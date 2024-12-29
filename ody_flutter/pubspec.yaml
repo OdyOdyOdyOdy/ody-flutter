@@ -24,4 +24,15 @@ flutter:
   assets:
     - assets/color/
 
+  fonts:
+    - family: PretendardBold
+      fonts:
+        - asset: assets/fonts/pretendard-bold.ttf
+    - family: PretendardMedium
+      fonts:
+        - asset: assets/fonts/pretendard-medium.ttf
+    - family: PretendardRegular
+      fonts:
+        - asset: assets/fonts/pretendard-regular.ttf
+
   uses-material-design: true
