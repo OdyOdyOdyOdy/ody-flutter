@@ -19,10 +19,12 @@ dev_dependencies:
     sdk: flutter
 
   flutter_lints: ^4.0.0
+  flutter_svg: ^2.0.16
 
 flutter:
   assets:
     - assets/color/
+    - assets/images/
 
   fonts:
     - family: PretendardBold
