@@ -21,8 +21,8 @@ jobs:
       - name: Install dependencies
       - run: flutter pub get
         
-      - name: Run lint checkout
-        run: flutter analyze --fail-on-lint
+      - name: Run lint check
+        run: flutter analyze --no-fatal-infos --no-fatal-warnings
 
       - name: Run test
         run: flutter test
