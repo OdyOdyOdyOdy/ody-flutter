@@ -25,7 +25,7 @@ jobs:
       - name: Lint check
         run: |
           cd ody_flutter
-          flutter analyze --no-fatal-infos --no-fatal-warnings
+          flutter analyze
 
       - name: Run test
         run: |
