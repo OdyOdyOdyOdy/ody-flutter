@@ -1,0 +1,39 @@
+name: Flutter CI
+
+on:
+  pull_request:
+    branches: [ "develop" ]
+
+jobs:
+  build:
+    runs-on: macOS-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install flutter sdk
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Install dependencies
+        run: |
+          cd ody_flutter
+          flutter pub get
+
+      - name: Lint check
+        run: |
+          cd ody_flutter
+          flutter analyze
+
+      - name: Run test
+        run: |
+          cd ody_flutter
+          flutter test
+          
+      # Build iOS without code signing
+      - name: Build iOS
+        run: |
+          cd ody_flutter
+          flutter build ios --no-codesign
