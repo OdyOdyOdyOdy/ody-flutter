@@ -16,7 +16,7 @@ jobs:
         
       - name: Install dependencies
         uses: actions/checkout@v4
-        run: flutter pub get
+      - run: flutter pub get
         
       - name: Run lint checkout
         run: flutter analyze --fail-on-lint
