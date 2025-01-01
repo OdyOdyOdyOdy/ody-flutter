@@ -19,7 +19,22 @@ dev_dependencies:
     sdk: flutter
 
   flutter_lints: ^4.0.0
+  flutter_svg: ^2.0.16
 
 flutter:
+  assets:
+    - assets/color/
+    - assets/images/
+
+  fonts:
+    - family: PretendardBold
+      fonts:
+        - asset: assets/fonts/pretendard-bold.ttf
+    - family: PretendardMedium
+      fonts:
+        - asset: assets/fonts/pretendard-medium.ttf
+    - family: PretendardRegular
+      fonts:
+        - asset: assets/fonts/pretendard-regular.ttf
 
   uses-material-design: true
