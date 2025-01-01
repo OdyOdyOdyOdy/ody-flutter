@@ -23,7 +23,7 @@ dev_dependencies:
 
 flutter:
   assets:
-    - assets/color/
+    - assets/colors/
     - assets/images/
 
   fonts:
