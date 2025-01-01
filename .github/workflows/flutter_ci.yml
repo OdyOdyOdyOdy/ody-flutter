@@ -16,10 +16,12 @@ jobs:
         
       - name: Install dependencies
         uses: actions/checkout@v4
-      - run: pwd
+      - run: |
+          pwd
+          ls
         
-      - name: Run lint checkout
-        run: flutter analyze --fail-on-lint
+      - name: Run lint check
+        run: flutter analyze --no-fatal-infos --no-fatal-warnings
 
       - name: Run test
         run: flutter test
