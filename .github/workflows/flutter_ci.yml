@@ -10,27 +10,32 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@4
-      - run: cd ody_flutter
-      
+        uses: actions/checkout@v4
+
       - name: Install flutter sdk
         uses: subosito/flutter-action@v2
         with:
           channel: stable
-        
+        working-directory: ody_flutter
+
       - name: Install dependencies
-      - run: flutter pub get
-        
+        run: flutter pub get
+        working-directory: ody_flutter
+
       - name: Run lint check
         run: flutter analyze --no-fatal-infos --no-fatal-warnings
+        working-directory: ody_flutter
 
       - name: Run test
         run: flutter test
-
+        working-directory: ody_flutter
+        
       # Build iOS without code signing
-      - name: Build iOS
+      - name: Build iOS without code signing
         run: flutter build ios --no-codesign
-
+        working-directory: ody_flutter
+        
       # Build Andriod without shrink
-      - name: Build Andriod
+      - name: Build Android without shrink
         run: flutter build apk --no-shrink
+        working-directory: ody_flutter
