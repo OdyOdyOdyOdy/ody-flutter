@@ -22,7 +22,7 @@ jobs:
           cd ody_flutter
           flutter pub get
 
-      - name: Run lint check
+      - name: Lint check
         run: |
           cd ody_flutter
           flutter analyze --no-fatal-infos --no-fatal-warnings
@@ -33,13 +33,13 @@ jobs:
           flutter test
           
       # Build iOS without code signing
-      - name: Build iOS without code signing
+      - name: Build iOS
         run: |
           cd ody_flutter
           flutter build ios --no-codesign
 
       # Build Andriod without shrink
-      - name: Build Android without shrink
+      - name: Build Android
         run: |
           cd ody_flutter
           flutter build apk --no-shrink
