@@ -37,9 +37,3 @@ jobs:
         run: |
           cd ody_flutter
           flutter build ios --no-codesign
-
-      # Build Andriod without shrink
-      - name: Build Android
-        run: |
-          cd ody_flutter
-          flutter build apk --no-shrink
