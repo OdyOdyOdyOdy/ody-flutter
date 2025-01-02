@@ -9,5 +9,6 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   @override
-  Widget build(final BuildContext context) => const Center(child: Text("설정 화면"));
+  Widget build(final BuildContext context) =>
+      const Center(child: Text("설정 화면"));
 }
