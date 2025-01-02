@@ -9,5 +9,5 @@ class StatusBoardScreen extends StatefulWidget {
 
 class _StatusBoardScreenState extends State<StatusBoardScreen> {
   @override
-  Widget build(BuildContext context) => const Center(child: Text("상태 현황표 화면"));
+  Widget build(final BuildContext context) => const Center(child: Text("상태 현황표 화면"));
 }

@@ -9,5 +9,5 @@ class EtaBoardScreen extends StatefulWidget {
 
 class _EtaBoardScreenState extends State<EtaBoardScreen> {
   @override
-  Widget build(BuildContext context) => const Center(child: Text("친구 위치 현황표 화면"));
+  Widget build(final BuildContext context) => const Center(child: Text("친구 위치 현황표 화면"));
 }

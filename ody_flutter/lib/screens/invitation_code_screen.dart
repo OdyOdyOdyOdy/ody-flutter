@@ -9,5 +9,5 @@ class InvitationCodeScreen extends StatefulWidget {
 
 class _InvitationCodeScreenState extends State<InvitationCodeScreen> {
   @override
-  Widget build(BuildContext context) => const Center(child: Text("초대 코드 화면"));
+  Widget build(final BuildContext context) => const Center(child: Text("초대 코드 화면"));
 }

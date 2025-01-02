@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) => MaterialApp(
+  Widget build(final BuildContext context) => MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Ody",
       theme: ThemeData(
@@ -26,14 +26,14 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: "/splash",
       routes: <String, WidgetBuilder>{
-        "/splash": (context) => const SplashScreen(),
-        "/login": (context) => const LoginScreen(),
-        "/gatherings": (context) => const GatheringsScreen(),
-        "/gatheringCreation": (context) => const GatheringCreatorScreen(),
-        "/settings": (context) => const SettingsScreen(),
-        "/invitationCode": (context) => const InvitationCodeScreen(),
-        "/etaBoard": (context) => const EtaBoardScreen(),
-        "/statusBoard": (context) => const StatusBoardScreen(),
+        "/splash": (final BuildContext context) => const SplashScreen(),
+        "/login": (final BuildContext context) => const LoginScreen(),
+        "/gatherings": (final BuildContext context) => const GatheringsScreen(),
+        "/gatheringCreation": (final BuildContext context) => const GatheringCreatorScreen(),
+        "/settings": (final BuildContext context) => const SettingsScreen(),
+        "/invitationCode": (final BuildContext context) => const InvitationCodeScreen(),
+        "/etaBoard": (final BuildContext context) => const EtaBoardScreen(),
+        "/statusBoard": (final BuildContext context) => const StatusBoardScreen(),
       },
     );
 }

@@ -9,7 +9,7 @@ class GatheringsScreen extends StatefulWidget {
 
 class _GatheringsScreenState extends State<GatheringsScreen> {
   @override
-  Widget build(BuildContext context) => Scaffold(
+  Widget build(final BuildContext context) => Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
