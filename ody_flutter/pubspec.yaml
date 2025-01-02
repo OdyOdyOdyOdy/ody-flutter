@@ -19,6 +19,8 @@ dev_dependencies:
   flutter_svg: ^2.0.16
   flutter_test:
     sdk: flutter
+  http: ^1.2.2
+  intl: ^0.20.1
 
 flutter:
   assets:
