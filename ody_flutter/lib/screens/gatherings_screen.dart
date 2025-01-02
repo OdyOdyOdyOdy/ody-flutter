@@ -17,25 +17,25 @@ class _GatheringsScreenState extends State<GatheringsScreen> {
             onPressed: () {
               Navigator.pushNamed(context, "/settings");
             },
-            child: const Text('설정'),
+            child: const Text("설정"),
           ),
           ElevatedButton(
             onPressed: () {
               Navigator.pushNamed(context, "/gatheringCreation");
             },
-            child: const Text('약속 생성'),
+            child: const Text("약속 생성"),
           ),
           ElevatedButton(
             onPressed: () {
               Navigator.pushNamed(context, "/invitationCode");
             },
-            child: const Text('초대 코드'),
+            child: const Text("초대 코드"),
           ),
           ElevatedButton(
             onPressed: () {
               Navigator.pushNamed(context, "/etaBoard");
             },
-            child: const Text('친구 현황표'),
+            child: const Text("친구 현황표"),
           ),
           ElevatedButton(
             onPressed: () {
