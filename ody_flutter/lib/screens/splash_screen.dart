@@ -1,18 +1,18 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    Future.delayed(const Duration(seconds: 2), () {
+  Widget build(final BuildContext context) {
+    Future<void>.delayed(const Duration(seconds: 2), () async {
       if (context.mounted) {
-        Navigator.pushReplacementNamed(context, '/login');
+        await Navigator.pushReplacementNamed(context, "/login");
       }
     });
 
     return const Scaffold(
-      body: Center(child: Text('스플래쉬 화면')),
+      body: Center(child: Text("스플래쉬 화면")),
     );
   }
 }

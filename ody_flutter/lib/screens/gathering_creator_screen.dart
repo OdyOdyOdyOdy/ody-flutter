@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 class GatheringCreatorScreen extends StatefulWidget {
   const GatheringCreatorScreen({super.key});
@@ -9,7 +9,6 @@ class GatheringCreatorScreen extends StatefulWidget {
 
 class _GatheringCreatorScreenState extends State<GatheringCreatorScreen> {
   @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text('약속 생성 화면'));
-  }
+  Widget build(final BuildContext context) =>
+      const Center(child: Text("약속 생성 화면"));
 }

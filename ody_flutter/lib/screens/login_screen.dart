@@ -1,19 +1,17 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  Widget build(final BuildContext context) => Scaffold(
       body: Center(
         child: ElevatedButton(
-          onPressed: () {
-            Navigator.pushNamed(context, '/gatherings');
+          onPressed: () async {
+            await Navigator.pushNamed(context, "/gatherings");
           },
-          child: const Text('로그인'),
+          child: const Text("로그인"),
         ),
       ),
     );
-  }
 }
