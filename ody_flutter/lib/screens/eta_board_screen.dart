@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 class EtaBoardScreen extends StatefulWidget {
   const EtaBoardScreen({super.key});
@@ -9,7 +9,5 @@ class EtaBoardScreen extends StatefulWidget {
 
 class _EtaBoardScreenState extends State<EtaBoardScreen> {
   @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text('친구 위치 현황표 화면'));
-  }
+  Widget build(BuildContext context) => const Center(child: Text("친구 위치 현황표 화면"));
 }

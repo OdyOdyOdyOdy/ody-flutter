@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -7,12 +7,12 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Future.delayed(const Duration(seconds: 2), () {
       if (context.mounted) {
-        Navigator.pushReplacementNamed(context, '/login');
+        Navigator.pushReplacementNamed(context, "/login");
       }
     });
 
     return const Scaffold(
-      body: Center(child: Text('스플래쉬 화면')),
+      body: Center(child: Text("스플래쉬 화면")),
     );
   }
 }

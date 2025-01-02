@@ -1,13 +1,13 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
-import 'package:ody_flutter/screens/eta_board_screen.dart';
-import 'package:ody_flutter/screens/gathering_creator_screen.dart';
-import 'package:ody_flutter/screens/gatherings_screen.dart';
-import 'package:ody_flutter/screens/invitation_code_screen.dart';
-import 'package:ody_flutter/screens/login_screen.dart';
-import 'package:ody_flutter/screens/settings_screen.dart';
-import 'package:ody_flutter/screens/splash_screen.dart';
-import 'package:ody_flutter/screens/status_board_screen.dart';
+import "package:ody_flutter/screens/eta_board_screen.dart";
+import "package:ody_flutter/screens/gathering_creator_screen.dart";
+import "package:ody_flutter/screens/gatherings_screen.dart";
+import "package:ody_flutter/screens/invitation_code_screen.dart";
+import "package:ody_flutter/screens/login_screen.dart";
+import "package:ody_flutter/screens/settings_screen.dart";
+import "package:ody_flutter/screens/splash_screen.dart";
+import "package:ody_flutter/screens/status_board_screen.dart";
 
 void main() {
   runApp(const MyApp());
