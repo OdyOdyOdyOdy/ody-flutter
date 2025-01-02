@@ -5,9 +5,9 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    Future.delayed(const Duration(seconds: 2), () {
+    Future<void>.delayed(const Duration(seconds: 2), () async {
       if (context.mounted) {
-        Navigator.pushReplacementNamed(context, "/login");
+        await Navigator.pushReplacementNamed(context, "/login");
       }
     });
 
