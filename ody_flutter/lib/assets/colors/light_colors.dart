@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
 
-import "colors.dart";
+import "package:ody_flutter/assets/colors/colors.dart";
 
 class LightColors {
   static const Color first = CommonColors.cream;

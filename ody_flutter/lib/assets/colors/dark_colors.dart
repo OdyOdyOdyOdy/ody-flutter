@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
 
-import "colors.dart";
+import "package:ody_flutter/assets/colors/colors.dart";
 
 class DarkColors {
   static const Color first = CommonColors.black;
