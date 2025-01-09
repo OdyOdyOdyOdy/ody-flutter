@@ -3,7 +3,6 @@ import "package:flutter_svg/flutter_svg.dart";
 import "package:ody_flutter/assets/colors/colors.dart";
 
 class OdyAlert extends StatelessWidget {
-  final VoidCallback onConfirm;
 
   const OdyAlert({
     required this.image,
@@ -13,6 +12,7 @@ class OdyAlert extends StatelessWidget {
     required this.onConfirm,
     super.key,
   });
+  final VoidCallback onConfirm;
 
   final String image;
   final String title;
