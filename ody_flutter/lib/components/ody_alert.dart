@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:flutter_svg/flutter_svg.dart";
 import "package:ody_flutter/assets/colors/colors.dart";
+import "package:ody_flutter/assets/colors/fonts.dart";
 
 class OdyAlert extends StatelessWidget {
   const OdyAlert({
@@ -48,19 +49,15 @@ class OdyAlert extends StatelessWidget {
 
   Widget _title() => Text(
         title,
-        style: const TextStyle(
+        style: CommonFonts.pretendardBold24.copyWith(
           color: CommonColors.purple_800,
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
         ),
       );
 
   Widget _description() => Text(
         description,
-        style: const TextStyle(
+        style: CommonFonts.pretendardMedium16.copyWith(
           color: CommonColors.black,
-          fontSize: 16,
-          fontWeight: FontWeight.normal,
         ),
       );
 
@@ -70,12 +67,10 @@ class OdyAlert extends StatelessWidget {
           Expanded(
             child: GestureDetector(
               onTap: () => Navigator.pop(context),
-              child: const Text(
+              child: Text(
                 "취소",
-                style: TextStyle(
+                style: CommonFonts.pretendardMedium18.copyWith(
                   color: CommonColors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.normal,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -94,10 +89,8 @@ class OdyAlert extends StatelessWidget {
               },
               child: Text(
                 confirmText,
-                style: const TextStyle(
+                style: CommonFonts.pretendardMedium18.copyWith(
                   color: CommonColors.red_500,
-                  fontSize: 18,
-                  fontWeight: FontWeight.normal,
                 ),
                 textAlign: TextAlign.center,
               ),
