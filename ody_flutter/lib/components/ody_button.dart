@@ -103,7 +103,7 @@ class _OdyButtonState extends State<OdyButton> {
           ),
           Text(
             widget.buttonType.title,
-            style: CommonFonts.pretendardBold16.copyWith(
+            style: PretendardFonts.bold16.copyWith(
               color: CommonColors.white,
             ),
           ),
@@ -113,7 +113,7 @@ class _OdyButtonState extends State<OdyButton> {
   Widget _textButton() => Center(
         child: Text(
           widget.buttonType.title,
-          style: CommonFonts.pretendardBold16.copyWith(
+          style: PretendardFonts.bold16.copyWith(
             color: CommonColors.white,
           ),
         ),
