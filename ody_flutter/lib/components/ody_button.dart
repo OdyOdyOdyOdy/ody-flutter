@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:flutter_svg/flutter_svg.dart";
 import "package:ody_flutter/assets/colors/colors.dart";
+import "package:ody_flutter/assets/colors/fonts.dart";
 
 enum OdyButtonType {
   next,
@@ -102,9 +103,7 @@ class _OdyButtonState extends State<OdyButton> {
           ),
           Text(
             widget.buttonType.title,
-            style: const TextStyle(
-              fontFamily: "PretendardBold",
-              fontSize: 16,
+            style: CommonFonts.pretendardBold16.copyWith(
               color: CommonColors.white,
             ),
           ),
@@ -114,9 +113,7 @@ class _OdyButtonState extends State<OdyButton> {
   Widget _textButton() => Center(
         child: Text(
           widget.buttonType.title,
-          style: const TextStyle(
-            fontFamily: "PretendardBold",
-            fontSize: 16,
+          style: CommonFonts.pretendardBold16.copyWith(
             color: CommonColors.white,
           ),
         ),
