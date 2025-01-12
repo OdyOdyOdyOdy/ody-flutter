@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 import "package:flutter_svg/flutter_svg.dart";
 import "package:ody_flutter/assets/colors/colors.dart";
-import "package:ody_flutter/assets/colors/fonts.dart";
+import "package:ody_flutter/assets/fonts/pretendart_fonts.dart";
 
 class OdyAlert extends StatelessWidget {
   const OdyAlert({
@@ -49,14 +49,14 @@ class OdyAlert extends StatelessWidget {
 
   Widget _title() => Text(
         title,
-        style: CommonFonts.pretendardBold24.copyWith(
+        style: PretendardFonts.bold24.copyWith(
           color: CommonColors.purple_800,
         ),
       );
 
   Widget _description() => Text(
         description,
-        style: CommonFonts.pretendardMedium16.copyWith(
+        style: PretendardFonts.medium16.copyWith(
           color: CommonColors.black,
         ),
       );
@@ -69,7 +69,7 @@ class OdyAlert extends StatelessWidget {
               onTap: () => Navigator.pop(context),
               child: Text(
                 "취소",
-                style: CommonFonts.pretendardMedium18.copyWith(
+                style: PretendardFonts.medium18.copyWith(
                   color: CommonColors.black,
                 ),
                 textAlign: TextAlign.center,
@@ -89,7 +89,7 @@ class OdyAlert extends StatelessWidget {
               },
               child: Text(
                 confirmText,
-                style: CommonFonts.pretendardMedium18.copyWith(
+                style: PretendardFonts.medium18.copyWith(
                   color: CommonColors.red_500,
                 ),
                 textAlign: TextAlign.center,

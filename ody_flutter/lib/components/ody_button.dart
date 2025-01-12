@@ -1,7 +1,8 @@
 import "package:flutter/material.dart";
 import "package:flutter_svg/flutter_svg.dart";
 import "package:ody_flutter/assets/colors/colors.dart";
-import "package:ody_flutter/assets/colors/fonts.dart";
+import "package:ody_flutter/assets/fonts/pretendart_fonts.dart";
+import "package:ody_flutter/assets/images/images.dart";
 
 enum OdyButtonType {
   next,
@@ -45,7 +46,7 @@ extension OdyButtonProperties on OdyButtonType {
   String get image {
     switch (this) {
       case OdyButtonType.ody:
-        return "assets/images/ic_ody.svg";
+        return CommonImages.icOdy;
       case OdyButtonType.next:
       case OdyButtonType.confirm:
         return "";
@@ -103,7 +104,7 @@ class _OdyButtonState extends State<OdyButton> {
           ),
           Text(
             widget.buttonType.title,
-            style: CommonFonts.pretendardBold16.copyWith(
+            style: PretendardFonts.bold16.copyWith(
               color: CommonColors.white,
             ),
           ),
@@ -113,7 +114,7 @@ class _OdyButtonState extends State<OdyButton> {
   Widget _textButton() => Center(
         child: Text(
           widget.buttonType.title,
-          style: CommonFonts.pretendardBold16.copyWith(
+          style: PretendardFonts.bold16.copyWith(
             color: CommonColors.white,
           ),
         ),
