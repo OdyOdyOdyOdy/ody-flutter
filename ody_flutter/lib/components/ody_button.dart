@@ -35,7 +35,8 @@ extension OdyButtonProperties on OdyButtonType {
     switch (this) {
       case OdyButtonType.next:
         return 0;
-      default:
+      case OdyButtonType.ody:
+      case OdyButtonType.confirm:
         return 10;
     }
   }
@@ -44,7 +45,8 @@ extension OdyButtonProperties on OdyButtonType {
     switch (this) {
       case OdyButtonType.ody:
         return "assets/images/ic_ody.svg";
-      default:
+      case OdyButtonType.next:
+      case OdyButtonType.confirm:
         return "";
     }
   }
@@ -53,13 +55,13 @@ extension OdyButtonProperties on OdyButtonType {
 class OdyButton extends StatefulWidget {
   const OdyButton({
     required this.buttonType,
+    required this.onPressed,
     required this.isEnabled,
-    this.onPressed,
     super.key,
   });
 
   final OdyButtonType buttonType;
-  final VoidCallback? onPressed;
+  final VoidCallback onPressed;
   final ValueNotifier<bool> isEnabled;
 
   @override
