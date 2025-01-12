@@ -11,7 +11,7 @@ class CommonFonts {
   );
   static const TextStyle pretendardBold20 = TextStyle(
     fontFamily: "PretendardBold",
-    fontSize: 24,
+    fontSize: 20,
   );
   static const TextStyle pretendardBold16 = TextStyle(
     fontFamily: "PretendardBold",
