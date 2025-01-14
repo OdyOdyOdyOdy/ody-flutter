@@ -1,7 +1,7 @@
 import "package:flutter/cupertino.dart";
 import "package:flutter_svg/flutter_svg.dart";
 import "package:ody_flutter/assets/colors/colors.dart";
-import "package:ody_flutter/assets/fonts/pretendart_fonts.dart";
+import "package:ody_flutter/assets/fonts/pretendard_fonts.dart";
 
 class OdyTopBar extends StatelessWidget {
   const OdyTopBar({
