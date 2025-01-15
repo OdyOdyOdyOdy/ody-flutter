@@ -9,7 +9,15 @@ class PretendardFonts {
     fontFamily: "PretendardBold",
     fontSize: 24,
   );
+  static const TextStyle bold22 = TextStyle(
+    fontFamily: "PretendardBold",
+    fontSize: 24,
+  );
   static const TextStyle bold20 = TextStyle(
+    fontFamily: "PretendardBold",
+    fontSize: 20,
+  );
+  static const TextStyle bold18 = TextStyle(
     fontFamily: "PretendardBold",
     fontSize: 20,
   );
