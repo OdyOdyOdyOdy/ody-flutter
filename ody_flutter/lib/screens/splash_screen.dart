@@ -1,4 +1,7 @@
 import "package:flutter/material.dart";
+import "package:flutter_svg/flutter_svg.dart";
+import "package:ody_flutter/assets/colors/colors.dart";
+import "package:ody_flutter/assets/images/images.dart";
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -11,8 +14,12 @@ class SplashScreen extends StatelessWidget {
       }
     });
 
-    return const Scaffold(
-      body: Center(child: Text("스플래쉬 화면")),
+    return Scaffold(
+      body: Container(
+          width: double.infinity,
+          height: double.infinity,
+          color: CommonColors.purple_800,
+          child: Center(child: SvgPicture.asset(CommonImages.icSplashLogo))),
     );
   }
 }
