@@ -1,4 +1,5 @@
 class CommonImages {
+  static const icAppleLogin = "assets/images/ic_apple_login.svg";
   static const icArrowBack = "assets/images/ic_arrow_back.svg";
   static const icArrowDown = "assets/images/ic_arrow_down.svg";
   static const icArrowRight = "assets/images/ic_arrow_right.svg";
