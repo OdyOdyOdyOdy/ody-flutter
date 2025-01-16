@@ -15,14 +15,10 @@ class SplashScreen extends StatelessWidget {
     });
 
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        color: CommonColors.purple_800,
-        child: Center(
+      backgroundColor: CommonColors.purple_800,
+      body: Center(
           child: SvgPicture.asset(CommonImages.icSplashLogo),
         ),
-      ),
     );
   }
 }
