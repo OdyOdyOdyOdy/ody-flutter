@@ -3,6 +3,7 @@ import "package:flutter_svg/flutter_svg.dart";
 import "package:ody_flutter/assets/colors/colors.dart";
 import "package:ody_flutter/assets/fonts/pretendard_fonts.dart";
 import "package:ody_flutter/assets/images/images.dart";
+import "package:ody_flutter/config/routes.dart";
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -55,7 +56,7 @@ class LoginScreen extends StatelessWidget {
       );
 
   Widget _appleLoginButton(final BuildContext context) => GestureDetector(
-        onTap: () async => Navigator.pushNamed(context, "/gatherings"),
+        onTap: () async => Navigator.pushNamed(context, Routes.gatherings),
         child: Container(
           width: double.infinity,
           padding: const EdgeInsets.only(left: 21, right: 21, bottom: 25),
