@@ -51,10 +51,7 @@ class _OdyTextFieldState extends State<OdyTextField> {
                 enabledBorder: _inputBorder(),
                 focusedBorder: _inputBorder(),
                 contentPadding: EdgeInsets.zero,
-                suffixIcon:
-                    (widget.textFieldType == OdyTextFieldType.clearButton)
-                        ? _closeButton()
-                        : _textCounter(widget.text.value),
+                suffixIcon: _suffixIcon(),
               ),
               keyboardType: TextInputType.text,
               inputFormatters: [
@@ -65,6 +62,15 @@ class _OdyTextFieldState extends State<OdyTextField> {
           ),
         ),
       );
+
+  Widget _suffixIcon() {
+    switch (widget.textFieldType) {
+      case OdyTextFieldType.clearButton:
+        return _closeButton();
+      case OdyTextFieldType.textCounter:
+        return _textCounter(widget.text.value);
+    }
+  }
 
   Widget _closeButton() => IconButton(
         padding: const EdgeInsets.only(left: 20),
