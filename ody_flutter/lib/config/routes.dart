@@ -1,7 +1,8 @@
 import "package:flutter/cupertino.dart";
 import "package:ody_flutter/screens/eta_board_screen.dart";
 import "package:ody_flutter/screens/gathering_creator_screen.dart";
-import "package:ody_flutter/screens/gatherings_screen.dart";
+import "package:ody_flutter/screens/gathering_detail_screen.dart";
+import "package:ody_flutter/screens/gatherings/gatherings_screen.dart";
 import "package:ody_flutter/screens/invitation_code_screen.dart";
 import "package:ody_flutter/screens/login_screen.dart";
 import "package:ody_flutter/screens/settings_screen.dart";
@@ -13,6 +14,7 @@ Map<String, WidgetBuilder> namedRoutes = <String, WidgetBuilder>{
   "/login": (final BuildContext context) => const LoginScreen(),
   "/gatherings": (final BuildContext context) => const GatheringsScreen(),
   "/gatheringCreation": (final BuildContext context) => const GatheringCreatorScreen(),
+  "/gatheringDetail": (final BuildContext context) => const GatheringDetailScreen(),
   "/settings": (final BuildContext context) => const SettingsScreen(),
   "/invitationCode": (final BuildContext context) => const InvitationCodeScreen(),
   "/etaBoard": (final BuildContext context) => const EtaBoardScreen(),
@@ -24,6 +26,7 @@ class Routes {
   static const String login = "/login";
   static const String gatherings = "/gatherings";
   static const String gatheringCreation = "/gatheringCreation";
+  static const String gatheringDetail = "/gatheringDetail";
   static const String settings = "/settings";
   static const String invitationCode = "/invitationCode";
   static const String etaBoard = "/etaBoard";
