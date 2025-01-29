@@ -55,4 +55,8 @@ class PretendardFonts {
     fontFamily: "PretendardRegular",
     fontSize: 14,
   );
+  static const TextStyle regular12 = TextStyle(
+    fontFamily: "PretendardRegular",
+    fontSize: 14,
+  );
 }
