@@ -129,10 +129,10 @@ class _GatheringsScreenState extends State<GatheringsScreen> {
       );
 
   Widget _buildGatheringItem(Gathering gathering) => GestureDetector(
-    onTap: () async {
-      await Navigator.pushNamed(context, Routes.gatheringDetail);
-    },
-    child: DecoratedBox(
+        onTap: () async {
+          await Navigator.pushNamed(context, Routes.gatheringDetail);
+        },
+        child: DecoratedBox(
           decoration: const BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -157,14 +157,14 @@ class _GatheringsScreenState extends State<GatheringsScreen> {
                           .copyWith(color: CommonColors.gray_800),
                     ),
                     const SizedBox(height: 7),
-                    if (!gathering.isExpanded)
+                    if (gathering.isExpanded)
+                      _buildExpandedGatheringDetails(gathering)
+                    else
                       Text(
                         gathering.time,
                         style: PretendardFonts.medium16
                             .copyWith(color: CommonColors.gray_800),
                       ),
-                    if (gathering.isExpanded)
-                      _buildExpandedGatheringDetails(gathering),
                     const SizedBox(height: 8),
                     Text(
                       "${gathering.durationMinutes}분 걸려요",
@@ -225,7 +225,7 @@ class _GatheringsScreenState extends State<GatheringsScreen> {
             ],
           ),
         ),
-  );
+      );
 
   Widget _buildExpandedGatheringDetails(Gathering gathering) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
