@@ -7,7 +7,7 @@ import "package:ody_flutter/screens/invitation_code_screen.dart";
 import "package:ody_flutter/screens/login_screen.dart";
 import "package:ody_flutter/screens/settings/settings_screen.dart";
 import "package:ody_flutter/screens/splash_screen.dart";
-import "package:ody_flutter/screens/status_board_screen.dart";
+import "package:ody_flutter/screens/status_board/status_board_screen.dart";
 
 Map<String, WidgetBuilder> namedRoutes = <String, WidgetBuilder>{
   "/splash": (final BuildContext context) => const SplashScreen(),
