@@ -42,123 +42,123 @@ class _StatusBoardScreenState extends State<StatusBoardScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-      floatingActionButton: _buildFloatingActionButton(context),
-      backgroundColor: CommonColors.cream,
-      body: SafeArea(
-        child: Column(
-          children: [
-            _buildTopBar(context),
-            const SizedBox(height: 24),
-            _buildStatusList(),
-          ],
-        ),
-      ),
-    );
-
-  Widget _buildFloatingActionButton(BuildContext context) => SizedBox(
-      width: 86,
-      height: 37,
-      child: FloatingActionButton.extended(
-        onPressed: () async {
-          await Navigator.pushNamed(context, Routes.etaBoard);
-        },
-        backgroundColor: CommonColors.purple_800,
-        label: Text(
-          "오디?",
-          style: PretendardFonts.bold16.copyWith(color: CommonColors.white),
-        ),
-        icon: SvgPicture.asset(CommonImages.icOdy),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
-        ),
-      ),
-    );
-
-  Widget _buildTopBar(BuildContext context) => OdyTopBar(
-      title: "어쩌구약속이름어쩌...",
-      leftIcon: CommonImages.icArrowBack,
-      rightIcon: CommonImages.icExit,
-      onLeftIcon: () => Navigator.pop(context),
-      onRightIcon: () async => showDialog(
-        context: context,
-        builder: (context) => OdyAlert(
-          image: "assets/images/ic_sad_ody.svg",
-          title: "어쩌구약속이름어쩌...",
-          description: "약속을 정말 나가실 건가요?",
-          confirmText: "나가기",
-          onConfirm: () => Navigator.pop(context),
-        ),
-      ),
-    );
-
-  Widget _buildStatusList() => Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: ListView.separated(
-          itemCount: userStatuses.length,
-          itemBuilder: (context, index) => UserStatusItem(
-            userStatus: userStatuses[index],
-          ),
-          separatorBuilder: (context, index) => const SizedBox(height: 18),
-        ),
-      ),
-    );
-}
-
-class UserStatusItem extends StatelessWidget {
-  final UserStatus userStatus;
-
-  const UserStatusItem({super.key, required this.userStatus});
-
-  @override
-  Widget build(BuildContext context) => Row(
-      children: [
-        _buildUserAvatar(),
-        const SizedBox(width: 8),
-        _buildUserInfo(),
-      ],
-    );
-
-  Widget _buildUserAvatar() => ClipRRect(
-      borderRadius: BorderRadius.circular(25),
-      child: CachedNetworkImage(
-        width: 44,
-        height: 44,
-        imageUrl: userStatus.imageUrl,
-        placeholder: (context, url) => const CircularProgressIndicator(),
-      ),
-    );
-
-  Widget _buildUserInfo() => Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        RichText(
-          text: TextSpan(
+        floatingActionButton: _buildFloatingActionButton(context),
+        backgroundColor: CommonColors.cream,
+        body: SafeArea(
+          child: Column(
             children: [
-              TextSpan(
-                text: userStatus.nickname,
-                style: PretendardFonts.bold18.copyWith(
-                  color: CommonColors.gray_800,
-                ),
-              ),
-              TextSpan(
-                text: _getNotificationText(userStatus.userNotificationType),
-                style: PretendardFonts.medium18.copyWith(
-                  color: CommonColors.gray_800,
-                ),
-              ),
+              _buildTopBar(context),
+              const SizedBox(height: 24),
+              _buildStatusList(),
             ],
           ),
         ),
-        const SizedBox(height: 2),
-        Text(
-          userStatus.created,
-          style: PretendardFonts.regular14.copyWith(
-            color: CommonColors.gray_350,
+      );
+
+  Widget _buildFloatingActionButton(BuildContext context) => SizedBox(
+        width: 86,
+        height: 37,
+        child: FloatingActionButton.extended(
+          onPressed: () async {
+            await Navigator.pushNamed(context, Routes.etaBoard);
+          },
+          backgroundColor: CommonColors.purple_800,
+          label: Text(
+            "오디?",
+            style: PretendardFonts.bold16.copyWith(color: CommonColors.white),
+          ),
+          icon: SvgPicture.asset(CommonImages.icOdy),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
           ),
         ),
-      ],
-    );
+      );
+
+  Widget _buildTopBar(BuildContext context) => OdyTopBar(
+        title: "어쩌구약속이름어쩌...",
+        leftIcon: CommonImages.icArrowBack,
+        rightIcon: CommonImages.icExit,
+        onLeftIcon: () => Navigator.pop(context),
+        onRightIcon: () async => showDialog(
+          context: context,
+          builder: (context) => OdyAlert(
+            image: "assets/images/ic_sad_ody.svg",
+            title: "어쩌구약속이름어쩌...",
+            description: "약속을 정말 나가실 건가요?",
+            confirmText: "나가기",
+            onConfirm: () => Navigator.pop(context),
+          ),
+        ),
+      );
+
+  Widget _buildStatusList() => Expanded(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: ListView.separated(
+            itemCount: userStatuses.length,
+            itemBuilder: (context, index) => UserStatusItem(
+              userStatus: userStatuses[index],
+            ),
+            separatorBuilder: (context, index) => const SizedBox(height: 18),
+          ),
+        ),
+      );
+}
+
+class UserStatusItem extends StatelessWidget {
+  const UserStatusItem({required this.userStatus, super.key});
+
+  final UserStatus userStatus;
+
+  @override
+  Widget build(BuildContext context) => Row(
+        children: [
+          _buildUserAvatar(),
+          const SizedBox(width: 8),
+          _buildUserInfo(),
+        ],
+      );
+
+  Widget _buildUserAvatar() => ClipRRect(
+        borderRadius: BorderRadius.circular(25),
+        child: CachedNetworkImage(
+          width: 44,
+          height: 44,
+          imageUrl: userStatus.imageUrl,
+          placeholder: (context, url) => const CircularProgressIndicator(),
+        ),
+      );
+
+  Widget _buildUserInfo() => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: userStatus.nickname,
+                  style: PretendardFonts.bold18.copyWith(
+                    color: CommonColors.gray_800,
+                  ),
+                ),
+                TextSpan(
+                  text: _getNotificationText(userStatus.userNotificationType),
+                  style: PretendardFonts.medium18.copyWith(
+                    color: CommonColors.gray_800,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 2),
+          Text(
+            userStatus.created,
+            style: PretendardFonts.regular14.copyWith(
+              color: CommonColors.gray_350,
+            ),
+          ),
+        ],
+      );
 
   String _getNotificationText(UserNotificationType notificationType) {
     switch (notificationType) {
