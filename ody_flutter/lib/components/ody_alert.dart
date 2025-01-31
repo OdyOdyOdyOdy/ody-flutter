@@ -47,10 +47,15 @@ class OdyAlert extends StatelessWidget {
         ],
       );
 
-  Widget _title() => Text(
-        title,
-        style: PretendardFonts.bold24.copyWith(
-          color: CommonColors.purple_800,
+  Widget _title() => SizedBox(
+        width: 300,
+        child: Text(
+          title,
+          style: PretendardFonts.bold24.copyWith(
+            color: CommonColors.purple_800,
+          ),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         ),
       );
 

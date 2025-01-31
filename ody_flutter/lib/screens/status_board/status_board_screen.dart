@@ -75,7 +75,7 @@ class _StatusBoardScreenState extends State<StatusBoardScreen> {
       );
 
   Widget _buildTopBar(BuildContext context) => OdyTopBar(
-        title: "어쩌구약속이름어쩌...",
+        title: "어쩌구약속이름어쩌구저쩌구나구나구나",
         leftIcon: CommonImages.icArrowBack,
         rightIcon: CommonImages.icExit,
         onLeftIcon: () => Navigator.pop(context),
@@ -83,7 +83,7 @@ class _StatusBoardScreenState extends State<StatusBoardScreen> {
           context: context,
           builder: (context) => OdyAlert(
             image: "assets/images/ic_sad_ody.svg",
-            title: "어쩌구약속이름어쩌...",
+            title: "어쩌구약속이름어쩌구저쩌구나구나구나",
             description: "약속을 정말 나가실 건가요?",
             confirmText: "나가기",
             onConfirm: () => Navigator.pop(context),
