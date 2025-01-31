@@ -69,7 +69,7 @@ class _StatusBoardScreenState extends State<StatusBoardScreen> {
           ),
           icon: SvgPicture.asset(CommonImages.icOdy),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(10),
           ),
         ),
       );
