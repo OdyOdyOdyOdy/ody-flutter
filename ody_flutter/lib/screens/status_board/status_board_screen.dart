@@ -82,7 +82,7 @@ class _StatusBoardScreenState extends State<StatusBoardScreen> {
         onRightIcon: () async => showDialog(
           context: context,
           builder: (context) => OdyAlert(
-            image: "assets/images/ic_sad_ody.svg",
+            image: CommonImages.icSadOdy,
             title: "어쩌구약속이름어쩌구저쩌구나구나구나",
             description: "약속을 정말 나가실 건가요?",
             confirmText: "나가기",
