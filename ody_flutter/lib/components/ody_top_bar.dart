@@ -38,10 +38,15 @@ class OdyTopBar extends StatelessWidget {
                     child: SvgPicture.asset(leftIcon),
                   ),
                   const SizedBox(width: 12),
-                  Text(
-                    title,
-                    style: PretendardFonts.bold22.copyWith(
-                      color: CommonColors.black,
+                  SizedBox(
+                    width: 228,
+                    child: Text(
+                      title,
+                      style: PretendardFonts.bold22.copyWith(
+                        color: CommonColors.black,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ],

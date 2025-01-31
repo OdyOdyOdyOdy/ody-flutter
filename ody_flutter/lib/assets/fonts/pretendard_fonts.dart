@@ -19,7 +19,7 @@ class PretendardFonts {
   );
   static const TextStyle bold18 = TextStyle(
     fontFamily: "PretendardBold",
-    fontSize: 20,
+    fontSize: 18,
   );
   static const TextStyle bold16 = TextStyle(
     fontFamily: "PretendardBold",
