@@ -4,6 +4,7 @@ class CommonImages {
   static const icArrowDown = "assets/images/ic_arrow_down.svg";
   static const icArrowRight = "assets/images/ic_arrow_right.svg";
   static const icArrowUp = "assets/images/ic_arrow_up.svg";
+  static const icBigCancel = "assets/images/ic_big_cancel.svg";
   static const icCancel = "assets/images/ic_cancel.svg";
   static const icClose = "assets/images/ic_close.svg";
   static const icCommentInfo = "assets/images/ic_comment_info.svg";
@@ -11,6 +12,7 @@ class CommonImages {
   static const icDiagonalLine = "assets/images/ic_diagonal_line.svg";
   static const icExit = "assets/images/ic_exit.svg";
   static const icHappyOdy = "assets/images/ic_happy_ody.svg";
+  static const icInformation = "assets/images/ic_information.svg";
   static const icLocationOn = "assets/images/ic_location_on.svg";
   static const icLogout = "assets/images/ic_logout.svg";
   static const icMenu = "assets/images/ic_menu.svg";
