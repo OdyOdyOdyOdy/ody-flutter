@@ -1,6 +1,6 @@
 import "package:flutter/cupertino.dart";
 import "package:ody_flutter/screens/eta_board_screen.dart";
-import "package:ody_flutter/screens/gathering_creator_screen.dart";
+import "package:ody_flutter/screens/gatherings/gathering_creator_screen.dart";
 import "package:ody_flutter/screens/gatherings_screen.dart";
 import "package:ody_flutter/screens/invitation_code_screen.dart";
 import "package:ody_flutter/screens/login_screen.dart";
@@ -12,9 +12,11 @@ Map<String, WidgetBuilder> namedRoutes = <String, WidgetBuilder>{
   "/splash": (final BuildContext context) => const SplashScreen(),
   "/login": (final BuildContext context) => const LoginScreen(),
   "/gatherings": (final BuildContext context) => const GatheringsScreen(),
-  "/gatheringCreation": (final BuildContext context) => const GatheringCreatorScreen(),
+  "/gatheringCreation": (final BuildContext context) =>
+      GatheringCreatorScreen(),
   "/settings": (final BuildContext context) => const SettingsScreen(),
-  "/invitationCode": (final BuildContext context) => const InvitationCodeScreen(),
+  "/invitationCode": (final BuildContext context) =>
+      const InvitationCodeScreen(),
   "/etaBoard": (final BuildContext context) => const EtaBoardScreen(),
   "/statusBoard": (final BuildContext context) => const StatusBoardScreen(),
 };
