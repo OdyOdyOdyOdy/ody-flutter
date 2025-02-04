@@ -1,5 +1,5 @@
 import "package:flutter/cupertino.dart";
-import "package:ody_flutter/screens/eta_board_screen.dart";
+import "package:ody_flutter/screens/eta_board/eta_board_screen.dart";
 import "package:ody_flutter/screens/gathering_creator_screen.dart";
 import "package:ody_flutter/screens/gathering_detail_screen.dart";
 import "package:ody_flutter/screens/gatherings/gatherings_screen.dart";
