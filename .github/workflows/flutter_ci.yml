@@ -26,10 +26,12 @@ jobs:
         run: |
           cd ody_flutter
           flutter analyze
-
+     
+      # Run Test에서는 .env 임의로 추가
       - name: Run test
         run: |
           cd ody_flutter
+          touch .env
           flutter test
           
       # Build iOS without code signing
