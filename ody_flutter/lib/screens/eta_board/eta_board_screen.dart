@@ -60,33 +60,38 @@ class _EtaBoardScreenState extends State<EtaBoardScreen> {
         ),
       );
 
-  Widget _buildEtaItem(MateEta mateEta) => Stack(
+  Widget _buildEtaItem(MateEta mateEta) => Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Positioned(
-            left: 0,
+          Expanded(
             child: Text(
+              textAlign: TextAlign.center,
               mateEta.name,
               style:
                   PretendardFonts.bold20.copyWith(color: CommonColors.gray_800),
             ),
           ),
-          Align(
-            child: _buildStatusBadge(mateEta.etaStatus),
+          const SizedBox(
+            width: 40,
           ),
-          Positioned(
-            right: 0,
+          _buildStatusBadge(mateEta.etaStatus),
+          const SizedBox(
+            width: 40,
+          ),
+          Expanded(
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
-                  width: 100,
-                  child: Text(
-                    textAlign: TextAlign.center,
-                    mateEta.etaStatus.statusMessage(),
-                    style: PretendardFonts.regular16
-                        .copyWith(color: CommonColors.black),
-                  ),
+                Text(
+                  textAlign: TextAlign.center,
+                  mateEta.etaStatus.statusMessage(),
+                  style: PretendardFonts.regular16
+                      .copyWith(color: CommonColors.black),
                 ),
-                if (mateEta.etaStatus is Missing) _buildTooltip(),
+                if (mateEta.etaStatus is Missing)
+                  Padding(
+                      padding: const EdgeInsets.only(left: 3),
+                      child: _buildTooltip()),
               ],
             ),
           ),
