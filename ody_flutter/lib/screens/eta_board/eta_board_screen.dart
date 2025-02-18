@@ -90,8 +90,9 @@ class _EtaBoardScreenState extends State<EtaBoardScreen> {
                 ),
                 if (mateEta.etaStatus is Missing)
                   Padding(
-                      padding: const EdgeInsets.only(left: 3),
-                      child: _buildTooltip()),
+                    padding: const EdgeInsets.only(left: 3),
+                    child: _buildTooltip(),
+                  ),
               ],
             ),
           ),
