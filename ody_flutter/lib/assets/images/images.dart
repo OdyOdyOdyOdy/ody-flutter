@@ -19,6 +19,7 @@ class CommonImages {
   static const icNotification = "assets/images/ic_notification.svg";
   static const icOdy = "assets/images/ic_ody.svg";
   static const icPlus = "assets/images/ic_plus.svg";
+  static const icQuestionMark = "assets/images/ic_question_mark.svg";
   static const icRoundCancel = "assets/images/ic_round_cancel.svg";
   static const icSadOdy = "assets/images/ic_sad_ody.svg";
   static const icSetting = "assets/images/ic_setting.svg";
