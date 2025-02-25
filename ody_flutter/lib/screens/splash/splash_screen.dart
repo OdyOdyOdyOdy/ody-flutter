@@ -3,7 +3,7 @@ import "package:flutter_svg/flutter_svg.dart";
 import "package:ody_flutter/assets/colors/colors.dart";
 import "package:ody_flutter/assets/images/images.dart";
 import "package:ody_flutter/config/routes.dart";
-import "package:ody_flutter/data/db/DatabaseHelper.dart";
+import "package:ody_flutter/data/db/database_helper.dart";
 import "package:ody_flutter/data/repository/token_repository_impl.dart";
 import "package:ody_flutter/screens/splash/splash_navigate_action.dart";
 import "package:ody_flutter/screens/splash/splash_view_model.dart";
