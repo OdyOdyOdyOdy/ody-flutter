@@ -1,3 +1,4 @@
+import "package:firebase_messaging/firebase_messaging.dart";
 import "package:flutter/material.dart";
 import "package:flutter_svg/flutter_svg.dart";
 import "package:ody_flutter/assets/colors/colors.dart";
@@ -9,18 +10,24 @@ class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   @override
-  Widget build(final BuildContext context) => Scaffold(
-        backgroundColor: CommonColors.cream,
-        body: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _topContent(),
-              _appleLoginButton(context),
-            ],
-          ),
+  Widget build(final BuildContext context) {
+    Future<void>.delayed(Duration.zero, () async {
+      await FirebaseMessaging.instance.requestPermission();
+    });
+
+    return Scaffold(
+      backgroundColor: CommonColors.cream,
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _topContent(),
+            _appleLoginButton(context),
+          ],
         ),
-      );
+      ),
+    );
+  }
 
   Widget _topContent() => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
