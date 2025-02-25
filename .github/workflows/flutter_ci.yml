@@ -18,13 +18,13 @@ jobs:
           channel: stable
           
       - name: Add firebase.json
-        run: echo '${{ secrets.FIREBASE_JSON }}' > .ody-flutter/ody_flutter/firebase.json
+        run: echo '${{ secrets.FIREBASE_JSON }}' > ./firebase.json
         
       - name: Add google-services.json
-        run: echo '${{ secrets.GOOGLE_SERVICE_JSON }}' > ./android/app/google-services.json
+        run: echo '${{ secrets.GOOGLE_SERVICE_JSON }}' > ./google-services.json
         
       - name: Add GoogleService-info.plist
-        run: echo '${{ secrets.GOOGLE_SERVICE_INFO }}' > ./ios/runner/GoogleService-info.plist
+        run: echo '${{ secrets.GOOGLE_SERVICE_INFO }}' > ./GoogleService-info.plist
 
       - name: Install dependencies
         run: |
