@@ -4,6 +4,10 @@ on:
   pull_request:
     branches: [ "develop" ]
 
+defaults:
+  run:
+    working-directory: ody_flutter
+
 jobs:
   build:
     runs-on: macOS-latest
@@ -16,26 +20,31 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: stable
+          
+      - name: Add firebase.json
+        run: echo '${{ secrets.FIREBASE_JSON }}' > ./firebase.json
+        
+      - name: Add google-services.json
+        run: echo '${{ secrets.GOOGLE_SERVICE_JSON }}' > ./android/app/google-services.json
+        
+      - name: Add GoogleService-info.plist
+        run: echo '${{ secrets.GOOGLE_SERVICE_INFO }}' > ./ios/Runner/GoogleService-info.plist
 
       - name: Install dependencies
         run: |
-          cd ody_flutter
           flutter pub get
 
       - name: Lint check
         run: |
-          cd ody_flutter
           flutter analyze
      
       # Run Test에서는 .env 임의로 추가
       - name: Run test
         run: |
-          cd ody_flutter
           touch .env
           flutter test
           
       # Build iOS without code signing
       - name: Build iOS
         run: |
-          cd ody_flutter
           flutter build ios --no-codesign

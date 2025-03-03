@@ -1,26 +1,35 @@
+import "dart:async";
+
 import "package:flutter/material.dart";
 import "package:flutter_svg/flutter_svg.dart";
 import "package:ody_flutter/assets/colors/colors.dart";
 import "package:ody_flutter/assets/fonts/pretendard_fonts.dart";
 import "package:ody_flutter/assets/images/images.dart";
 import "package:ody_flutter/config/routes.dart";
+import "package:ody_flutter/screens/login/login_view_model.dart";
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  LoginScreen({super.key});
+
+  final LoginViewModel viewModel = LoginViewModel();
 
   @override
-  Widget build(final BuildContext context) => Scaffold(
-        backgroundColor: CommonColors.cream,
-        body: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _topContent(),
-              _appleLoginButton(context),
-            ],
-          ),
+  Widget build(final BuildContext context) {
+    unawaited(viewModel.requestPermission());
+
+    return Scaffold(
+      backgroundColor: CommonColors.cream,
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _topContent(),
+            _appleLoginButton(context),
+          ],
         ),
-      );
+      ),
+    );
+  }
 
   Widget _topContent() => Column(
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -4,14 +4,14 @@ import "package:ody_flutter/screens/gathering_detail/gathering_detail_screen.dar
 import "package:ody_flutter/screens/gatherings/gathering_creator_screen.dart";
 import "package:ody_flutter/screens/gatherings/gatherings_screen.dart";
 import "package:ody_flutter/screens/invitation_code_screen.dart";
-import "package:ody_flutter/screens/login_screen.dart";
+import "package:ody_flutter/screens/login/login_screen.dart";
 import "package:ody_flutter/screens/settings/settings_screen.dart";
-import "package:ody_flutter/screens/splash_screen.dart";
+import "package:ody_flutter/screens/splash/splash_screen.dart";
 import "package:ody_flutter/screens/status_board/status_board_screen.dart";
 
 Map<String, WidgetBuilder> namedRoutes = <String, WidgetBuilder>{
-  "/splash": (final BuildContext context) => const SplashScreen(),
-  "/login": (final BuildContext context) => const LoginScreen(),
+  "/splash": (final BuildContext context) => SplashScreen(),
+  "/login": (final BuildContext context) => LoginScreen(),
   "/gatherings": (final BuildContext context) => const GatheringsScreen(),
   "/gatheringCreation": (final BuildContext context) =>
       GatheringCreatorScreen(),
