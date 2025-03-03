@@ -1,3 +1,5 @@
+import "dart:async";
+
 import "package:flutter/material.dart";
 import "package:flutter_svg/flutter_svg.dart";
 import "package:ody_flutter/assets/colors/colors.dart";
@@ -13,7 +15,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    viewModel.requestPermission();
+    unawaited(viewModel.requestPermission());
 
     return Scaffold(
       backgroundColor: CommonColors.cream,

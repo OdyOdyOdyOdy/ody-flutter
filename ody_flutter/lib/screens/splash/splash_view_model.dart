@@ -11,6 +11,7 @@ class SplashViewModel {
   Future<void> hasToken() async {
     final Token? deviceToken = await _tokenRepository.getToken();
     // 추후에 엑세스 토큰 리플레쉬 토큰으로 분기 필요
+    if (deviceToken != null) {}
     navigation = NavigateToLogin();
   }
 }
