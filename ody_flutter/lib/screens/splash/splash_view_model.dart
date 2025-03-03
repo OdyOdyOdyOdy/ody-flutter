@@ -9,17 +9,8 @@ class SplashViewModel {
   SplashNavigateAction? navigation;
 
   Future<void> hasToken() async {
-    final Token? token = await _tokenRepository.getToken();
+    final Token? deviceToken = await _tokenRepository.getToken();
     // 추후에 엑세스 토큰 리플레쉬 토큰으로 분기 필요
-    if (token == null) {
-      await _addToken();
-      navigation = NavigateToLogin();
-    } else {
-      navigation = NavigateToGatherings();
-    }
-  }
-
-  Future<void> _addToken() async {
-    await _tokenRepository.insertToken();
+    navigation = NavigateToLogin();
   }
 }

@@ -1,25 +1,28 @@
 import "package:firebase_messaging/firebase_messaging.dart";
-import "package:ody_flutter/data/db/database_helper.dart";
+import "package:ody_flutter/data/db/service/token_service.dart";
 import "package:ody_flutter/domain/model/token.dart";
 import "package:ody_flutter/domain/repository/token_repository.dart";
 
 class TokenRepositoryImpl implements TokenRepository {
-  TokenRepositoryImpl(this.db);
+  TokenRepositoryImpl(this.deviceTokenService);
 
-  final DatabaseHelper db;
+  final DeviceTokenService deviceTokenService;
 
   @override
   Future<Token?> getToken() async {
-    try {
-      return await db.fetchToken();
-    } on Exception catch (_) {
-      return null;
+    final Token? deviceToken = await deviceTokenService.fetchToken();
+
+    if (deviceToken == null) {
+      await addToken();
     }
+
+    return deviceTokenService.fetchToken();
   }
 
   @override
-  Future<int> insertToken() async {
-    final String? deviceToken = await FirebaseMessaging.instance.getToken();
-    return db.insertToken(Token(device: deviceToken));
+  Future<int> addToken() async {
+    final deviceToken = await FirebaseMessaging.instance.getToken();
+
+    return deviceTokenService.insertToken(Token(device: deviceToken));
   }
 }

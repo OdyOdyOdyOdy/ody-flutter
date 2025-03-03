@@ -1,19 +1,19 @@
-import "package:firebase_messaging/firebase_messaging.dart";
 import "package:flutter/material.dart";
 import "package:flutter_svg/flutter_svg.dart";
 import "package:ody_flutter/assets/colors/colors.dart";
 import "package:ody_flutter/assets/fonts/pretendard_fonts.dart";
 import "package:ody_flutter/assets/images/images.dart";
 import "package:ody_flutter/config/routes.dart";
+import "package:ody_flutter/screens/login/login_view_model.dart";
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  LoginScreen({super.key});
+
+  final LoginViewModel viewModel = LoginViewModel();
 
   @override
   Widget build(final BuildContext context) {
-    Future<void>.delayed(Duration.zero, () async {
-      await FirebaseMessaging.instance.requestPermission();
-    });
+    viewModel.requestPermission();
 
     return Scaffold(
       backgroundColor: CommonColors.cream,
