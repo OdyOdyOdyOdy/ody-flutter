@@ -31,7 +31,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
+  Widget build(final BuildContext context) => Scaffold(
         backgroundColor: CommonColors.cream,
         body: SafeArea(
           child: _showWebView
