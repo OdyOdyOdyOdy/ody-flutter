@@ -31,7 +31,7 @@ class _OdyTextFieldState extends State<OdyTextField> {
 
   @override
   Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(left: 40, right: 40),
+        padding: const EdgeInsets.only(left: 38, right: 38),
         child: ValueListenableBuilder(
           valueListenable: widget.text,
           builder: (
@@ -48,14 +48,23 @@ class _OdyTextFieldState extends State<OdyTextField> {
                 hintStyle: PretendardFonts.medium20.copyWith(
                   color: CommonColors.gray_350,
                 ),
+                labelStyle: PretendardFonts.medium20.copyWith(
+                  color: CommonColors.black,
+                ),
                 enabledBorder: _inputBorder(),
                 focusedBorder: _inputBorder(),
                 contentPadding: EdgeInsets.zero,
-                suffixIcon: _suffixIcon(),
+                suffixIcon: widget.text.value.isNotEmpty
+                    ? _suffixIcon()
+                    : const SizedBox.shrink(),
               ),
               keyboardType: TextInputType.text,
               inputFormatters: [
-                LengthLimitingTextInputFormatter(15),
+                LengthLimitingTextInputFormatter(
+                  widget.textFieldType == OdyTextFieldType.textCounter
+                      ? 15
+                      : 100,
+                ),
               ],
               onChanged: (text) => widget.text.value = text,
             ),
