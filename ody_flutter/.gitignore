@@ -135,4 +135,9 @@ app.*.symbols
 .gclient_previous_custom_vars
 .gclient_previous_sync_commits
 
+# Firebase
+firebase.json
+google-services.json
+GoogleService-info.plist
+
 *.env

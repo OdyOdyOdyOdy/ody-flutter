@@ -1,10 +1,15 @@
+import "package:firebase_core/firebase_core.dart";
 import "package:flutter/material.dart";
 import "package:flutter_dotenv/flutter_dotenv.dart";
 import "package:flutter_localizations/flutter_localizations.dart";
 import "package:ody_flutter/config/routes.dart";
+import "package:ody_flutter/firebase_options.dart";
 
 Future<void> main() async {
   await dotenv.load();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
