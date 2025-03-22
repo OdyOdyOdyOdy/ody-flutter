@@ -3,6 +3,7 @@ import "package:ody_flutter/screens/eta_board/eta_board_screen.dart";
 import "package:ody_flutter/screens/gathering_detail/gathering_detail_screen.dart";
 import "package:ody_flutter/screens/gatherings/gathering_creator_screen.dart";
 import "package:ody_flutter/screens/gatherings/gatherings_screen.dart";
+import "package:ody_flutter/screens/gatherings/screens/gathering_location_search_screen.dart";
 import "package:ody_flutter/screens/invitation_code_screen.dart";
 import "package:ody_flutter/screens/login/login_screen.dart";
 import "package:ody_flutter/screens/settings/settings_screen.dart";
@@ -22,6 +23,8 @@ Map<String, WidgetBuilder> namedRoutes = <String, WidgetBuilder>{
       const InvitationCodeScreen(),
   "/etaBoard": (final BuildContext context) => const EtaBoardScreen(),
   "/statusBoard": (final BuildContext context) => const StatusBoardScreen(),
+  "/gatheringLocationSearch": (final BuildContext context) =>
+      GatheringLocationSearchScreen(),
 };
 
 class Routes {
@@ -34,4 +37,5 @@ class Routes {
   static const String invitationCode = "/invitationCode";
   static const String etaBoard = "/etaBoard";
   static const String statusBoard = "/statusBoard";
+  static const String gatheringLocationSearch = "/gatheringLocationSearch";
 }
