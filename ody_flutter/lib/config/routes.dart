@@ -1,9 +1,9 @@
 import "package:flutter/cupertino.dart";
 import "package:ody_flutter/screens/eta_board/eta_board_screen.dart";
 import "package:ody_flutter/screens/gathering_detail/gathering_detail_screen.dart";
-import "package:ody_flutter/screens/gatherings/gathering_creator_screen.dart";
+import "package:ody_flutter/screens/gathering_creator/gathering_creator_screen.dart";
 import "package:ody_flutter/screens/gatherings/gatherings_screen.dart";
-import "package:ody_flutter/screens/gatherings/screens/gathering_location_search_screen.dart";
+import "package:ody_flutter/screens/gathering_creator/screens/gathering_location_search_screen.dart";
 import "package:ody_flutter/screens/invitation_code_screen.dart";
 import "package:ody_flutter/screens/login/login_screen.dart";
 import "package:ody_flutter/screens/settings/settings_screen.dart";

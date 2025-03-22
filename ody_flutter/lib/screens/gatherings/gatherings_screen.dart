@@ -5,7 +5,7 @@ import "package:ody_flutter/assets/fonts/pretendard_fonts.dart";
 import "package:ody_flutter/assets/images/images.dart";
 import "package:ody_flutter/components/ody_top_bar.dart";
 import "package:ody_flutter/config/routes.dart";
-import "package:ody_flutter/screens/gatherings/model/gathering.dart";
+import "package:ody_flutter/screens/gathering_creator/model/gathering.dart";
 
 class GatheringsScreen extends StatefulWidget {
   const GatheringsScreen({super.key});
