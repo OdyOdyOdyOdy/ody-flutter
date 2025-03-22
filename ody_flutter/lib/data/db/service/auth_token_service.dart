@@ -1,6 +1,5 @@
 import "package:ody_flutter/data/db/database_helper.dart";
 import "package:ody_flutter/domain/model/auth_token.dart";
-import "package:ody_flutter/domain/model/device_token.dart";
 import "package:sqflite/sqflite.dart";
 
 class AuthTokenService {

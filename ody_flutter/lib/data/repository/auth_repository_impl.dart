@@ -23,10 +23,12 @@ class AuthRepositoryImpl extends AuthRepository {
 
   @override
   Future<int> addToken(String accessToken, String refreshToken) async =>
-      authTokenService.addAuthToken(AuthToken(
-        accessToken: accessToken,
-        refreshToken: refreshToken,
-      ));
+      authTokenService.addAuthToken(
+        AuthToken(
+          accessToken: accessToken,
+          refreshToken: refreshToken,
+        ),
+      );
 
   @override
   Future<AuthToken?> getToken() async {

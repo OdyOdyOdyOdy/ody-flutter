@@ -11,7 +11,7 @@ import "package:ody_flutter/screens/status_board/status_board_screen.dart";
 
 Map<String, WidgetBuilder> namedRoutes = <String, WidgetBuilder>{
   "/splash": (final BuildContext context) => SplashScreen(),
-  "/login": (final BuildContext context) => LoginScreen(),
+  "/login": (final BuildContext context) => const LoginScreen(),
   "/gatherings": (final BuildContext context) => const GatheringsScreen(),
   "/gatheringCreation": (final BuildContext context) =>
       GatheringCreatorScreen(),
