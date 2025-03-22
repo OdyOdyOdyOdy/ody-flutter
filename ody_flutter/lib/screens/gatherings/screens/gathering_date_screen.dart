@@ -11,7 +11,7 @@ class GatheringDateScreen extends StatelessWidget {
 
   final GatheringCreatorViewModel viewModel;
 
-  ValueNotifier<DateTime> _focusedDay = ValueNotifier(DateTime.now());
+  final ValueNotifier<DateTime> _focusedDay = ValueNotifier(DateTime.now());
 
   @override
   Widget build(final BuildContext context) => ListenableBuilder(

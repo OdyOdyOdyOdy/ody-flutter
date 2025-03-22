@@ -62,9 +62,4 @@ class _OdyTimePickerState extends State<OdyTimePicker> {
           }).toList(),
         ),
       );
-
-  Widget _divider() => Container(
-        height: 2,
-        color: CommonColors.purple_300,
-      );
 }
