@@ -14,15 +14,22 @@ class DatabaseHelper {
   }
 
   Future<Database> initDatabase() async {
-    final String path = join(await getDatabasesPath(), "token.db");
+    final String path = join(await getDatabasesPath(), "ody.db");
 
     return openDatabase(
       path,
       version: 1,
-      onCreate: (db, version) async {
+      onCreate: (db, _) async {
         await db.execute("""
-        CREATE TABLE token(
+        CREATE TABLE device_token(
           device TEXT
+        )
+        """);
+
+        await db.execute("""
+        CREATE TABLE auth_token(
+          accessToken TEXT,
+          refreshToken TEXT
         )
         """);
       },

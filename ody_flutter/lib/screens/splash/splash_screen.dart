@@ -3,8 +3,8 @@ import "package:flutter_svg/flutter_svg.dart";
 import "package:ody_flutter/assets/colors/colors.dart";
 import "package:ody_flutter/assets/images/images.dart";
 import "package:ody_flutter/config/routes.dart";
-import "package:ody_flutter/data/db/service/token_service.dart";
-import "package:ody_flutter/data/repository/token_repository_impl.dart";
+import "package:ody_flutter/data/db/service/device_token_service.dart";
+import "package:ody_flutter/data/repository/device_token_repository_impl.dart";
 import "package:ody_flutter/screens/splash/splash_navigate_action.dart";
 import "package:ody_flutter/screens/splash/splash_view_model.dart";
 
@@ -13,7 +13,7 @@ class SplashScreen extends StatelessWidget {
 
   // 추후에 주입 필요
   final _viewModel = SplashViewModel(
-    TokenRepositoryImpl(DeviceTokenService()),
+    DeviceTokenRepositoryImpl(DeviceTokenService()),
   );
 
   @override
@@ -34,10 +34,10 @@ class SplashScreen extends StatelessWidget {
     });
 
     return Scaffold(
-          backgroundColor: CommonColors.purple_800,
-          body: Center(
-            child: SvgPicture.asset(CommonImages.icSplashLogo),
-          ),
-        );
+      backgroundColor: CommonColors.purple_800,
+      body: Center(
+        child: SvgPicture.asset(CommonImages.icSplashLogo),
+      ),
+    );
   }
 }

@@ -6,12 +6,44 @@ import "package:ody_flutter/assets/colors/colors.dart";
 import "package:ody_flutter/assets/fonts/pretendard_fonts.dart";
 import "package:ody_flutter/assets/images/images.dart";
 import "package:ody_flutter/config/routes.dart";
+import "package:ody_flutter/data/db/service/auth_token_service.dart";
+import "package:ody_flutter/data/db/service/device_token_service.dart";
+import "package:ody_flutter/data/network/base/base_service.dart";
+import "package:ody_flutter/data/network/service/auth_service.dart";
+import "package:ody_flutter/data/repository/auth_repository_impl.dart";
+import "package:ody_flutter/data/repository/device_token_repository_impl.dart";
+import "package:ody_flutter/screens/login/login_navigate_action.dart";
 import "package:ody_flutter/screens/login/login_view_model.dart";
+import "package:sign_in_with_apple/sign_in_with_apple.dart";
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
-  final LoginViewModel viewModel = LoginViewModel();
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final LoginViewModel viewModel = LoginViewModel(
+    AuthRepositoryImpl(AuthService(BaseService()), AuthTokenService()),
+    DeviceTokenRepositoryImpl(DeviceTokenService()),
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    viewModel.navigation.addListener(_onNavigationChanged);
+  }
+
+  Future<void> _onNavigationChanged() async {
+    final action = viewModel.navigation.value;
+    if (action != null) {
+      if (action is NavigateToGatherings) {
+        await Navigator.pushNamed(context, Routes.gatherings);
+      }
+      // 다른 액션에 대한 처리도 추가 가능
+    }
+  }
 
   @override
   Widget build(final BuildContext context) {
@@ -24,7 +56,26 @@ class LoginScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             _topContent(),
-            _appleLoginButton(context),
+            Padding(
+              padding: const EdgeInsets.only(left: 21, bottom: 25, right: 21),
+              child: SignInWithAppleButton(
+                onPressed: () async {
+                  final credential = await SignInWithApple.getAppleIDCredential(
+                    scopes: [
+                      AppleIDAuthorizationScopes.email,
+                      AppleIDAuthorizationScopes.fullName,
+                    ],
+                  );
+
+                  await viewModel.login(
+                    credential.identityToken,
+                    "${credential.familyName}${credential.givenName}",
+                    credential.authorizationCode,
+                  );
+                },
+                text: "Apple로 로그인",
+              ),
+            ),
           ],
         ),
       ),
@@ -62,17 +113,5 @@ class LoginScreen extends StatelessWidget {
           const SizedBox(height: 39),
           Center(child: SvgPicture.asset(CommonImages.icHappyOdy)),
         ],
-      );
-
-  Widget _appleLoginButton(final BuildContext context) => GestureDetector(
-        onTap: () async => Navigator.pushNamed(context, Routes.gatherings),
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.only(left: 21, right: 21, bottom: 25),
-          child: FittedBox(
-            fit: BoxFit.fill,
-            child: SvgPicture.asset(CommonImages.icAppleLogin),
-          ),
-        ),
       );
 }
