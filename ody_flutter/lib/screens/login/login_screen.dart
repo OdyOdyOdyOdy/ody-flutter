@@ -25,19 +25,21 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final LoginViewModel viewModel = LoginViewModel(
-    AuthRepositoryImpl(AuthService(BaseService()), AuthTokenService()),
-    DeviceTokenRepositoryImpl(DeviceTokenService()),
-  );
+  late final LoginViewModel _viewModel;
 
   @override
   void initState() {
     super.initState();
-    viewModel.navigation.addListener(_onNavigationChanged);
+    _viewModel = LoginViewModel(
+      AuthRepositoryImpl(AuthService(BaseService()), AuthTokenService()),
+      DeviceTokenRepositoryImpl(DeviceTokenService()),
+    );
+    _viewModel.navigation.addListener(_onNavigationChanged);
+    unawaited(_viewModel.requestPermission());
   }
 
   Future<void> _onNavigationChanged() async {
-    final action = viewModel.navigation.value;
+    final action = _viewModel.navigation.value;
     if (action != null) {
       if (action is NavigateToGatherings) {
         await Navigator.pushNamed(context, Routes.gatherings);
@@ -47,42 +49,39 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   @override
-  Widget build(final BuildContext context) {
-    unawaited(viewModel.requestPermission());
-
-    return Scaffold(
-      backgroundColor: CommonColors.cream,
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _topContent(),
-            Padding(
-              padding: const EdgeInsets.only(left: 21, bottom: 25, right: 21),
-              child: SignInWithAppleButton(
-                onPressed: () async {
-                  final credential = await SignInWithApple.getAppleIDCredential(
-                    scopes: [
-                      AppleIDAuthorizationScopes.email,
-                      AppleIDAuthorizationScopes.fullName,
-                    ],
-                  );
-
-                  final Map<String, dynamic> decodedToken =
-                      JwtDecoder.decode(credential.identityToken!);
-
-                  await viewModel.login(
-                    decodedToken["sub"],
-                    "${credential.familyName}${credential.givenName}",
-                    credential.authorizationCode,
-                  );
-                },
-                text: "Apple로 로그인",
+  Widget build(final BuildContext context) => Scaffold(
+        backgroundColor: CommonColors.cream,
+        body: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _topContent(),
+              Padding(
+                padding: const EdgeInsets.only(left: 21, bottom: 25, right: 21),
+                child: SignInWithAppleButton(
+                  onPressed: _appleLogin,
+                  text: "Apple로 로그인",
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
+      );
+
+  Future<void> _appleLogin() async {
+    final credential = await SignInWithApple.getAppleIDCredential(
+      scopes: [
+        AppleIDAuthorizationScopes.email,
+        AppleIDAuthorizationScopes.fullName,
+      ],
+    );
+
+    final decodedToken = JwtDecoder.decode(credential.identityToken!);
+
+    await _viewModel.login(
+      decodedToken["sub"],
+      "${credential.familyName}${credential.givenName}",
+      credential.authorizationCode,
     );
   }
 
