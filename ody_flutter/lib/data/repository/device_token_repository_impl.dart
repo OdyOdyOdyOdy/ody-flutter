@@ -10,20 +10,20 @@ class DeviceTokenRepositoryImpl implements DeviceTokenRepository {
 
   @override
   Future<DeviceToken?> getToken() async {
-    final DeviceToken? deviceToken = await deviceTokenService.fetchToken();
+    final DeviceToken? deviceToken = await deviceTokenService.getToken();
 
     if (deviceToken == null) {
-      await addToken();
-      return deviceTokenService.fetchToken();
+      await saveToken();
+      return deviceTokenService.getToken();
     }
 
     return deviceToken;
   }
 
   @override
-  Future<int> addToken() async {
+  Future<int> saveToken() async {
     final deviceToken = await FirebaseMessaging.instance.getToken();
 
-    return deviceTokenService.addToken(DeviceToken(device: deviceToken));
+    return deviceTokenService.saveToken(DeviceToken(device: deviceToken));
   }
 }

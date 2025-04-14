@@ -5,12 +5,12 @@ import "package:sqflite/sqflite.dart";
 class DeviceTokenService {
   final DatabaseHelper _databaseHelper = DatabaseHelper();
 
-  Future<int> addToken(DeviceToken token) async {
+  Future<int> saveToken(DeviceToken token) async {
     final Database db = await _databaseHelper.database;
     return db.insert("device_token", token.toMap());
   }
 
-  Future<DeviceToken?> fetchToken() async {
+  Future<DeviceToken?> getToken() async {
     final Database db = await _databaseHelper.database;
 
     final List<Map<String, dynamic>> result = await db.query(

@@ -22,8 +22,8 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<int> addToken(String accessToken, String refreshToken) async =>
-      authTokenService.addAuthToken(
+  Future<int> saveToken(String accessToken, String refreshToken) async =>
+      authTokenService.saveToken(
         AuthToken(
           accessToken: accessToken,
           refreshToken: refreshToken,
@@ -32,7 +32,7 @@ class AuthRepositoryImpl extends AuthRepository {
 
   @override
   Future<AuthToken?> getToken() async {
-    final AuthToken? authToken = await authTokenService.fetchToken();
+    final AuthToken? authToken = await authTokenService.getToken();
     return authToken;
   }
 }

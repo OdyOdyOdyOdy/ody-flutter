@@ -33,7 +33,7 @@ class LoginViewModel extends ChangeNotifier {
       authorizationCode: authorizationCode,
     );
     final AuthToken authToken = await _authRepository.login(request);
-    await _authRepository.addToken(
+    await _authRepository.saveToken(
       authToken.accessToken!,
       authToken.refreshToken!,
     );
