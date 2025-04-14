@@ -2,6 +2,7 @@ import "dart:async";
 
 import "package:flutter/material.dart";
 import "package:flutter_svg/flutter_svg.dart";
+import "package:jwt_decoder/jwt_decoder.dart";
 import "package:ody_flutter/assets/colors/colors.dart";
 import "package:ody_flutter/assets/fonts/pretendard_fonts.dart";
 import "package:ody_flutter/assets/images/images.dart";
@@ -67,8 +68,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   );
 
+                  final Map<String, dynamic> decodedToken =
+                      JwtDecoder.decode(credential.identityToken!);
+
                   await viewModel.login(
-                    credential.identityToken,
+                    decodedToken["sub"],
                     "${credential.familyName}${credential.givenName}",
                     credential.authorizationCode,
                   );
