@@ -36,7 +36,6 @@ extension OdyButtonProperties on OdyButtonType {
   double get radius {
     switch (this) {
       case OdyButtonType.next:
-        return 0;
       case OdyButtonType.ody:
       case OdyButtonType.confirm:
         return 10;

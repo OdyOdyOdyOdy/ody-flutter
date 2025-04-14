@@ -26,6 +26,10 @@ class PretendardFonts {
     fontSize: 16,
   );
 
+  static const TextStyle medium24 = TextStyle(
+    fontFamily: "PretendardMedium",
+    fontSize: 24,
+  );
   static const TextStyle medium20 = TextStyle(
     fontFamily: "PretendardMedium",
     fontSize: 20,
