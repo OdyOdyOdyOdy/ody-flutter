@@ -21,8 +21,10 @@ dependencies:
     sdk: flutter
   flutter_svg: ^2.0.16
   intl: ^0.19.0
+  jwt_decoder: ^2.0.1
   path: ^1.9.0
   provider: ^6.1.2
+  sign_in_with_apple: ^6.1.4
   smooth_page_indicator: ^1.2.1
   sqflite: ^2.4.1
   table_calendar: ^3.1.3

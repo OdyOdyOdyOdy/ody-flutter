@@ -9,8 +9,8 @@ class BaseService {
   final Dio _dio = Dio(
     BaseOptions(
       baseUrl: dotenv.get("BASE_DEV_URL"),
-      connectTimeout: const Duration(seconds: 5),
-      receiveTimeout: const Duration(seconds: 3),
+      connectTimeout: const Duration(seconds: 10),
+      receiveTimeout: const Duration(seconds: 10),
       contentType: Headers.jsonContentType,
     ),
   );
