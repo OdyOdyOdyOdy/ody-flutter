@@ -42,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final action = _viewModel.navigation.value;
     if (action != null) {
       if (action is NavigateToGatherings) {
-        await Navigator.pushNamed(context, Routes.gatherings);
+        await Navigator.pushReplacementNamed(context, Routes.gatherings);
       }
       // 다른 액션에 대한 처리도 추가 가능
     }

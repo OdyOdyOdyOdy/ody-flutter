@@ -49,6 +49,22 @@ class BaseService {
     }
   }
 
+  Future<dynamic> deleteWithResponse({
+    required String path,
+    Map<String, dynamic>? headers,
+  }) async {
+    try {
+      final response = await _dio.delete(
+        path,
+        options: Options(headers: {...?headers}),
+      );
+      _printSuccessLog(response);
+      return response.data;
+    } on DioException catch (e) {
+      throw _handleError(e);
+    }
+  }
+
   Exception _handleError(DioException e) {
     _printErrorLog(e);
     switch (e.response?.statusCode) {
