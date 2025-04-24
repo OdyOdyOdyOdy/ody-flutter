@@ -22,6 +22,20 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
+  Future<void> withdrawal() async {
+    try {
+      final token = await authTokenService.getToken();
+      final headers = {
+        "Authorization": "Bearer access-token=${token?.accessToken}",
+      };
+      await authService.appleWithdrawal(headers);
+      await authTokenService.deleteToken();
+    } catch (_) {
+      rethrow;
+    }
+  }
+
+  @override
   Future<int> saveToken(String accessToken, String refreshToken) async =>
       authTokenService.saveToken(
         AuthToken(

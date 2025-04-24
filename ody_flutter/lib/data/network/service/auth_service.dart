@@ -18,4 +18,15 @@ class AuthService {
       rethrow;
     }
   }
+
+  Future<void> appleWithdrawal(Map<String, dynamic> headers) async {
+    try {
+      await baseService.deleteWithResponse(
+        path: "/v2/members",
+        headers: headers,
+      );
+    } catch(_) {
+      rethrow;
+    }
+  }
 }

@@ -3,9 +3,17 @@ import "package:flutter_svg/flutter_svg.dart";
 import "package:ody_flutter/assets/colors/colors.dart";
 import "package:ody_flutter/assets/fonts/pretendard_fonts.dart";
 import "package:ody_flutter/assets/images/images.dart";
+import "package:ody_flutter/components/ody_alert.dart";
 import "package:ody_flutter/components/ody_top_bar.dart";
+import "package:ody_flutter/config/routes.dart";
+import "package:ody_flutter/data/db/service/auth_token_service.dart";
+import "package:ody_flutter/data/network/base/base_service.dart";
+import "package:ody_flutter/data/network/service/auth_service.dart";
+import "package:ody_flutter/data/repository/auth_repository_impl.dart";
 import "package:ody_flutter/screens/settings/model/notification_setting.dart";
 import "package:ody_flutter/screens/settings/model/use_of_service_setting.dart";
+import "package:ody_flutter/screens/settings/settings_navigate_action.dart";
+import "package:ody_flutter/screens/settings/settings_view_model.dart";
 import "package:webview_flutter/webview_flutter.dart";
 
 final List<NotificationSetting> notificationSettings =
@@ -21,13 +29,32 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  late final SettingViewModel _viewModel;
   bool _showWebView = false;
   late WebViewController _webViewController;
 
   @override
   void initState() {
     super.initState();
+    _viewModel = SettingViewModel(
+        AuthRepositoryImpl(AuthService(BaseService()), AuthTokenService()),
+    );
+    _viewModel.navigation.addListener(_onNavigationChanged);
     _webViewController = WebViewController();
+  }
+
+  Future<void> _onNavigationChanged() async {
+    final action = _viewModel.navigation.value;
+    if (action != null) {
+      if (action is NavigateToLogin) {
+        await Navigator.pushNamedAndRemoveUntil(
+          context,
+          Routes.login,
+          (route) => false,
+        );
+      }
+      // 다른 액션에 대한 처리도 추가 가능
+    }
   }
 
   @override
@@ -157,15 +184,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
       );
 
   Future<void> _handleServiceItemTap(UseOfServiceSetting setting) async {
-    _handleWebViewBack();
     switch (setting.useOfServiceType) {
       case UseOfServiceType.privacyPolicy:
+        _handleWebViewBack();
         await _webViewController.loadRequest(
           Uri.parse(
             "https://sly-face-106.notion.site/fecbe589eb23471ba2d0685cb3c2d274?pvs=4",
           ),
         );
       case UseOfServiceType.term:
+        _handleWebViewBack();
         await _webViewController.loadRequest(
           Uri.parse(
             "https://sly-face-106.notion.site/beb204b6e6724ecbbb83496448fc7b53?pvs=4",
@@ -173,8 +201,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
         );
       case UseOfServiceType.logout:
       case UseOfServiceType.withdraw:
-        // Handle logout or withdraw actions here
-        break;
+        await showDialog(
+          context: context,
+          builder: (context) => OdyAlert(
+            image: CommonImages.icSadOdy,
+            title: "정말 오디를 떠나시겠어요?",
+            description: "참여한 약속들이 모두 사라져요.",
+            confirmText: "탈퇴",
+            onConfirm: () => _viewModel.appleWithdrawal(),
+          ),
+        );
     }
   }
 

@@ -28,4 +28,9 @@ class AuthTokenService {
       return null;
     }
   }
+
+  Future<void> deleteToken() async {
+    final Database db = await _databaseHelper.database;
+    await db.delete("auth_token");
+  }
 }

@@ -51,6 +51,7 @@ class OdyAlert extends StatelessWidget {
         width: 300,
         child: Text(
           title,
+          textAlign: TextAlign.center,
           style: PretendardFonts.bold24.copyWith(
             color: CommonColors.purple_800,
           ),
@@ -88,10 +89,7 @@ class OdyAlert extends StatelessWidget {
           ),
           Expanded(
             child: GestureDetector(
-              onTap: () {
-                onConfirm();
-                Navigator.pop(context);
-              },
+              onTap: onConfirm,
               child: Text(
                 confirmText,
                 style: PretendardFonts.medium18.copyWith(
