@@ -53,7 +53,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
           (route) => false,
         );
       }
-      // 다른 액션에 대한 처리도 추가 가능
     }
   }
 
@@ -200,6 +199,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
         );
       case UseOfServiceType.logout:
+        await _viewModel.appleLogout();
       case UseOfServiceType.withdraw:
         await showDialog(
           context: context,
