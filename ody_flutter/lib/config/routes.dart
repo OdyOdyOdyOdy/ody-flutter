@@ -6,7 +6,7 @@ import "package:ody_flutter/screens/gathering_detail/gathering_detail_screen.dar
 import "package:ody_flutter/screens/gathering_enter/gathering_enter_complete_screen.dart";
 import "package:ody_flutter/screens/gathering_enter/gathering_enter_location_screen.dart";
 import "package:ody_flutter/screens/gatherings/gatherings_screen.dart";
-import "package:ody_flutter/screens/invitation_code_screen.dart";
+import "package:ody_flutter/screens/invitation_code/invitation_code_screen.dart";
 import "package:ody_flutter/screens/login/login_screen.dart";
 import "package:ody_flutter/screens/settings/settings_screen.dart";
 import "package:ody_flutter/screens/splash/splash_screen.dart";
@@ -21,8 +21,7 @@ Map<String, WidgetBuilder> namedRoutes = <String, WidgetBuilder>{
   "/gatheringDetail": (final BuildContext context) =>
       const GatheringDetailScreen(),
   "/settings": (final BuildContext context) => const SettingsScreen(),
-  "/invitationCode": (final BuildContext context) =>
-      const InvitationCodeScreen(),
+  "/invitationCode": (final BuildContext context) => InvitationCodeScreen(),
   "/etaBoard": (final BuildContext context) => const EtaBoardScreen(),
   "/statusBoard": (final BuildContext context) => const StatusBoardScreen(),
   "/gatheringLocationSearch": (final BuildContext context) =>
