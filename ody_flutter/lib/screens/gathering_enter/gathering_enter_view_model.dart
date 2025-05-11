@@ -1,0 +1,25 @@
+import "package:flutter/cupertino.dart";
+import "package:location/location.dart";
+import "package:ody_flutter/domain/model/gathering.dart";
+
+class GatheringEnterViewModel extends ChangeNotifier {
+  GatheringEnterViewModel() {
+    _init();
+  }
+
+  Gathering? gathering;
+  final ValueNotifier<String> locationText = ValueNotifier("");
+  final ValueNotifier<bool> isConfirmEnabled = ValueNotifier(false);
+
+  void _init() {}
+
+  Future<void> fetchCurrentLocation() async {
+    final Location location = Location();
+    await location.getLocation().then((final LocationData locationData) {
+      locationText.value =
+          "${locationData.latitude}, ${locationData.longitude}";
+      isConfirmEnabled.value = true;
+      notifyListeners();
+    });
+  }
+}
