@@ -5,7 +5,7 @@ import "package:ody_flutter/assets/fonts/pretendard_fonts.dart";
 import "package:ody_flutter/assets/images/images.dart";
 import "package:ody_flutter/components/ody_text_field.dart";
 import "package:ody_flutter/components/ody_top_bar.dart";
-import "package:ody_flutter/screens/gatherings/model/location.dart";
+import "package:ody_flutter/screens/gathering_creator/model/location.dart";
 
 class GatheringLocationSearchScreen extends StatelessWidget {
   GatheringLocationSearchScreen({super.key});

@@ -3,7 +3,7 @@ import "package:ody_flutter/assets/colors/colors.dart";
 import "package:ody_flutter/assets/fonts/pretendard_fonts.dart";
 import "package:ody_flutter/components/ody_button.dart";
 import "package:ody_flutter/components/ody_highlight_text.dart";
-import "package:ody_flutter/screens/gatherings/gathering_creator_view_model.dart";
+import "package:ody_flutter/screens/gathering_creator/gathering_creator_view_model.dart";
 import "package:table_calendar/table_calendar.dart";
 
 class GatheringDateScreen extends StatelessWidget {
