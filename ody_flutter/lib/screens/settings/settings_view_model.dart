@@ -12,4 +12,9 @@ class SettingViewModel extends ChangeNotifier {
     await _authRepository.withdrawal();
     navigation.value = NavigateToLogin();
   }
+
+  Future appleLogout() async {
+    await _authRepository.logout();
+    navigation.value = NavigateToLogin();
+  }
 }

@@ -49,4 +49,9 @@ class AuthRepositoryImpl extends AuthRepository {
     final AuthToken? authToken = await authTokenService.getToken();
     return authToken;
   }
+
+  @override
+  Future<void> logout() async {
+    await authTokenService.deleteToken();
+  }
 }

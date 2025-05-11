@@ -44,7 +44,6 @@ class _LoginScreenState extends State<LoginScreen> {
       if (action is NavigateToGatherings) {
         await Navigator.pushReplacementNamed(context, Routes.gatherings);
       }
-      // 다른 액션에 대한 처리도 추가 가능
     }
   }
 
@@ -78,11 +77,19 @@ class _LoginScreenState extends State<LoginScreen> {
 
     final decodedToken = JwtDecoder.decode(credential.identityToken!);
 
-    await _viewModel.login(
-      decodedToken["sub"],
-      "${credential.familyName}${credential.givenName}",
-      credential.authorizationCode,
-    );
+    if (credential.familyName == null || credential.givenName == null) {
+      await _viewModel.login(
+        decodedToken["sub"],
+        "",
+        credential.authorizationCode,
+      );
+    } else {
+      await _viewModel.login(
+        decodedToken["sub"],
+        "${credential.familyName}${credential.givenName}",
+        credential.authorizationCode,
+      );
+    }
   }
 
   Widget _topContent() => Column(
