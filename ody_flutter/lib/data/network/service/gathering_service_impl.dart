@@ -1,5 +1,6 @@
 import "package:ody_flutter/data/entity/gathering/gathering_request.dart";
 import "package:ody_flutter/data/entity/gathering/gathering_response.dart";
+import "package:ody_flutter/data/entity/gathering/gatherings_response.dart";
 import "package:ody_flutter/data/network/base/base_service.dart";
 
 class GatheringService {
@@ -27,6 +28,20 @@ class GatheringService {
         headers: {"Authorization": "Bearer access-token={access-token}"},
       );
       return GatheringResponse.fromJson(response);
+    } catch (_) {
+      rethrow;
+    }
+  }
+
+  Future<GatheringsResponse> fetchGatherings(
+    Map<String, dynamic> headers,
+  ) async {
+    try {
+      final response = await baseService.getWithResponse(
+        path: "/v1/meetings/me",
+        headers: headers,
+      );
+      return GatheringsResponse.fromJson(response);
     } catch (_) {
       rethrow;
     }
