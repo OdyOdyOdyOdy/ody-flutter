@@ -32,7 +32,7 @@ class _OdyTextFieldState extends State<OdyTextField> {
 
   @override
   Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(left: 40, right: 40),
+        padding: const EdgeInsets.symmetric(horizontal: 40),
         child: ValueListenableBuilder(
           valueListenable: widget.text,
           builder: (
