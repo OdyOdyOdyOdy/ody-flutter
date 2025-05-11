@@ -82,10 +82,10 @@ class GatheringDateScreen extends StatelessWidget {
             ),
           ];
           return Scaffold(
-            backgroundColor: CommonColors.white,
+            backgroundColor: CommonColors.cream,
             body: SafeArea(
               child: ColoredBox(
-                color: CommonColors.white,
+                color: CommonColors.cream,
                 child: Column(
                   children: children,
                 ),

@@ -15,7 +15,7 @@ import "package:smooth_page_indicator/smooth_page_indicator.dart";
 class GatheringCreatorScreen extends StatelessWidget {
   GatheringCreatorScreen({super.key});
 
-  // 추후에 주입 필요
+  // to do: 추후에 주입 필요
   final _viewModel = GatheringCreatorViewModel(
     GatheringRepositoryImpl(GatheringService(BaseService())),
   );
@@ -26,10 +26,10 @@ class GatheringCreatorScreen extends StatelessWidget {
   Widget build(final BuildContext context) => ListenableBuilder(
         listenable: _viewModel,
         builder: (BuildContext context, Widget? child) => Scaffold(
-          backgroundColor: CommonColors.white,
+          backgroundColor: CommonColors.cream,
           body: SafeArea(
             child: ColoredBox(
-              color: CommonColors.white,
+              color: CommonColors.cream,
               child: Column(
                 children: [
                   OdyTopBar(

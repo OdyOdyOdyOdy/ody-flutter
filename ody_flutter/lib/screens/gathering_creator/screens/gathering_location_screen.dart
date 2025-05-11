@@ -17,10 +17,10 @@ class GatheringLocationScreen extends StatelessWidget {
   Widget build(final BuildContext context) => ListenableBuilder(
         listenable: viewModel,
         builder: (BuildContext context, Widget? child) => Scaffold(
-          backgroundColor: CommonColors.white,
+          backgroundColor: CommonColors.cream,
           body: SafeArea(
             child: ColoredBox(
-              color: CommonColors.white,
+              color: CommonColors.cream,
               child: Column(
                 children: [
                   OdyHighlightText(
