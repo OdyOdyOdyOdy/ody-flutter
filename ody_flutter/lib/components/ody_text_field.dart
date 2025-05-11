@@ -6,6 +6,7 @@ import "package:ody_flutter/assets/fonts/pretendard_fonts.dart";
 import "package:ody_flutter/assets/images/images.dart";
 
 enum OdyTextFieldType {
+  none,
   clearButton,
   textCounter,
 }
@@ -31,44 +32,37 @@ class _OdyTextFieldState extends State<OdyTextField> {
 
   @override
   Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 38),
+        padding: const EdgeInsets.only(left: 40, right: 40),
         child: ValueListenableBuilder(
           valueListenable: widget.text,
           builder: (
             final BuildContext context,
             final String value,
             final Widget? child,
-          ) =>
-              SizedBox(
-            height: 42,
-            child: TextField(
-              controller: _textFieldController,
-              decoration: InputDecoration(
-                hintText: widget.placeHolder,
-                hintStyle: PretendardFonts.medium20.copyWith(
-                  color: CommonColors.gray_350,
+          ) {
+            _textFieldController.text = widget.text.value;
+            return SizedBox(
+              height: 42,
+              child: TextField(
+                controller: _textFieldController,
+                decoration: InputDecoration(
+                  hintText: widget.placeHolder,
+                  hintStyle: PretendardFonts.medium20.copyWith(
+                    color: CommonColors.gray_350,
+                  ),
+                  enabledBorder: _inputBorder(),
+                  focusedBorder: _inputBorder(),
+                  contentPadding: EdgeInsets.zero,
+                  suffixIcon: _suffixIcon(),
                 ),
-                labelStyle: PretendardFonts.medium20.copyWith(
-                  color: CommonColors.black,
-                ),
-                enabledBorder: _inputBorder(),
-                focusedBorder: _inputBorder(),
-                contentPadding: EdgeInsets.zero,
-                suffixIcon: widget.text.value.isNotEmpty
-                    ? _suffixIcon()
-                    : const SizedBox.shrink(),
+                keyboardType: TextInputType.text,
+                inputFormatters: [
+                  LengthLimitingTextInputFormatter(15),
+                ],
+                onChanged: (text) => widget.text.value = text,
               ),
-              keyboardType: TextInputType.text,
-              inputFormatters: [
-                LengthLimitingTextInputFormatter(
-                  widget.textFieldType == OdyTextFieldType.textCounter
-                      ? 15
-                      : 100,
-                ),
-              ],
-              onChanged: (text) => widget.text.value = text,
-            ),
-          ),
+            );
+          },
         ),
       );
 
@@ -78,6 +72,8 @@ class _OdyTextFieldState extends State<OdyTextField> {
         return _closeButton();
       case OdyTextFieldType.textCounter:
         return _textCounter(widget.text.value);
+      case OdyTextFieldType.none:
+        return const SizedBox.shrink();
     }
   }
 

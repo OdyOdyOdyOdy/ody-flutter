@@ -1,17 +1,22 @@
 import "package:flutter/material.dart";
+import "package:flutter_svg/flutter_svg.dart";
 import "package:ody_flutter/assets/colors/colors.dart";
 import "package:ody_flutter/assets/fonts/pretendard_fonts.dart";
+import "package:ody_flutter/assets/images/images.dart";
 import "package:ody_flutter/components/ody_button.dart";
 import "package:ody_flutter/components/ody_highlight_text.dart";
 import "package:ody_flutter/components/ody_text_field.dart";
+import "package:ody_flutter/components/ody_top_bar.dart";
 import "package:ody_flutter/config/routes.dart";
-import "package:ody_flutter/screens/gathering_creator/gathering_creator_view_model.dart";
 import "package:ody_flutter/screens/gathering_creator/model/location.dart";
+import "package:ody_flutter/screens/gathering_enter/gathering_enter_view_model.dart";
 
-class GatheringLocationScreen extends StatelessWidget {
-  const GatheringLocationScreen({required this.viewModel, super.key});
+class GatheringEnterScreen extends StatelessWidget {
+  GatheringEnterScreen({
+    super.key,
+  });
 
-  final GatheringCreatorViewModel viewModel;
+  final GatheringEnterViewModel viewModel = GatheringEnterViewModel();
 
   @override
   Widget build(final BuildContext context) => ListenableBuilder(
@@ -23,8 +28,16 @@ class GatheringLocationScreen extends StatelessWidget {
               color: CommonColors.white,
               child: Column(
                 children: [
+                  OdyTopBar(
+                    title: "",
+                    leftIcon: CommonImages.icArrowBack,
+                    onLeftIcon: () => Navigator.pop(context),
+                  ),
+                  const SizedBox(
+                    height: 112,
+                  ),
                   OdyHighlightText(
-                    text: "오디서 만나시나요?",
+                    text: "오디서 출발하시나요?",
                     highlightText: "오디",
                     textStyle: PretendardFonts.bold24.copyWith(
                       color: CommonColors.gray_800,
@@ -37,12 +50,31 @@ class GatheringLocationScreen extends StatelessWidget {
                     height: 32,
                   ),
                   GestureDetector(
-                    child: AbsorbPointer(
-                      child: OdyTextField(
-                        textFieldType: OdyTextFieldType.none,
-                        placeHolder: "주소를 찾아보세요",
-                        text: viewModel.locationText,
-                      ),
+                    child: Stack(
+                      children: [
+                        AbsorbPointer(
+                          child: OdyTextField(
+                            textFieldType: OdyTextFieldType.none,
+                            placeHolder: "주소를 찾아보세요",
+                            text: viewModel.locationText,
+                          ),
+                        ),
+                        Positioned(
+                          right: 30,
+                          bottom: 1,
+                          child: IconButton(
+                            iconSize: 30,
+                            onPressed: () async {
+                              await viewModel.fetchCurrentLocation();
+                            },
+                            icon: SvgPicture.asset(
+                              CommonImages.icCurrentLocation,
+                            ),
+                            splashColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                          ),
+                        ),
+                      ],
                     ),
                     onTap: () async {
                       final result = await Navigator.pushNamed(
@@ -64,7 +96,7 @@ class GatheringLocationScreen extends StatelessWidget {
                     onPressed: () async {
                       await Navigator.pushNamed(
                         context,
-                        Routes.gatheringEnter,
+                        Routes.gatheringEnterComplete,
                       );
                     },
                     isEnabled: viewModel.isConfirmEnabled,

@@ -6,6 +6,7 @@ class OdyHighlightText extends StatelessWidget {
     required this.highlightText,
     required this.textStyle,
     required this.highlightStyle,
+    this.textAlign,
     super.key,
   });
 
@@ -13,6 +14,7 @@ class OdyHighlightText extends StatelessWidget {
   final String highlightText;
   final TextStyle textStyle;
   final TextStyle highlightStyle;
+  final TextAlign? textAlign;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,7 @@ class OdyHighlightText extends StatelessWidget {
     }
 
     return RichText(
+      textAlign: textAlign ?? TextAlign.start,
       text: TextSpan(children: spans),
     );
   }
