@@ -1,3 +1,5 @@
+import "dart:async";
+
 import "package:flutter/material.dart";
 import "package:flutter_svg/svg.dart";
 import "package:ody_flutter/assets/colors/colors.dart";
@@ -5,7 +7,12 @@ import "package:ody_flutter/assets/fonts/pretendard_fonts.dart";
 import "package:ody_flutter/assets/images/images.dart";
 import "package:ody_flutter/components/ody_top_bar.dart";
 import "package:ody_flutter/config/routes.dart";
+import "package:ody_flutter/data/db/service/auth_token_service.dart";
+import "package:ody_flutter/data/network/base/base_service.dart";
+import "package:ody_flutter/data/network/service/gathering_service_impl.dart";
+import "package:ody_flutter/data/repository/gathering_repository_impl.dart";
 import "package:ody_flutter/screens/gathering_creator/model/gathering.dart";
+import "package:ody_flutter/screens/gatherings/gatherings_view_model.dart";
 
 class GatheringsScreen extends StatefulWidget {
   const GatheringsScreen({super.key});
@@ -15,8 +22,22 @@ class GatheringsScreen extends StatefulWidget {
 }
 
 class _GatheringsScreenState extends State<GatheringsScreen> {
+  late final GatheringsViewModel _viewModel;
+
   final ValueNotifier<bool> _isFloatingActionButtonPressed =
       ValueNotifier(false);
+
+  @override
+  void initState() {
+    super.initState();
+    _viewModel = GatheringsViewModel(
+      GatheringRepositoryImpl(
+        GatheringService(BaseService()),
+        AuthTokenService(),
+      ),
+    );
+    unawaited(_viewModel.getGatherings());
+  }
 
   // 임시 데이터 (API 연결 후 삭제)
   final List<Gathering> _gatherings = List.generate(
