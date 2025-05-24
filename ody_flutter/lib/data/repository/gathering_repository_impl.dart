@@ -1,3 +1,4 @@
+import "package:ody_flutter/data/entity/gathering/gathering_request.dart";
 import "package:ody_flutter/data/entity/mapper/gathering_mapper.dart";
 import "package:ody_flutter/data/network/service/gathering_service_impl.dart";
 import "package:ody_flutter/domain/model/gathering.dart";
@@ -9,10 +10,9 @@ class GatheringRepositoryImpl implements GatheringRepository {
   final GatheringService gatheringService;
 
   @override
-  Future<Gathering> createGathering(Gathering request) async {
+  Future<Gathering> createGathering(GatheringRequest request) async {
     try {
-      final response =
-          await gatheringService.createGathering(request.toEntity());
+      final response = await gatheringService.createGathering(request);
       return response.toModel();
     } catch (_) {
       rethrow;
