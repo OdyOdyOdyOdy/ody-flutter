@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import "package:ody_flutter/assets/colors/colors.dart";
 import "package:ody_flutter/assets/images/images.dart";
 import "package:ody_flutter/components/ody_top_bar.dart";
+import "package:ody_flutter/data/db/service/auth_token_service.dart";
 import "package:ody_flutter/data/network/base/base_service.dart";
 import "package:ody_flutter/data/network/service/gathering_service_impl.dart";
 import "package:ody_flutter/data/repository/gathering_repository_impl.dart";
@@ -17,7 +18,10 @@ class GatheringCreatorScreen extends StatelessWidget {
 
   // to do: 추후에 주입 필요
   final _viewModel = GatheringCreatorViewModel(
-    GatheringRepositoryImpl(GatheringService(BaseService())),
+    GatheringRepositoryImpl(
+      GatheringService(BaseService()),
+      AuthTokenService(),
+    ),
   );
 
   final _pageController = PageController();
