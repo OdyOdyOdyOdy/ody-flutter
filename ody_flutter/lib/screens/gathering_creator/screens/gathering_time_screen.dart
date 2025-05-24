@@ -2,12 +2,17 @@ import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:ody_flutter/assets/colors/colors.dart";
 import "package:ody_flutter/assets/fonts/pretendard_fonts.dart";
-import "package:ody_flutter/components/ody_button.dart";
 import "package:ody_flutter/components/ody_highlight_text.dart";
 import "package:ody_flutter/components/ody_time_picker.dart";
+import "package:ody_flutter/screens/gathering_creator/gathering_creator_view_model.dart";
 
 class GatheringTimeScreen extends StatelessWidget {
-  const GatheringTimeScreen({super.key});
+  const GatheringTimeScreen({
+    required this.viewModel,
+    super.key,
+  });
+
+  final GatheringCreatorViewModel viewModel;
 
   @override
   Widget build(BuildContext context) => Column(
@@ -25,18 +30,12 @@ class GatheringTimeScreen extends StatelessWidget {
           const SizedBox(
             height: 80,
           ),
-          const SizedBox(
+          SizedBox(
             height: 120,
-            child: OdyTimePicker(),
-          ),
-          const Spacer(),
-          OdyButton(
-            buttonType: OdyButtonType.next,
-            onPressed: () {},
-            isEnabled: ValueNotifier(true),
-          ),
-          const SizedBox(
-            height: 10,
+            child: OdyTimePicker(
+              selectedHour: viewModel.hour,
+              selectedMinute: viewModel.minute,
+            ),
           ),
         ],
       );
