@@ -1,17 +1,21 @@
-import "package:ody_flutter/domain/model/device_token.dart";
-import "package:ody_flutter/domain/repository/device_token_repository.dart";
+import "package:ody_flutter/domain/model/auth_token.dart";
+import "package:ody_flutter/domain/repository/auth_repository.dart";
 import "package:ody_flutter/screens/splash/splash_navigate_action.dart";
 
 class SplashViewModel {
-  SplashViewModel(this._tokenRepository);
+  SplashViewModel(this._authRepository);
 
-  final DeviceTokenRepository _tokenRepository;
+  final AuthRepository _authRepository;
+
   SplashNavigateAction? navigation;
 
   Future<void> hasToken() async {
-    final DeviceToken? deviceToken = await _tokenRepository.getToken();
-    // 추후에 엑세스 토큰 리플레쉬 토큰으로 분기 필요
-    if (deviceToken != null) {}
-    navigation = NavigateToLogin();
+    final AuthToken? authToken = await _authRepository.getToken();
+
+    if (authToken == null) {
+      navigation = NavigateToLogin();
+    } else {
+      navigation = NavigateToGatherings();
+    }
   }
 }
