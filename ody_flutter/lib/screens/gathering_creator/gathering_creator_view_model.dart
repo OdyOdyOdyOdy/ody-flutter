@@ -120,7 +120,7 @@ class GatheringCreatorViewModel extends ChangeNotifier {
 ============================================================
 """);
 
-    // gathering = await _gatheringRepository.createGathering(request);
+    gathering = await _gatheringRepository.createGathering(request);
   }
 
   String _dateToString() {

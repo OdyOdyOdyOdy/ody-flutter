@@ -1,5 +1,5 @@
-import "package:ody_flutter/data/entity/gathering/gathering_request.dart";
 import "package:ody_flutter/data/db/service/auth_token_service.dart";
+import "package:ody_flutter/data/entity/gathering/gathering_request.dart";
 import "package:ody_flutter/data/entity/mapper/gathering_mapper.dart";
 import "package:ody_flutter/data/entity/mapper/gatherings_mapper.dart";
 import "package:ody_flutter/data/network/service/gathering_service_impl.dart";
