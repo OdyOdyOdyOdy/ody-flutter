@@ -1,7 +1,9 @@
 import "package:flutter/material.dart";
 import "package:ody_flutter/assets/colors/colors.dart";
 import "package:ody_flutter/assets/images/images.dart";
+import "package:ody_flutter/components/ody_button.dart";
 import "package:ody_flutter/components/ody_top_bar.dart";
+import "package:ody_flutter/config/routes.dart";
 import "package:ody_flutter/data/db/service/auth_token_service.dart";
 import "package:ody_flutter/data/network/base/base_service.dart";
 import "package:ody_flutter/data/network/service/gathering_service_impl.dart";
@@ -24,8 +26,6 @@ class GatheringCreatorScreen extends StatelessWidget {
     ),
   );
 
-  final _pageController = PageController();
-
   @override
   Widget build(final BuildContext context) => ListenableBuilder(
         listenable: _viewModel,
@@ -39,13 +39,20 @@ class GatheringCreatorScreen extends StatelessWidget {
                   OdyTopBar(
                     title: "",
                     leftIcon: CommonImages.icArrowBack,
-                    onLeftIcon: () => Navigator.pop(context),
+                    onLeftIcon: () async {
+                      if (_viewModel.currentScreenType ==
+                          GatheringCreatorScreenType.title) {
+                        Navigator.pop(context);
+                      } else {
+                        await _viewModel.goToPreviousPage();
+                      }
+                    },
                   ),
                   const SizedBox(
                     height: 50,
                   ),
                   SmoothPageIndicator(
-                    controller: _pageController,
+                    controller: _viewModel.pageController,
                     count: 4,
                     effect: const WormEffect(
                       dotColor: CommonColors.gray_300,
@@ -59,7 +66,12 @@ class GatheringCreatorScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: PageView(
-                      controller: _pageController,
+                      controller: _viewModel.pageController,
+                      physics: _viewModel.isGoingPrevious
+                          ? const AlwaysScrollableScrollPhysics()
+                          : _viewModel.isConfirmEnabled.value
+                              ? const AlwaysScrollableScrollPhysics()
+                              : const NeverScrollableScrollPhysics(),
                       children: [
                         GatheringTitleScreen(
                           viewModel: _viewModel,
@@ -67,12 +79,36 @@ class GatheringCreatorScreen extends StatelessWidget {
                         GatheringDateScreen(
                           viewModel: _viewModel,
                         ),
-                        const GatheringTimeScreen(),
+                        GatheringTimeScreen(
+                          viewModel: _viewModel,
+                        ),
                         GatheringLocationScreen(
                           viewModel: _viewModel,
                         ),
                       ],
                     ),
+                  ),
+                  OdyButton(
+                    buttonType: OdyButtonType.next,
+                    onPressed: () async {
+                      if (_viewModel.currentScreenType ==
+                          GatheringCreatorScreenType.location) {
+                        await _viewModel.createGathering();
+                        if (context.mounted) {
+                          await Navigator.pushNamed(
+                            context,
+                            Routes.gatheringEnter,
+                          );
+                        }
+                        return;
+                      }
+
+                      await _viewModel.goToNextPage();
+                    },
+                    isEnabled: _viewModel.isConfirmEnabled,
+                  ),
+                  const SizedBox(
+                    height: 10,
                   ),
                 ],
               ),

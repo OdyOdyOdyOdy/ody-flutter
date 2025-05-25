@@ -20,7 +20,7 @@ class GatheringEnterScreen extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) => ListenableBuilder(
-        listenable: viewModel,
+        listenable: viewModel.locationText,
         builder: (BuildContext context, Widget? child) => Scaffold(
           backgroundColor: CommonColors.cream,
           body: SafeArea(

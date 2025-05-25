@@ -1,4 +1,5 @@
 import "package:ody_flutter/data/db/service/auth_token_service.dart";
+import "package:ody_flutter/data/entity/gathering/gathering_request.dart";
 import "package:ody_flutter/data/entity/mapper/gathering_mapper.dart";
 import "package:ody_flutter/data/entity/mapper/gatherings_mapper.dart";
 import "package:ody_flutter/data/network/service/gathering_service_impl.dart";
@@ -13,10 +14,9 @@ class GatheringRepositoryImpl implements GatheringRepository {
   final AuthTokenService authTokenService;
 
   @override
-  Future<Gathering> createGathering(Gathering request) async {
+  Future<Gathering> createGathering(GatheringRequest request) async {
     try {
-      final response =
-          await gatheringService.createGathering(request.toEntity());
+      final response = await gatheringService.createGathering(request);
       return response.toModel();
     } catch (_) {
       rethrow;
