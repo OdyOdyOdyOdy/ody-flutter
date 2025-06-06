@@ -47,7 +47,7 @@ class _OdyTextFieldState extends State<OdyTextField> {
                 controller: _textFieldController,
                 decoration: InputDecoration(
                   hintText: widget.placeHolder,
-                  hintStyle: PretendardFonts.medium20.copyWith(
+                  hintStyle: PretendardFonts.medium18.copyWith(
                     color: CommonColors.gray_350,
                   ),
                   enabledBorder: _inputBorder(),

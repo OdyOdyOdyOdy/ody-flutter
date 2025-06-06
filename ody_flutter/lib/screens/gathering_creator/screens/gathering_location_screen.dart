@@ -4,8 +4,8 @@ import "package:ody_flutter/assets/fonts/pretendard_fonts.dart";
 import "package:ody_flutter/components/ody_highlight_text.dart";
 import "package:ody_flutter/components/ody_text_field.dart";
 import "package:ody_flutter/config/routes.dart";
+import "package:ody_flutter/domain/model/location.dart";
 import "package:ody_flutter/screens/gathering_creator/gathering_creator_view_model.dart";
-import "package:ody_flutter/screens/gathering_creator/model/location.dart";
 
 class GatheringLocationScreen extends StatelessWidget {
   const GatheringLocationScreen({required this.viewModel, super.key});
@@ -45,12 +45,15 @@ class GatheringLocationScreen extends StatelessWidget {
                     final result = await Navigator.pushNamed(
                       context,
                       Routes.gatheringLocationSearch,
-                      arguments: Location(),
+                      arguments: LocationModel,
                     );
 
                     if (result != null) {
                       viewModel.locationText.value =
-                          (result as Location).address ?? "";
+                          (result as LocationModel).address ??
+                              result.name ??
+                              "";
+                      viewModel.location = (result as LocationModel);
                       viewModel.isConfirmEnabled.value = true;
                     }
                   },
