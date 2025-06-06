@@ -5,7 +5,8 @@ class LocationResponse {
       LocationResponse(
         (json["documents"] as List<dynamic>?)
             ?.map(
-                (e) => LocationResponseData.fromJson(e as Map<String, dynamic>))
+              (e) => LocationResponseData.fromJson(e as Map<String, dynamic>),
+            )
             .toList(),
       );
 

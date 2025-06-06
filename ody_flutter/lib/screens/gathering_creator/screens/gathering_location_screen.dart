@@ -53,7 +53,7 @@ class GatheringLocationScreen extends StatelessWidget {
                           (result as LocationModel).address ??
                               result.name ??
                               "";
-                      viewModel.location = (result as LocationModel);
+                      viewModel.location = result;
                       viewModel.isConfirmEnabled.value = true;
                     }
                   },
