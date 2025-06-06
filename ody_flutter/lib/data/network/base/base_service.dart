@@ -34,12 +34,13 @@ class BaseService {
   }
 
   Future<dynamic> getWithResponse({
-    required String path,
+    String? url,
+    String? path,
     Map<String, dynamic>? headers,
   }) async {
     try {
-      final response = await _dio.get(
-        path,
+      final response = await _dio.getUri(
+        Uri.parse(url ?? _dio.options.baseUrl + (path ?? "")),
         options: Options(headers: {...?headers}),
       );
       _printSuccessLog(response);

@@ -1,0 +1,20 @@
+import "package:ody_flutter/data/entity/mapper/location_mapper.dart";
+import "package:ody_flutter/data/network/service/location_service.dart";
+import "package:ody_flutter/domain/model/location.dart";
+import "package:ody_flutter/domain/repository/location_repository.dart";
+
+class LocationRepositoryImpl implements LocationRepository {
+  LocationRepositoryImpl(this.locationService);
+
+  final LocationService locationService;
+
+  @override
+  Future<List<LocationModel>> searchLocation(String keyword) async {
+    try {
+      final response = await locationService.fetchLocation(keyword);
+      return response.toModel();
+    } catch (_) {
+      rethrow;
+    }
+  }
+}

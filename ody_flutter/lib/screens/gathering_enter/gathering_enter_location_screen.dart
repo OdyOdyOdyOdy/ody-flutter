@@ -8,7 +8,7 @@ import "package:ody_flutter/components/ody_highlight_text.dart";
 import "package:ody_flutter/components/ody_text_field.dart";
 import "package:ody_flutter/components/ody_top_bar.dart";
 import "package:ody_flutter/config/routes.dart";
-import "package:ody_flutter/screens/gathering_creator/model/location.dart";
+import "package:ody_flutter/domain/model/location.dart";
 import "package:ody_flutter/screens/gathering_enter/gathering_enter_view_model.dart";
 
 class GatheringEnterScreen extends StatelessWidget {
@@ -80,12 +80,12 @@ class GatheringEnterScreen extends StatelessWidget {
                       final result = await Navigator.pushNamed(
                         context,
                         Routes.gatheringLocationSearch,
-                        arguments: Location(),
+                        arguments: LocationModel,
                       );
 
                       if (result != null) {
                         viewModel.locationText.value =
-                            (result as Location).address ?? "";
+                            (result as LocationModel).address ?? "";
                         viewModel.isConfirmEnabled.value = true;
                       }
                     },

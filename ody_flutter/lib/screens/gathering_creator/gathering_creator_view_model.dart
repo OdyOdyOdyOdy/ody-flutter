@@ -1,6 +1,7 @@
 import "package:flutter/cupertino.dart";
 import "package:ody_flutter/data/entity/gathering/gathering_request.dart";
 import "package:ody_flutter/domain/model/gathering.dart";
+import "package:ody_flutter/domain/model/location.dart";
 import "package:ody_flutter/domain/repository/gathering_repository.dart";
 
 enum GatheringCreatorScreenType {
@@ -36,8 +37,7 @@ class GatheringCreatorViewModel extends ChangeNotifier {
   final ValueNotifier<String> locationText = ValueNotifier("");
   final ValueNotifier<bool> isConfirmEnabled = ValueNotifier(false);
 
-  String targetLatitude = "";
-  String targetLongitude = "";
+  LocationModel location = LocationModel.init();
   bool isGoingPrevious = false;
 
   GatheringCreatorScreenType _currentScreenType =
@@ -104,21 +104,9 @@ class GatheringCreatorViewModel extends ChangeNotifier {
       date: _dateToString(),
       time: _timeToString(),
       targetAddress: locationText.value,
-      targetLatitude: targetLatitude,
-      targetLongitude: targetLongitude,
+      targetLatitude: "${location.latitude}",
+      targetLongitude: "${location.longitude}",
     );
-
-    debugPrint("""
-=== [CreateGathering] =========================================
-🚀 Request Info:
-  • name: ${request.name}
-  • date: ${request.date}
-  • time: ${request.time}
-  • address: ${request.targetAddress}
-  • latitude: ${request.targetLatitude}
-  • longitude: ${request.targetLongitude}
-============================================================
-""");
 
     gathering = await _gatheringRepository.createGathering(request);
   }
