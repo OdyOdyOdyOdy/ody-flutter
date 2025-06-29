@@ -31,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
     _viewModel = LoginViewModel(
-      AuthRepositoryImpl(AuthService(BaseService()), AuthTokenService()),
+      AuthRepositoryImpl(AuthService(BaseService(AuthTokenService())), AuthTokenService()),
       DeviceTokenRepositoryImpl(DeviceTokenService()),
     );
     _viewModel.navigation.addListener(_onNavigationChanged);

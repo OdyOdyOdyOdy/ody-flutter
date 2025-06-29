@@ -21,7 +21,7 @@ class GatheringCreatorScreen extends StatelessWidget {
   // to do: 추후에 주입 필요
   final _viewModel = GatheringCreatorViewModel(
     GatheringRepositoryImpl(
-      GatheringService(BaseService(), AuthTokenService()),
+      GatheringService(BaseService(AuthTokenService()), AuthTokenService()),
       AuthTokenService(),
     ),
   );

@@ -32,7 +32,7 @@ class _GatheringsScreenState extends State<GatheringsScreen> {
     super.initState();
     _viewModel = GatheringsViewModel(
       GatheringRepositoryImpl(
-        GatheringService(BaseService(), AuthTokenService()),
+        GatheringService(BaseService(AuthTokenService()), AuthTokenService()),
         AuthTokenService(),
       ),
     );

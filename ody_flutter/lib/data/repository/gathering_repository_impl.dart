@@ -36,11 +36,7 @@ class GatheringRepositoryImpl implements GatheringRepository {
   @override
   Future<List<Gathering2>> fetchGatherings() async {
     try {
-      final token = await authTokenService.getToken();
-      final headers = {
-        "Authorization": "Bearer access-token=${token?.accessToken}",
-      };
-      final response = await gatheringService.fetchGatherings(headers);
+      final response = await gatheringService.fetchGatherings();
       return response.toModel();
     } catch (_) {
       rethrow;
