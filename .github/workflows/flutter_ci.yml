@@ -37,6 +37,12 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      - name: Clean & install pods
+        run: |
+          cd ios
+          rm -rf Pods Podfile.lock
+          pod install --repo-update
+
       - name: Lint check
         run: flutter analyze
 
