@@ -10,9 +10,12 @@ defaults:
 
 jobs:
   build:
-    runs-on: macOS-latest
+    runs-on: macos-14
 
     steps:
+      - name: Use Xcode 15.3
+        run: sudo xcode-select -s /Applications/Xcode_15.3.app
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -20,31 +23,26 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: stable
-          
+
       - name: Add firebase.json
         run: echo '${{ secrets.FIREBASE_JSON }}' > ./firebase.json
-        
+
       - name: Add google-services.json
         run: echo '${{ secrets.GOOGLE_SERVICE_JSON }}' > ./android/app/google-services.json
-        
+
       - name: Add GoogleService-info.plist
         run: echo '${{ secrets.GOOGLE_SERVICE_INFO }}' > ./ios/Runner/GoogleService-info.plist
 
       - name: Install dependencies
-        run: |
-          flutter pub get
+        run: flutter pub get
 
       - name: Lint check
-        run: |
-          flutter analyze
-     
-      # Run Test에서는 .env 임의로 추가
+        run: flutter analyze
+
       - name: Run test
         run: |
           touch .env
           flutter test
-          
-      # Build iOS without code signing
+
       - name: Build iOS
-        run: |
-          flutter build ios --no-codesign
+        run: flutter build ios --no-codesign
