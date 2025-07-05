@@ -1,7 +1,7 @@
 import "package:ody_flutter/data/entity/gathering/location_response.dart";
 import "package:ody_flutter/domain/model/location.dart";
 
-extension ToDomain on LocationResponse {
+extension LocationResponseToDomain on LocationResponse {
   List<LocationModel> toModel() =>
       documents
           ?.map(
@@ -14,4 +14,13 @@ extension ToDomain on LocationResponse {
           )
           .toList() ??
       [];
+}
+
+extension LocationResponseDataToDomain on LocationResponseData {
+  LocationModel toModel() => LocationModel(
+        name: placeName,
+        address: roadAddressName,
+        latitude: double.parse(y ?? "0"),
+        longitude: double.parse(x ?? "0"),
+      );
 }
