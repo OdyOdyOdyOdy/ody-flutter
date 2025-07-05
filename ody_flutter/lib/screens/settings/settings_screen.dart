@@ -37,7 +37,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
   void initState() {
     super.initState();
     _viewModel = SettingViewModel(
-        AuthRepositoryImpl(AuthService(BaseService(AuthTokenService())), AuthTokenService()),
+      AuthRepositoryImpl(
+        AuthService(BaseService(AuthTokenService())),
+        AuthTokenService(),
+      ),
     );
     _viewModel.navigation.addListener(_onNavigationChanged);
     _webViewController = WebViewController();

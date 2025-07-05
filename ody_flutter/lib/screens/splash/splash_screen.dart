@@ -16,7 +16,9 @@ class SplashScreen extends StatelessWidget {
   // 추후에 주입 필요
   final _viewModel = SplashViewModel(
     AuthRepositoryImpl(
-        AuthService(BaseService(AuthTokenService())), AuthTokenService()),
+      AuthService(BaseService(AuthTokenService())),
+      AuthTokenService(),
+    ),
   );
 
   @override
