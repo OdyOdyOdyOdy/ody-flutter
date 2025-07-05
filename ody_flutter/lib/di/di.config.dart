@@ -51,8 +51,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i1054.InvitationCodeViewModel>(
         () => _i1054.InvitationCodeViewModel());
-    gh.factory<_i989.GatheringEnterViewModel>(
-        () => _i989.GatheringEnterViewModel());
     gh.factory<_i363.DeviceTokenService>(() => _i363.DeviceTokenService());
     gh.factory<_i967.AuthTokenService>(() => _i967.AuthTokenService());
     gh.singleton<_i756.DatabaseHelper>(() => _i756.DatabaseHelper());
@@ -76,6 +74,8 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.factory<_i485.GatheringLocationViewModel>(
         () => _i485.GatheringLocationViewModel(gh<_i201.LocationRepository>()));
+    gh.factory<_i989.GatheringEnterViewModel>(
+        () => _i989.GatheringEnterViewModel(gh<_i201.LocationRepository>()));
     gh.factory<_i306.AuthRepository>(() => _i461.AuthRepositoryImpl(
           gh<_i308.AuthService>(),
           gh<_i967.AuthTokenService>(),
