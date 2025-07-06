@@ -3,9 +3,17 @@ import "dart:convert";
 import "package:dio/dio.dart";
 import "package:flutter/foundation.dart";
 import "package:flutter_dotenv/flutter_dotenv.dart";
+import "package:ody_flutter/data/db/service/auth_token_service.dart";
 import "package:ody_flutter/data/network/base/base_exception.dart";
+import "package:ody_flutter/domain/model/auth_token.dart";
 
 class BaseService {
+  BaseService(this.authTokenService) {
+    _setupInterceptors();
+  }
+
+  final AuthTokenService authTokenService;
+
   final Dio _dio = Dio(
     BaseOptions(
       baseUrl: dotenv.get("BASE_DEV_URL"),
@@ -14,6 +22,33 @@ class BaseService {
       contentType: Headers.jsonContentType,
     ),
   );
+
+  void _setupInterceptors() {
+    _dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) async {
+          final AuthToken? token = await _getStoredToken();
+
+          if (token != null) {
+            options.headers["Authorization"] =
+                "Bearer access-token=${token.accessToken}";
+          }
+
+          handler.next(options);
+        },
+        onResponse: (response, handler) {
+          _printSuccessLog(response);
+          handler.next(response);
+        },
+        onError: (error, handler) {
+          _printErrorLog(error);
+          handler.next(error);
+        },
+      ),
+    );
+  }
+
+  Future<AuthToken?> _getStoredToken() => authTokenService.getToken();
 
   Future<dynamic> postWithResponse({
     required String path,
@@ -26,7 +61,6 @@ class BaseService {
         data: data,
         options: Options(headers: {...?headers}),
       );
-      _printSuccessLog(response);
       return response.data;
     } on DioException catch (e) {
       throw _handleError(e);
@@ -43,7 +77,6 @@ class BaseService {
         Uri.parse(url ?? _dio.options.baseUrl + (path ?? "")),
         options: Options(headers: {...?headers}),
       );
-      _printSuccessLog(response);
       return response.data;
     } on DioException catch (e) {
       throw _handleError(e);
@@ -59,7 +92,6 @@ class BaseService {
         path,
         options: Options(headers: {...?headers}),
       );
-      _printSuccessLog(response);
       return response.data;
     } on DioException catch (e) {
       throw _handleError(e);
@@ -67,7 +99,6 @@ class BaseService {
   }
 
   Exception _handleError(DioException e) {
-    _printErrorLog(e);
     switch (e.response?.statusCode) {
       case 400:
         throw BaseException.clientError();

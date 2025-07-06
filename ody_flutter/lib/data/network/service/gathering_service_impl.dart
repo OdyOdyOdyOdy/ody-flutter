@@ -12,11 +12,9 @@ class GatheringService {
 
   Future<GatheringResponse> createGathering(GatheringRequest request) async {
     try {
-      final token = await authTokenService.getToken();
       final response = await baseService.postWithResponse(
         path: "/v1/meetings",
         data: request.toJson(),
-        headers: {"Authorization": "Bearer access-token=${token?.accessToken}"},
       );
       return GatheringResponse.fromJson(response);
     } catch (_) {
@@ -28,7 +26,6 @@ class GatheringService {
     try {
       final response = await baseService.getWithResponse(
         path: "/v1/meetings/$id",
-        headers: {"Authorization": "Bearer access-token={access-token}"},
       );
       return GatheringResponse.fromJson(response);
     } catch (_) {
@@ -36,13 +33,10 @@ class GatheringService {
     }
   }
 
-  Future<GatheringsResponse> fetchGatherings(
-    Map<String, dynamic> headers,
-  ) async {
+  Future<GatheringsResponse> fetchGatherings() async {
     try {
       final response = await baseService.getWithResponse(
         path: "/v1/meetings/me",
-        headers: headers,
       );
       return GatheringsResponse.fromJson(response);
     } catch (_) {
