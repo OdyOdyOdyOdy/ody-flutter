@@ -1,7 +1,6 @@
 import "package:intl/intl.dart";
 
 class Gathering2 {
-
   Gathering2({
     required this.id,
     required this.name,
@@ -34,7 +33,8 @@ class Gathering2 {
   String dateTimeMessage() {
     final now = DateTime.now();
     final meetingDate = datetime;
-    final localDate = DateTime(meetingDate.year, meetingDate.month, meetingDate.day);
+    final localDate =
+        DateTime(meetingDate.year, meetingDate.month, meetingDate.day);
     final today = DateTime(now.year, now.month, now.day);
     final tomorrow = today.add(const Duration(days: 1));
 
