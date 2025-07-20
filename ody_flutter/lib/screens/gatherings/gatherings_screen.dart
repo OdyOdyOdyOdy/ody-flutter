@@ -41,7 +41,7 @@ class _GatheringsScreenState extends State<GatheringsScreen> {
   }
 
   void _onViewModelChanged() {
-    setState(() {}); // 뷰모델 변경 시 UI 갱신
+    setState(() {});
   }
 
   @override
