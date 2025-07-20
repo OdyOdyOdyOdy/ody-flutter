@@ -52,7 +52,9 @@ class GatheringDetailResponse {
     if (json["mates"] is List) {
       mates = json["mates"] == null
           ? null
-          : (json["mates"] as List).map((e) => ResponseMates.fromJson(e)).toList();
+          : (json["mates"] as List)
+              .map((e) => ResponseMates.fromJson(e))
+              .toList();
     }
     if (json["inviteCode"] is String) {
       inviteCode = json["inviteCode"];
