@@ -36,7 +36,7 @@ class _GatheringsScreenState extends State<GatheringsScreen> {
         AuthTokenService(),
       ),
     );
-    _viewModel.addListener(_onViewModelChanged); // 👈 리스너 추가
+    _viewModel.addListener(_onViewModelChanged);
     unawaited(_viewModel.getGatherings());
   }
 
