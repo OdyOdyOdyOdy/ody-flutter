@@ -143,7 +143,11 @@ class _GatheringsScreenState extends State<GatheringsScreen> {
 
   Widget _buildGatheringItem(Gathering2 gathering) => GestureDetector(
         onTap: () async {
-          await Navigator.pushNamed(context, Routes.gatheringDetail);
+          await Navigator.pushNamed(
+            context,
+            Routes.gatheringDetail,
+            arguments: gathering.id,
+          );
         },
         child: DecoratedBox(
           decoration: const BoxDecoration(

@@ -1,4 +1,5 @@
 import "package:ody_flutter/data/db/service/auth_token_service.dart";
+import "package:ody_flutter/data/entity/gathering/gathering_detail_response.dart";
 import "package:ody_flutter/data/entity/gathering/gathering_request.dart";
 import "package:ody_flutter/data/entity/gathering/gathering_response.dart";
 import "package:ody_flutter/data/entity/gathering/gatherings_response.dart";
@@ -22,12 +23,12 @@ class GatheringService {
     }
   }
 
-  Future<GatheringResponse> fetchGathering(int id) async {
+  Future<GatheringDetailResponse> fetchGathering(int id) async {
     try {
       final response = await baseService.getWithResponse(
-        path: "/v1/meetings/$id",
+        path: "/v2/meetings/$id",
       );
-      return GatheringResponse.fromJson(response);
+      return GatheringDetailResponse.fromJson(response);
     } catch (_) {
       rethrow;
     }
