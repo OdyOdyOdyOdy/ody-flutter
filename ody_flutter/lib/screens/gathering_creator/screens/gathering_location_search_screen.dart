@@ -12,7 +12,8 @@ import "package:ody_flutter/screens/gathering_creator/screens/gathering_location
 class GatheringLocationSearchScreen extends StatelessWidget {
   GatheringLocationSearchScreen({super.key});
 
-  final GatheringLocationViewModel _viewModel = getIt<GatheringLocationViewModel>();
+  final GatheringLocationViewModel _viewModel =
+      getIt<GatheringLocationViewModel>();
 
   @override
   Widget build(BuildContext context) => ListenableBuilder(

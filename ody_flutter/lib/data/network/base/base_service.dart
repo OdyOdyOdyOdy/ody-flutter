@@ -1,9 +1,9 @@
-import "package:injectable/injectable.dart";
 import "dart:convert";
 
 import "package:dio/dio.dart";
 import "package:flutter/foundation.dart";
 import "package:flutter_dotenv/flutter_dotenv.dart";
+import "package:injectable/injectable.dart";
 import "package:ody_flutter/data/db/service/auth_token_service.dart";
 import "package:ody_flutter/data/network/base/base_exception.dart";
 import "package:ody_flutter/domain/model/auth_token.dart";
