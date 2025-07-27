@@ -11,7 +11,7 @@ import "package:ody_flutter/data/db/service/auth_token_service.dart";
 import "package:ody_flutter/data/network/base/base_service.dart";
 import "package:ody_flutter/data/network/service/gathering_service_impl.dart";
 import "package:ody_flutter/data/repository/gathering_repository_impl.dart";
-import "package:ody_flutter/screens/gathering_creator/model/gathering.dart";
+import "package:ody_flutter/domain/model/gathering2.dart";
 import "package:ody_flutter/screens/gatherings/gatherings_view_model.dart";
 
 class GatheringsScreen extends StatefulWidget {
@@ -36,21 +36,13 @@ class _GatheringsScreenState extends State<GatheringsScreen> {
         AuthTokenService(),
       ),
     );
+    _viewModel.addListener(_onViewModelChanged);
     unawaited(_viewModel.getGatherings());
   }
 
-  // 임시 데이터 (API 연결 후 삭제)
-  final List<Gathering> _gatherings = List.generate(
-    3,
-    (index) => Gathering(
-      name: "김수한무거북이모임",
-      date: "2024-09-10",
-      time: "13:30",
-      targetAddress: "서울 송파구 올림픽로 35다길",
-      originAddress: "서울 강남구 테헤란로 411길",
-      durationMinutes: "30",
-    ),
-  );
+  void _onViewModelChanged() {
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -70,9 +62,9 @@ class _GatheringsScreenState extends State<GatheringsScreen> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 18),
                   child: ListView.separated(
-                    itemCount: _gatherings.length,
+                    itemCount: _viewModel.gatherings.length,
                     itemBuilder: (context, index) =>
-                        _buildGatheringItem(_gatherings[index]),
+                        _buildGatheringItem(_viewModel.gatherings[index]),
                     separatorBuilder: (context, index) =>
                         const SizedBox(height: 18),
                   ),
@@ -149,7 +141,7 @@ class _GatheringsScreenState extends State<GatheringsScreen> {
         ),
       );
 
-  Widget _buildGatheringItem(Gathering gathering) => GestureDetector(
+  Widget _buildGatheringItem(Gathering2 gathering) => GestureDetector(
         onTap: () async {
           await Navigator.pushNamed(context, Routes.gatheringDetail);
         },
@@ -182,7 +174,7 @@ class _GatheringsScreenState extends State<GatheringsScreen> {
                       _buildExpandedGatheringDetails(gathering)
                     else
                       Text(
-                        gathering.time,
+                        gathering.dateTimeMessage(),
                         style: PretendardFonts.medium16
                             .copyWith(color: CommonColors.gray_800),
                       ),
@@ -216,6 +208,7 @@ class _GatheringsScreenState extends State<GatheringsScreen> {
                 ),
               ),
               // 추후에 약속 시간 30분전 일때만 오디? 버튼 활성화 되게 변경 해야함
+
               Positioned(
                 right: 22,
                 bottom: 12,
@@ -248,11 +241,11 @@ class _GatheringsScreenState extends State<GatheringsScreen> {
         ),
       );
 
-  Widget _buildExpandedGatheringDetails(Gathering gathering) => Column(
+  Widget _buildExpandedGatheringDetails(Gathering2 gathering) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            gathering.date,
+            gathering.formattedDate,
             style:
                 PretendardFonts.medium16.copyWith(color: CommonColors.gray_800),
           ),
@@ -296,5 +289,11 @@ class _GatheringsScreenState extends State<GatheringsScreen> {
   Future<void> _navigateTo(String routeName) async {
     _isFloatingActionButtonPressed.value = false;
     await Navigator.pushNamed(context, routeName);
+  }
+
+  @override
+  void dispose() {
+    _viewModel.removeListener(_onViewModelChanged);
+    super.dispose();
   }
 }
