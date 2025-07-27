@@ -18,8 +18,12 @@ Map<String, WidgetBuilder> namedRoutes = <String, WidgetBuilder>{
   "/gatherings": (final BuildContext context) => const GatheringsScreen(),
   "/gatheringCreation": (final BuildContext context) =>
       GatheringCreatorScreen(),
-  "/gatheringDetail": (final BuildContext context) =>
-      const GatheringDetailScreen(),
+  "/gatheringDetail": (final BuildContext context) {
+    final gatheringId = ModalRoute.of(context)!.settings.arguments! as int;
+    return GatheringDetailScreen(
+      gatheringId: gatheringId,
+    );
+  },
   "/settings": (final BuildContext context) => const SettingsScreen(),
   "/invitationCode": (final BuildContext context) => InvitationCodeScreen(),
   "/etaBoard": (final BuildContext context) => const EtaBoardScreen(),
