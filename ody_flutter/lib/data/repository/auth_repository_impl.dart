@@ -1,3 +1,4 @@
+import "package:injectable/injectable.dart";
 import "package:ody_flutter/data/db/service/auth_token_service.dart";
 import "package:ody_flutter/data/entity/mapper/login_mapper.dart";
 import "package:ody_flutter/data/network/service/auth_service.dart";
@@ -5,6 +6,7 @@ import "package:ody_flutter/domain/model/apple_login.dart";
 import "package:ody_flutter/domain/model/auth_token.dart";
 import "package:ody_flutter/domain/repository/auth_repository.dart";
 
+@Injectable(as: AuthRepository)
 class AuthRepositoryImpl extends AuthRepository {
   AuthRepositoryImpl(this.authService, this.authTokenService);
 

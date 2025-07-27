@@ -10,10 +10,7 @@ import "package:ody_flutter/assets/images/images.dart";
 import "package:ody_flutter/components/ody_alert.dart";
 import "package:ody_flutter/components/ody_top_bar.dart";
 import "package:ody_flutter/config/routes.dart";
-import "package:ody_flutter/data/db/service/auth_token_service.dart";
-import "package:ody_flutter/data/network/base/base_service.dart";
-import "package:ody_flutter/data/network/service/gathering_service_impl.dart";
-import "package:ody_flutter/data/repository/gathering_repository_impl.dart";
+import "package:ody_flutter/di/di.dart";
 import "package:ody_flutter/domain/model/gathering_detail.dart";
 import "package:ody_flutter/screens/gathering_detail/gathering_detail_view_model.dart";
 
@@ -38,12 +35,7 @@ class _GatheringDetailScreenState extends State<GatheringDetailScreen> {
   @override
   void initState() {
     super.initState();
-    _viewModel = GatheringDetailViewModel(
-      GatheringRepositoryImpl(
-        GatheringService(BaseService(AuthTokenService()), AuthTokenService()),
-        AuthTokenService(),
-      ),
-    );
+    _viewModel = getIt<GatheringDetailViewModel>();
     _viewModel.addListener(_onViewModelChanged);
     unawaited(_viewModel.getDetailGathering(widget.gatheringId));
   }

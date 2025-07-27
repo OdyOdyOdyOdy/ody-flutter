@@ -1,4 +1,5 @@
 import "package:flutter/cupertino.dart";
+import "package:injectable/injectable.dart";
 import "package:ody_flutter/data/entity/gathering/gathering_request.dart";
 import "package:ody_flutter/domain/model/gathering.dart";
 import "package:ody_flutter/domain/model/location.dart";
@@ -20,6 +21,7 @@ enum GatheringCreatorScreenType {
       );
 }
 
+@injectable
 class GatheringCreatorViewModel extends ChangeNotifier {
   GatheringCreatorViewModel(this._gatheringRepository) {
     _init();

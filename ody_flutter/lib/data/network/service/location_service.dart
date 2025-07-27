@@ -1,7 +1,9 @@
 import "package:flutter_dotenv/flutter_dotenv.dart";
+import "package:injectable/injectable.dart";
 import "package:ody_flutter/data/entity/gathering/location_response.dart";
 import "package:ody_flutter/data/network/base/base_service.dart";
 
+@injectable
 class LocationService {
   LocationService(this.baseService);
 

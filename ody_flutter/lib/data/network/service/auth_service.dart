@@ -1,7 +1,9 @@
+import "package:injectable/injectable.dart";
 import "package:ody_flutter/data/entity/auth/apple_login_request.dart";
 import "package:ody_flutter/data/entity/auth/login_response.dart";
 import "package:ody_flutter/data/network/base/base_service.dart";
 
+@injectable
 class AuthService {
   AuthService(this.baseService);
 

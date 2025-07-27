@@ -1,7 +1,9 @@
 import "package:flutter/cupertino.dart";
+import "package:injectable/injectable.dart";
 import "package:location/location.dart";
 import "package:ody_flutter/domain/model/gathering.dart";
 
+@injectable
 class GatheringEnterViewModel extends ChangeNotifier {
   GatheringEnterViewModel();
 

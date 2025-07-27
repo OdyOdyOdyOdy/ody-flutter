@@ -1,7 +1,9 @@
+import "package:injectable/injectable.dart";
 import "package:ody_flutter/domain/model/auth_token.dart";
 import "package:ody_flutter/domain/repository/auth_repository.dart";
 import "package:ody_flutter/screens/splash/splash_navigate_action.dart";
 
+@injectable
 class SplashViewModel {
   SplashViewModel(
     this._authRepository,

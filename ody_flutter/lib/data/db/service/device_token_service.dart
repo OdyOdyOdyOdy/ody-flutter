@@ -1,7 +1,9 @@
+import "package:injectable/injectable.dart";
 import "package:ody_flutter/data/db/database_helper.dart";
 import "package:ody_flutter/domain/model/device_token.dart";
 import "package:sqflite/sqflite.dart";
 
+@injectable
 class DeviceTokenService {
   final DatabaseHelper _databaseHelper = DatabaseHelper();
 

@@ -7,12 +7,7 @@ import "package:ody_flutter/assets/colors/colors.dart";
 import "package:ody_flutter/assets/fonts/pretendard_fonts.dart";
 import "package:ody_flutter/assets/images/images.dart";
 import "package:ody_flutter/config/routes.dart";
-import "package:ody_flutter/data/db/service/auth_token_service.dart";
-import "package:ody_flutter/data/db/service/device_token_service.dart";
-import "package:ody_flutter/data/network/base/base_service.dart";
-import "package:ody_flutter/data/network/service/auth_service.dart";
-import "package:ody_flutter/data/repository/auth_repository_impl.dart";
-import "package:ody_flutter/data/repository/device_token_repository_impl.dart";
+import "package:ody_flutter/di/di.dart";
 import "package:ody_flutter/screens/login/login_navigate_action.dart";
 import "package:ody_flutter/screens/login/login_view_model.dart";
 import "package:sign_in_with_apple/sign_in_with_apple.dart";
@@ -30,13 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    _viewModel = LoginViewModel(
-      AuthRepositoryImpl(
-        AuthService(BaseService(AuthTokenService())),
-        AuthTokenService(),
-      ),
-      DeviceTokenRepositoryImpl(DeviceTokenService()),
-    );
+    _viewModel = getIt<LoginViewModel>();
     _viewModel.navigation.addListener(_onNavigationChanged);
     unawaited(_viewModel.requestPermission());
   }

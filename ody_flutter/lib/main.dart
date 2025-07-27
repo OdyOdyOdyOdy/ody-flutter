@@ -3,9 +3,11 @@ import "package:flutter/material.dart";
 import "package:flutter_dotenv/flutter_dotenv.dart";
 import "package:flutter_localizations/flutter_localizations.dart";
 import "package:ody_flutter/config/routes.dart";
+import "package:ody_flutter/di/di.dart";
 import "package:ody_flutter/firebase_options.dart";
 
 Future<void> main() async {
+  configureDependencies();
   await dotenv.load();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

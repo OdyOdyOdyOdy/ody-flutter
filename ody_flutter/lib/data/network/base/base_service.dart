@@ -1,3 +1,4 @@
+import "package:injectable/injectable.dart";
 import "dart:convert";
 
 import "package:dio/dio.dart";
@@ -7,6 +8,7 @@ import "package:ody_flutter/data/db/service/auth_token_service.dart";
 import "package:ody_flutter/data/network/base/base_exception.dart";
 import "package:ody_flutter/domain/model/auth_token.dart";
 
+@injectable
 class BaseService {
   BaseService(this.authTokenService) {
     _setupInterceptors();
