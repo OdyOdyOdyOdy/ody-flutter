@@ -9,4 +9,6 @@ abstract class GatheringRepository {
   Future<GatheringDetail> fetchGathering(int id);
 
   Future<List<Gathering2>> fetchGatherings();
+
+  Future<void> exitMeeting(int meetingId);
 }
