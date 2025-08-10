@@ -7,13 +7,13 @@ import "package:ody_flutter/components/ody_highlight_text.dart";
 import "package:ody_flutter/components/ody_text_field.dart";
 import "package:ody_flutter/components/ody_top_bar.dart";
 import "package:ody_flutter/config/routes.dart";
+import "package:ody_flutter/di/di.dart";
 import "package:ody_flutter/screens/invitation_code/invitation_code_view_model.dart";
 
 class InvitationCodeScreen extends StatelessWidget {
   InvitationCodeScreen({super.key});
 
-  // to do: 추후에 주입 필요
-  final InvitationCodeViewModel viewModel = InvitationCodeViewModel();
+  final InvitationCodeViewModel viewModel = getIt<InvitationCodeViewModel>();
 
   @override
   Widget build(final BuildContext context) => ListenableBuilder(

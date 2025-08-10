@@ -1,3 +1,4 @@
+import "package:injectable/injectable.dart";
 import "package:ody_flutter/data/db/service/auth_token_service.dart";
 import "package:ody_flutter/data/entity/gathering/gathering_request.dart";
 import "package:ody_flutter/data/entity/mapper/gathering_detail_mapper.dart";
@@ -9,6 +10,7 @@ import "package:ody_flutter/domain/model/gathering2.dart";
 import "package:ody_flutter/domain/model/gathering_detail.dart";
 import "package:ody_flutter/domain/repository/gathering_repository.dart";
 
+@Injectable(as: GatheringRepository)
 class GatheringRepositoryImpl implements GatheringRepository {
   GatheringRepositoryImpl(this.gatheringService, this.authTokenService);
 

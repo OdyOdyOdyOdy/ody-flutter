@@ -4,10 +4,7 @@ import "package:ody_flutter/assets/images/images.dart";
 import "package:ody_flutter/components/ody_button.dart";
 import "package:ody_flutter/components/ody_top_bar.dart";
 import "package:ody_flutter/config/routes.dart";
-import "package:ody_flutter/data/db/service/auth_token_service.dart";
-import "package:ody_flutter/data/network/base/base_service.dart";
-import "package:ody_flutter/data/network/service/gathering_service_impl.dart";
-import "package:ody_flutter/data/repository/gathering_repository_impl.dart";
+import "package:ody_flutter/di/di.dart";
 import "package:ody_flutter/screens/gathering_creator/gathering_creator_view_model.dart";
 import "package:ody_flutter/screens/gathering_creator/screens/gathering_date_screen.dart";
 import "package:ody_flutter/screens/gathering_creator/screens/gathering_location_screen.dart";
@@ -18,13 +15,7 @@ import "package:smooth_page_indicator/smooth_page_indicator.dart";
 class GatheringCreatorScreen extends StatelessWidget {
   GatheringCreatorScreen({super.key});
 
-  // to do: 추후에 주입 필요
-  final _viewModel = GatheringCreatorViewModel(
-    GatheringRepositoryImpl(
-      GatheringService(BaseService(AuthTokenService()), AuthTokenService()),
-      AuthTokenService(),
-    ),
-  );
+  final _viewModel = getIt<GatheringCreatorViewModel>();
 
   @override
   Widget build(final BuildContext context) => ListenableBuilder(

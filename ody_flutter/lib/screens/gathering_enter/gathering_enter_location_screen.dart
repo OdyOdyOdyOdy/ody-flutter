@@ -8,6 +8,7 @@ import "package:ody_flutter/components/ody_highlight_text.dart";
 import "package:ody_flutter/components/ody_text_field.dart";
 import "package:ody_flutter/components/ody_top_bar.dart";
 import "package:ody_flutter/config/routes.dart";
+import "package:ody_flutter/di/di.dart";
 import "package:ody_flutter/domain/model/location.dart";
 import "package:ody_flutter/screens/gathering_enter/gathering_enter_view_model.dart";
 
@@ -16,7 +17,7 @@ class GatheringEnterScreen extends StatelessWidget {
     super.key,
   });
 
-  final GatheringEnterViewModel viewModel = GatheringEnterViewModel();
+  final GatheringEnterViewModel viewModel = getIt<GatheringEnterViewModel>();
 
   @override
   Widget build(final BuildContext context) => ListenableBuilder(

@@ -7,10 +7,7 @@ import "package:ody_flutter/assets/fonts/pretendard_fonts.dart";
 import "package:ody_flutter/assets/images/images.dart";
 import "package:ody_flutter/components/ody_top_bar.dart";
 import "package:ody_flutter/config/routes.dart";
-import "package:ody_flutter/data/db/service/auth_token_service.dart";
-import "package:ody_flutter/data/network/base/base_service.dart";
-import "package:ody_flutter/data/network/service/gathering_service_impl.dart";
-import "package:ody_flutter/data/repository/gathering_repository_impl.dart";
+import "package:ody_flutter/di/di.dart";
 import "package:ody_flutter/domain/model/gathering2.dart";
 import "package:ody_flutter/screens/gatherings/gatherings_view_model.dart";
 
@@ -30,12 +27,7 @@ class _GatheringsScreenState extends State<GatheringsScreen> {
   @override
   void initState() {
     super.initState();
-    _viewModel = GatheringsViewModel(
-      GatheringRepositoryImpl(
-        GatheringService(BaseService(AuthTokenService()), AuthTokenService()),
-        AuthTokenService(),
-      ),
-    );
+    _viewModel = getIt<GatheringsViewModel>();
     _viewModel.addListener(_onViewModelChanged);
     unawaited(_viewModel.getGatherings());
   }

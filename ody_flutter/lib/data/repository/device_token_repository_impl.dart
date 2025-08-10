@@ -1,8 +1,10 @@
 import "package:firebase_messaging/firebase_messaging.dart";
+import "package:injectable/injectable.dart";
 import "package:ody_flutter/data/db/service/device_token_service.dart";
 import "package:ody_flutter/domain/model/device_token.dart";
 import "package:ody_flutter/domain/repository/device_token_repository.dart";
 
+@Injectable(as: DeviceTokenRepository)
 class DeviceTokenRepositoryImpl implements DeviceTokenRepository {
   DeviceTokenRepositoryImpl(this.deviceTokenService);
 

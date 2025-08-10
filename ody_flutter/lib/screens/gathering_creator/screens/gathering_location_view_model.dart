@@ -1,9 +1,11 @@
 import "dart:async";
 
 import "package:flutter/cupertino.dart";
+import "package:injectable/injectable.dart";
 import "package:ody_flutter/domain/model/location.dart";
 import "package:ody_flutter/domain/repository/location_repository.dart";
 
+@injectable
 class GatheringLocationViewModel extends ChangeNotifier {
   GatheringLocationViewModel(this.locationRepository) {
     _init();

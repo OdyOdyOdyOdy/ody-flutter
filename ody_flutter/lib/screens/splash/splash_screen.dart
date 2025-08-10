@@ -3,23 +3,14 @@ import "package:flutter_svg/flutter_svg.dart";
 import "package:ody_flutter/assets/colors/colors.dart";
 import "package:ody_flutter/assets/images/images.dart";
 import "package:ody_flutter/config/routes.dart";
-import "package:ody_flutter/data/db/service/auth_token_service.dart";
-import "package:ody_flutter/data/network/base/base_service.dart";
-import "package:ody_flutter/data/network/service/auth_service.dart";
-import "package:ody_flutter/data/repository/auth_repository_impl.dart";
+import "package:ody_flutter/di/di.dart";
 import "package:ody_flutter/screens/splash/splash_navigate_action.dart";
 import "package:ody_flutter/screens/splash/splash_view_model.dart";
 
 class SplashScreen extends StatelessWidget {
   SplashScreen({super.key});
 
-  // 추후에 주입 필요
-  final _viewModel = SplashViewModel(
-    AuthRepositoryImpl(
-      AuthService(BaseService(AuthTokenService())),
-      AuthTokenService(),
-    ),
-  );
+  final _viewModel = getIt<SplashViewModel>();
 
   @override
   Widget build(final BuildContext context) {

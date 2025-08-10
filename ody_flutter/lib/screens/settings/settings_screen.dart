@@ -6,10 +6,7 @@ import "package:ody_flutter/assets/images/images.dart";
 import "package:ody_flutter/components/ody_alert.dart";
 import "package:ody_flutter/components/ody_top_bar.dart";
 import "package:ody_flutter/config/routes.dart";
-import "package:ody_flutter/data/db/service/auth_token_service.dart";
-import "package:ody_flutter/data/network/base/base_service.dart";
-import "package:ody_flutter/data/network/service/auth_service.dart";
-import "package:ody_flutter/data/repository/auth_repository_impl.dart";
+import "package:ody_flutter/di/di.dart";
 import "package:ody_flutter/screens/settings/model/notification_setting.dart";
 import "package:ody_flutter/screens/settings/model/use_of_service_setting.dart";
 import "package:ody_flutter/screens/settings/settings_navigate_action.dart";
@@ -36,12 +33,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   void initState() {
     super.initState();
-    _viewModel = SettingViewModel(
-      AuthRepositoryImpl(
-        AuthService(BaseService(AuthTokenService())),
-        AuthTokenService(),
-      ),
-    );
+    _viewModel = getIt<SettingViewModel>();
     _viewModel.navigation.addListener(_onNavigationChanged);
     _webViewController = WebViewController();
   }

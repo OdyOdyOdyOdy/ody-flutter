@@ -1,5 +1,7 @@
 import "package:flutter/cupertino.dart";
+import "package:injectable/injectable.dart";
 
+@injectable
 class InvitationCodeViewModel extends ChangeNotifier {
   InvitationCodeViewModel() {
     _init();

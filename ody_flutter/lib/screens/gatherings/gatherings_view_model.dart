@@ -1,7 +1,9 @@
 import "package:flutter/cupertino.dart";
+import "package:injectable/injectable.dart";
 import "package:ody_flutter/domain/model/gathering2.dart";
 import "package:ody_flutter/domain/repository/gathering_repository.dart";
 
+@injectable
 class GatheringsViewModel extends ChangeNotifier {
   GatheringsViewModel(this._gatheringRepository);
 

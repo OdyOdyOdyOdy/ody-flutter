@@ -5,19 +5,15 @@ import "package:ody_flutter/assets/fonts/pretendard_fonts.dart";
 import "package:ody_flutter/assets/images/images.dart";
 import "package:ody_flutter/components/ody_text_field.dart";
 import "package:ody_flutter/components/ody_top_bar.dart";
-import "package:ody_flutter/data/db/service/auth_token_service.dart";
-import "package:ody_flutter/data/network/base/base_service.dart";
-import "package:ody_flutter/data/network/service/location_service.dart";
-import "package:ody_flutter/data/repository/location_repository_impl.dart";
+import "package:ody_flutter/di/di.dart";
 import "package:ody_flutter/domain/model/location.dart";
 import "package:ody_flutter/screens/gathering_creator/screens/gathering_location_view_model.dart";
 
 class GatheringLocationSearchScreen extends StatelessWidget {
   GatheringLocationSearchScreen({super.key});
 
-  final GatheringLocationViewModel _viewModel = GatheringLocationViewModel(
-    LocationRepositoryImpl(LocationService(BaseService(AuthTokenService()))),
-  );
+  final GatheringLocationViewModel _viewModel =
+      getIt<GatheringLocationViewModel>();
 
   @override
   Widget build(BuildContext context) => ListenableBuilder(

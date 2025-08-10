@@ -1,6 +1,8 @@
+import "package:injectable/injectable.dart";
 import "package:path/path.dart";
 import "package:sqflite/sqflite.dart";
 
+@Singleton()
 class DatabaseHelper {
   static Database? _database;
 

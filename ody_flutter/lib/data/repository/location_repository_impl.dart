@@ -1,8 +1,10 @@
+import "package:injectable/injectable.dart";
 import "package:ody_flutter/data/entity/mapper/location_mapper.dart";
 import "package:ody_flutter/data/network/service/location_service.dart";
 import "package:ody_flutter/domain/model/location.dart";
 import "package:ody_flutter/domain/repository/location_repository.dart";
 
+@Injectable(as: LocationRepository)
 class LocationRepositoryImpl implements LocationRepository {
   LocationRepositoryImpl(this.locationService);
 
