@@ -199,8 +199,7 @@ class _GatheringDetailScreenState extends State<GatheringDetailScreen> {
               _viewModel.detailGathering?.date != null &&
                       _viewModel.detailGathering?.time != null
                   ? _formatDateTime(
-                      "${_viewModel.detailGathering!.date} ${_viewModel.detailGathering!.time}",
-                    )
+                      """${_viewModel.detailGathering!.date} ${_viewModel.detailGathering!.time}""",)
                   : "",
             ),
             const SizedBox(height: 28),
@@ -267,8 +266,7 @@ class _GatheringDetailScreenState extends State<GatheringDetailScreen> {
             ],
           ),
           Text(
-            "오후 ${_viewModel.detailGathering?.departureTime ?? ""}분에 나가야 해요."
-            "\n출발 장소부터 약속 장소까지 ${_viewModel.detailGathering?.routeTime ?? ""}분 걸려요.",
+            """오후 ${_viewModel.detailGathering?.departureTime ?? ""}분에 나가야 해요.\n출발 장소부터 약속 장소까지 ${_viewModel.detailGathering?.routeTime ?? ""}분 걸려요.""",
             style: PretendardFonts.regular16
                 .copyWith(color: CommonColors.gray_800),
           ),
