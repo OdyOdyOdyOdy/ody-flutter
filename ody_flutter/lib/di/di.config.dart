@@ -70,10 +70,13 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.factory<_i201.LocationRepository>(
         () => _i601.LocationRepositoryImpl(gh<_i881.LocationService>()));
+    gh.factory<_i989.GatheringEnterViewModel>(
+        () => _i989.GatheringEnterViewModel(
+              gh<_i201.LocationRepository>(),
+              gh<_i11.GatheringRepository>(),
+            ));
     gh.factory<_i485.GatheringLocationViewModel>(
         () => _i485.GatheringLocationViewModel(gh<_i201.LocationRepository>()));
-    gh.factory<_i989.GatheringEnterViewModel>(
-        () => _i989.GatheringEnterViewModel(gh<_i201.LocationRepository>()));
     gh.factory<_i306.AuthRepository>(() => _i461.AuthRepositoryImpl(
           gh<_i308.AuthService>(),
           gh<_i967.AuthTokenService>(),
