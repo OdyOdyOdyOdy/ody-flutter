@@ -1,5 +1,6 @@
 import "package:injectable/injectable.dart";
 import "package:ody_flutter/data/db/service/auth_token_service.dart";
+import "package:ody_flutter/data/entity/gathering/enter_gathering_request.dart";
 import "package:ody_flutter/data/entity/gathering/gathering_detail_response.dart";
 import "package:ody_flutter/data/entity/gathering/gathering_request.dart";
 import "package:ody_flutter/data/entity/gathering/gathering_response.dart";
@@ -42,6 +43,27 @@ class GatheringService {
         path: "/v1/meetings/me",
       );
       return GatheringsResponse.fromJson(response);
+    } catch (_) {
+      rethrow;
+    }
+  }
+
+  Future<bool> enterGathering(EnterGatheringRequest request) async {
+    try {
+      return await baseService.postWithoutResponse(
+        path: "/v2/mates",
+        data: request.toJson(),
+      );
+    } catch (_) {
+      rethrow;
+    }
+  }
+
+  Future<bool> validateInvitationCode(String inviteCode) async {
+    try {
+      return await baseService.getWithoutResponse(
+        path: "/invite-codes/$inviteCode/validate",
+      );
     } catch (_) {
       rethrow;
     }
