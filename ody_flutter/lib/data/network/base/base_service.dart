@@ -28,16 +28,6 @@ class BaseService {
   void _setupInterceptors() {
     _dio.interceptors.add(
       InterceptorsWrapper(
-        onRequest: (options, handler) async {
-          final AuthToken? token = await _getStoredToken();
-
-          if (token != null) {
-            options.headers["Authorization"] =
-                "Bearer access-token=${token.accessToken}";
-          }
-
-          handler.next(options);
-        },
         onResponse: (response, handler) {
           _printSuccessLog(response);
           handler.next(response);
@@ -58,12 +48,40 @@ class BaseService {
     Map<String, dynamic>? headers,
   }) async {
     try {
+      final AuthToken? token = await _getStoredToken();
+      _dio.options.headers = headers ??
+          (token != null
+              ? {"Authorization": "Bearer access-token=${token.accessToken}"}
+              : {});
+
       final response = await _dio.post(
         path,
         data: data,
-        options: Options(headers: {...?headers}),
       );
       return response.data;
+    } on DioException catch (e) {
+      throw _handleError(e);
+    }
+  }
+
+  Future<bool> postWithoutResponse({
+    required String path,
+    required Map<String, dynamic> data,
+    Map<String, dynamic>? headers,
+  }) async {
+    try {
+      final AuthToken? token = await _getStoredToken();
+      _dio.options.headers = headers ??
+          (token != null
+              ? {"Authorization": "Bearer access-token=${token.accessToken}"}
+              : {});
+
+      final response = await _dio.post(
+        path,
+        data: data,
+      );
+      final statusCode = response.statusCode ?? 500;
+      return statusCode >= 200 && statusCode < 300;
     } on DioException catch (e) {
       throw _handleError(e);
     }
@@ -75,11 +93,38 @@ class BaseService {
     Map<String, dynamic>? headers,
   }) async {
     try {
+      final AuthToken? token = await _getStoredToken();
+      _dio.options.headers = headers ??
+          (token != null
+              ? {"Authorization": "Bearer access-token=${token.accessToken}"}
+              : {});
+
       final response = await _dio.getUri(
         Uri.parse(url ?? _dio.options.baseUrl + (path ?? "")),
-        options: Options(headers: {...?headers}),
       );
       return response.data;
+    } on DioException catch (e) {
+      throw _handleError(e);
+    }
+  }
+
+  Future<dynamic> getWithoutResponse({
+    String? url,
+    String? path,
+    Map<String, dynamic>? headers,
+  }) async {
+    try {
+      final AuthToken? token = await _getStoredToken();
+      _dio.options.headers = headers ??
+          (token != null
+              ? {"Authorization": "Bearer access-token=${token.accessToken}"}
+              : {});
+
+      final response = await _dio.getUri(
+        Uri.parse(url ?? _dio.options.baseUrl + (path ?? "")),
+      );
+      final statusCode = response.statusCode ?? 500;
+      return statusCode >= 200 && statusCode < 300;
     } on DioException catch (e) {
       throw _handleError(e);
     }
@@ -90,9 +135,14 @@ class BaseService {
     Map<String, dynamic>? headers,
   }) async {
     try {
+      final AuthToken? token = await _getStoredToken();
+      _dio.options.headers = headers ??
+          (token != null
+              ? {"Authorization": "Bearer access-token=${token.accessToken}"}
+              : {});
+
       final response = await _dio.delete(
         path,
-        options: Options(headers: {...?headers}),
       );
       return response.data;
     } on DioException catch (e) {
