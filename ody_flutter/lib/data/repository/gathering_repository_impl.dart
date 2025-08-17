@@ -46,4 +46,13 @@ class GatheringRepositoryImpl implements GatheringRepository {
       rethrow;
     }
   }
+
+  @override
+  Future<void> exitMeeting(int meetingId) async {
+    try {
+      await gatheringService.exitMeeting(meetingId);
+    } catch (_) {
+      rethrow;
+    }
+  }
 }

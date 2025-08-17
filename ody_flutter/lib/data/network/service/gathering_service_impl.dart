@@ -46,4 +46,14 @@ class GatheringService {
       rethrow;
     }
   }
+
+  Future<void> exitMeeting(int meetingId) async {
+    try {
+      await baseService.deleteWithResponse(
+        path: "/meetings/$meetingId/mate",
+      );
+    } catch (_) {
+      rethrow;
+    }
+  }
 }

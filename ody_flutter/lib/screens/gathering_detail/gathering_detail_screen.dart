@@ -12,6 +12,7 @@ import "package:ody_flutter/components/ody_top_bar.dart";
 import "package:ody_flutter/config/routes.dart";
 import "package:ody_flutter/di/di.dart";
 import "package:ody_flutter/domain/model/gathering_detail.dart";
+import "package:ody_flutter/screens/gathering_detail/gathering_detail_navigate_action.dart";
 import "package:ody_flutter/screens/gathering_detail/gathering_detail_view_model.dart";
 
 class GatheringDetailScreen extends StatefulWidget {
@@ -30,18 +31,29 @@ class _GatheringDetailScreenState extends State<GatheringDetailScreen> {
   late final GatheringDetailViewModel _viewModel;
 
   final ValueNotifier<bool> _isFloatingActionButtonPressed =
-  ValueNotifier(false);
+      ValueNotifier(false);
 
   @override
   void initState() {
     super.initState();
     _viewModel = getIt<GatheringDetailViewModel>();
-    _viewModel.addListener(_onViewModelChanged);
+    _viewModel
+      ..addListener(_onViewModelChanged)
+      ..addListener(_onNavigationChanged);
     unawaited(_viewModel.getDetailGathering(widget.gatheringId));
   }
 
   void _onViewModelChanged() {
     setState(() {});
+  }
+
+  Future<void> _onNavigationChanged() async {
+    final action = _viewModel.navigation.value;
+    if (action != null) {
+      if (action is NavigateToGatherings) {
+        await Navigator.pushReplacementNamed(context, Routes.gatherings);
+      }
+    }
   }
 
   String _formatDateTime(String dateTimeString) {
@@ -54,8 +66,7 @@ class _GatheringDetailScreenState extends State<GatheringDetailScreen> {
   }
 
   @override
-  Widget build(BuildContext context) =>
-      Scaffold(
+  Widget build(BuildContext context) => Scaffold(
         floatingActionButton: _buildFloatingActionButton(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         backgroundColor: CommonColors.cream,
@@ -72,28 +83,25 @@ class _GatheringDetailScreenState extends State<GatheringDetailScreen> {
         ),
       );
 
-  Widget _buildTopBar(BuildContext context) =>
-      OdyTopBar(
+  Widget _buildTopBar(BuildContext context) => OdyTopBar(
         title: _viewModel.detailGathering?.name ?? "",
         leftIcon: CommonImages.icArrowBack,
         rightIcon: CommonImages.icExit,
         onLeftIcon: () => Navigator.pop(context),
-        onRightIcon: () async =>
-            showDialog(
-              context: context,
-              builder: (context) =>
-                  OdyAlert(
-                    image: CommonImages.icSadOdy,
-                    title: _viewModel.detailGathering?.name ?? "",
-                    description: "약속을 정말 나가실 건가요?",
-                    confirmText: "나가기",
-                    onConfirm: () => Navigator.pop(context),
-                  ),
-            ),
+        onRightIcon: () async => showDialog(
+          context: context,
+          builder: (context) => OdyAlert(
+            image: CommonImages.icSadOdy,
+            title: _viewModel.detailGathering?.name ?? "",
+            description: "약속을 정말 나가실 건가요?",
+            confirmText: "나가기",
+            onConfirm: () =>
+                _viewModel.exitMeeting(_viewModel.detailGathering?.id ?? 0),
+          ),
+        ),
       );
 
-  Widget _buildMatesSection() =>
-      SizedBox(
+  Widget _buildMatesSection() => SizedBox(
         height: 123,
         child: DecoratedBox(
           decoration: const BoxDecoration(
@@ -125,16 +133,15 @@ class _GatheringDetailScreenState extends State<GatheringDetailScreen> {
                 }
               },
               separatorBuilder: (context, index) =>
-              index == _viewModel.detailGathering!.mates!.length - 1
-                  ? const SizedBox(width: 36)
-                  : const SizedBox(width: 8),
+                  index == _viewModel.detailGathering!.mates!.length - 1
+                      ? const SizedBox(width: 36)
+                      : const SizedBox(width: 8),
             ),
           ),
         ),
       );
 
-  Widget _buildInviteFriendSection() =>
-      Column(
+  Widget _buildInviteFriendSection() => Column(
         children: [
           Text(
             "친구를 초대해 보세요!",
@@ -162,8 +169,7 @@ class _GatheringDetailScreenState extends State<GatheringDetailScreen> {
         ],
       );
 
-  Widget _buildMateSection(Mates mate) =>
-      Column(
+  Widget _buildMateSection(Mates mate) => Column(
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(30),
@@ -183,8 +189,7 @@ class _GatheringDetailScreenState extends State<GatheringDetailScreen> {
         ],
       );
 
-  Widget _buildDetailSection() =>
-      Padding(
+  Widget _buildDetailSection() => Padding(
         padding: const EdgeInsets.only(left: 28, right: 28),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -192,11 +197,9 @@ class _GatheringDetailScreenState extends State<GatheringDetailScreen> {
             _buildDetailItem(
               "약속 시간",
               _viewModel.detailGathering?.date != null &&
-                  _viewModel.detailGathering?.time != null
+                      _viewModel.detailGathering?.time != null
                   ? _formatDateTime(
-                "${_viewModel.detailGathering!.date} ${_viewModel
-                    .detailGathering!.time }",
-              )
+                      """${_viewModel.detailGathering!.date} ${_viewModel.detailGathering!.time}""",)
                   : "",
             ),
             const SizedBox(height: 28),
@@ -215,14 +218,13 @@ class _GatheringDetailScreenState extends State<GatheringDetailScreen> {
         ),
       );
 
-  Widget _buildDetailItem(String title, String content) =>
-      Column(
+  Widget _buildDetailItem(String title, String content) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             title,
             style:
-            PretendardFonts.bold18.copyWith(color: CommonColors.purple_800),
+                PretendardFonts.bold18.copyWith(color: CommonColors.purple_800),
           ),
           Text(
             content,
@@ -232,8 +234,7 @@ class _GatheringDetailScreenState extends State<GatheringDetailScreen> {
         ],
       );
 
-  Widget _buildDepartureInfoSection() =>
-      Column(
+  Widget _buildDepartureInfoSection() => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
@@ -265,51 +266,46 @@ class _GatheringDetailScreenState extends State<GatheringDetailScreen> {
             ],
           ),
           Text(
-            "오후 ${_viewModel.detailGathering?.departureTime ?? ""}분에 나가야 해요."
-                "\n출발 장소부터 약속 장소까지 ${_viewModel.detailGathering?.routeTime ??
-                ""}분 걸려요.",
+            """오후 ${_viewModel.detailGathering?.departureTime ?? ""}분에 나가야 해요.\n출발 장소부터 약속 장소까지 ${_viewModel.detailGathering?.routeTime ?? ""}분 걸려요.""",
             style: PretendardFonts.regular16
                 .copyWith(color: CommonColors.gray_800),
           ),
         ],
       );
 
-  Widget _buildFloatingActionButton() =>
-      ValueListenableBuilder<bool>(
+  Widget _buildFloatingActionButton() => ValueListenableBuilder<bool>(
         valueListenable: _isFloatingActionButtonPressed,
-        builder: (context, isPressed, child) =>
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if (isPressed) _buildOdyButton(),
-                const SizedBox(width: 18),
-                FloatingActionButton(
-                  foregroundColor: CommonColors.white,
-                  backgroundColor: CommonColors.purple_800,
-                  onPressed: () =>
+        builder: (context, isPressed, child) => Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (isPressed) _buildOdyButton(),
+            const SizedBox(width: 18),
+            FloatingActionButton(
+              foregroundColor: CommonColors.white,
+              backgroundColor: CommonColors.purple_800,
+              onPressed: () =>
                   _isFloatingActionButtonPressed.value = !isPressed,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: isPressed
-                      ? SvgPicture.asset(CommonImages.icBigCancel)
-                      : SvgPicture.asset(CommonImages.icOdy),
-                ),
-                const SizedBox(width: 18),
-                if (isPressed) _buildLogButton(),
-              ],
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: isPressed
+                  ? SvgPicture.asset(CommonImages.icBigCancel)
+                  : SvgPicture.asset(CommonImages.icOdy),
             ),
+            const SizedBox(width: 18),
+            if (isPressed) _buildLogButton(),
+          ],
+        ),
       );
 
-  Widget _buildOdyButton() =>
-      OutlinedButton(
+  Widget _buildOdyButton() => OutlinedButton(
         onPressed: () async {
           await Navigator.pushNamed(context, Routes.etaBoard);
         },
         style: OutlinedButton.styleFrom(
           side: const BorderSide(color: CommonColors.purple_800),
           shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         ),
         child: Row(
           children: [
@@ -330,20 +326,19 @@ class _GatheringDetailScreenState extends State<GatheringDetailScreen> {
         ),
       );
 
-  Widget _buildLogButton() =>
-      OutlinedButton(
+  Widget _buildLogButton() => OutlinedButton(
         onPressed: () async {
           await Navigator.pushNamed(context, Routes.statusBoard);
         },
         style: OutlinedButton.styleFrom(
           side: const BorderSide(color: CommonColors.purple_800),
           shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         ),
         child: Text(
           "약속 로그",
           style:
-          PretendardFonts.bold16.copyWith(color: CommonColors.purple_800),
+              PretendardFonts.bold16.copyWith(color: CommonColors.purple_800),
         ),
       );
 }
