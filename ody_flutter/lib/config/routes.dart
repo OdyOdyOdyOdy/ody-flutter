@@ -33,7 +33,7 @@ Map<String, WidgetBuilder> namedRoutes = <String, WidgetBuilder>{
   "/gatheringEnter": (
     final BuildContext context,
   ) =>
-      GatheringEnterScreen(),
+      const GatheringEnterScreen(),
   "/gatheringEnterComplete": (final BuildContext context) =>
       const GatheringEnterCompleteScreen(),
 };

@@ -26,7 +26,9 @@ class EnterGatheringRequest {
   String? originLatitude;
   String? originLongitude;
 
-  static List<EnterGatheringRequest> fromList(List<Map<String, dynamic>> list) =>
+  static List<EnterGatheringRequest> fromList(
+    List<Map<String, dynamic>> list,
+  ) =>
       list.map(EnterGatheringRequest.fromJson).toList();
 
   Map<String, dynamic> toJson() {
@@ -37,4 +39,4 @@ class EnterGatheringRequest {
     data["originLongitude"] = originLongitude;
     return data;
   }
-} 
+}

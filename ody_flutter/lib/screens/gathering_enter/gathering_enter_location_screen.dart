@@ -48,10 +48,12 @@ class _GatheringEnterScreenState extends State<GatheringEnterScreen> {
           if (viewModel.isCompleted.value && mounted) {
             WidgetsBinding.instance.addPostFrameCallback(
               (_) {
-                unawaited(Navigator.pushNamed(
-                  context,
-                  Routes.gatheringEnterComplete,
-                ));
+                unawaited(
+                  Navigator.pushNamed(
+                    context,
+                    Routes.gatheringEnterComplete,
+                  ),
+                );
               },
             );
           }
