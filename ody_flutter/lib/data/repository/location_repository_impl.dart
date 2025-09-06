@@ -19,4 +19,14 @@ class LocationRepositoryImpl implements LocationRepository {
       rethrow;
     }
   }
+
+  @override
+  Future<LocationModel> fetchLocationWithCoord(String x, String y) async {
+    try {
+      final response = await locationService.fetchLocationWithCoord(x, y);
+      return response.toModel();
+    } catch (_) {
+      rethrow;
+    }
+  }
 }

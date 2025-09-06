@@ -62,6 +62,7 @@ class InvitationCodeScreen extends StatelessWidget {
                         await Navigator.pushNamed(
                           context,
                           Routes.gatheringEnter,
+                          arguments: viewModel.currentInvitationCode,
                         );
                       } else {
                         // to do: 초대 코드 유효하지 않을 때 토스트 메시지 띄우기

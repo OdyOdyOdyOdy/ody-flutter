@@ -91,6 +91,7 @@ class GatheringCreatorScreen extends StatelessWidget {
                             await Navigator.pushNamed(
                               context,
                               Routes.gatheringEnter,
+                              arguments: _viewModel.gathering?.inviteCode,
                             );
                           }
                           return;

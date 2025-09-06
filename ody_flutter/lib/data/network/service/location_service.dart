@@ -21,4 +21,20 @@ class LocationService {
       rethrow;
     }
   }
+
+  Future<LocationResponseData> fetchLocationWithCoord(
+    String x,
+    String y,
+  ) async {
+    try {
+      final response = await baseService.getWithResponse(
+        url:
+            "https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?x=$x&y=$y",
+        headers: {"Authorization": "KakaoAK ${dotenv.get("KAKAO_API_KEY")}"},
+      );
+      return LocationResponseData.fromJson(response);
+    } catch (_) {
+      rethrow;
+    }
+  }
 }
