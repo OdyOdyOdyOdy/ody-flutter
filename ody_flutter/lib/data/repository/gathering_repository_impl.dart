@@ -5,10 +5,12 @@ import "package:ody_flutter/data/entity/gathering/gathering_request.dart";
 import "package:ody_flutter/data/entity/mapper/gathering_detail_mapper.dart";
 import "package:ody_flutter/data/entity/mapper/gathering_mapper.dart";
 import "package:ody_flutter/data/entity/mapper/gatherings_mapper.dart";
+import "package:ody_flutter/data/entity/mapper/nudge_mapper.dart";
 import "package:ody_flutter/data/network/service/gathering_service.dart";
 import "package:ody_flutter/domain/model/gathering.dart";
 import "package:ody_flutter/domain/model/gathering2.dart";
 import "package:ody_flutter/domain/model/gathering_detail.dart";
+import "package:ody_flutter/domain/model/nudge.dart";
 import "package:ody_flutter/domain/repository/gathering_repository.dart";
 
 @Injectable(as: GatheringRepository)
@@ -75,6 +77,15 @@ class GatheringRepositoryImpl implements GatheringRepository {
     try {
       await gatheringService.exitMeeting(meetingId);
     } catch (_) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> postNudge(Nudge nudge) async {
+    try {
+      await gatheringService.postNudge(nudge.toEntity());
+    } catch(_) {
       rethrow;
     }
   }

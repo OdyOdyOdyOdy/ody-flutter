@@ -5,6 +5,7 @@ import "package:ody_flutter/data/entity/gathering/gathering_detail_response.dart
 import "package:ody_flutter/data/entity/gathering/gathering_request.dart";
 import "package:ody_flutter/data/entity/gathering/gathering_response.dart";
 import "package:ody_flutter/data/entity/gathering/gatherings_response.dart";
+import "package:ody_flutter/data/entity/gathering/nudge_request.dart";
 import "package:ody_flutter/data/network/base/base_service.dart";
 
 @injectable
@@ -52,6 +53,17 @@ class GatheringService {
     try {
       await baseService.deleteWithResponse(
         path: "/meetings/$meetingId/mate",
+      );
+    } catch (_) {
+      rethrow;
+    }
+  }
+
+  Future<void> postNudge(NudgeRequest request) async {
+    try {
+      await baseService.postWithResponse(
+        path: "/v1/mates/nudge",
+        data: request.toJson(),
       );
     } catch (_) {
       rethrow;
