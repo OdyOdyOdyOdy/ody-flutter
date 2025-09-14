@@ -1,3 +1,4 @@
+import "package:dio/dio.dart";
 import "package:injectable/injectable.dart";
 import "package:ody_flutter/data/db/service/auth_token_service.dart";
 import "package:ody_flutter/data/entity/gathering/enter_gathering_request.dart";
@@ -59,9 +60,9 @@ class GatheringService {
     }
   }
 
-  Future<void> postNudge(NudgeRequest request) async {
+  Future<Response<void>> postNudge(NudgeRequest request) async {
     try {
-      await baseService.postWithResponse(
+      return await baseService.post(
         path: "/v1/mates/nudge",
         data: request.toJson(),
       );

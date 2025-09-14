@@ -64,6 +64,31 @@ class BaseService {
     }
   }
 
+  Future<Response> post({
+    required String path,
+    required Map<String, dynamic> data,
+    Map<String, dynamic>? headers,
+  }) async {
+    try {
+      final AuthToken? token = await _getStoredToken();
+      _dio.options.headers = headers ??
+          (token != null
+              ? {"Authorization": "Bearer access-token=${token.accessToken}"}
+              : {});
+
+      final response = await _dio.post(
+        path,
+        data: data,
+        options: Options(
+          validateStatus: (status) => true,
+        ),
+      );
+      return response;
+    } on DioException catch (e) {
+      throw _handleError(e);
+    }
+  }
+
   Future<bool> postWithoutResponse({
     required String path,
     required Map<String, dynamic> data,

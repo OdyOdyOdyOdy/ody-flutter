@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import "package:injectable/injectable.dart";
 import "package:ody_flutter/data/db/service/auth_token_service.dart";
 import "package:ody_flutter/data/entity/gathering/enter_gathering_request.dart";
@@ -82,9 +83,9 @@ class GatheringRepositoryImpl implements GatheringRepository {
   }
 
   @override
-  Future<void> postNudge(Nudge nudge) async {
+  Future<Response<void>> postNudge(Nudge nudge) async {
     try {
-      await gatheringService.postNudge(nudge.toEntity());
+      return await gatheringService.postNudge(nudge.toEntity());
     } catch(_) {
       rethrow;
     }
