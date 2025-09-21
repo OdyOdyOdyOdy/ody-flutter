@@ -1,6 +1,5 @@
-import 'package:dio/dio.dart';
 import "package:flutter/cupertino.dart";
-import 'package:fluttertoast/fluttertoast.dart';
+import "package:fluttertoast/fluttertoast.dart";
 import "package:injectable/injectable.dart";
 import "package:ody_flutter/domain/model/nudge.dart";
 import "package:ody_flutter/domain/repository/gathering_repository.dart";

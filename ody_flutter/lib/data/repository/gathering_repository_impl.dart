@@ -1,4 +1,4 @@
-import 'package:dio/dio.dart';
+import "package:dio/dio.dart";
 import "package:injectable/injectable.dart";
 import "package:ody_flutter/data/db/service/auth_token_service.dart";
 import "package:ody_flutter/data/entity/gathering/enter_gathering_request.dart";

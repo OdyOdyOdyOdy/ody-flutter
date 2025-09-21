@@ -7,4 +7,3 @@ class Nudge {
   int? requestMateId;
   int? nudgedMateId;
 }
-
