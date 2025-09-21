@@ -41,29 +41,56 @@ class _GatheringsScreenState extends State<GatheringsScreen> {
         backgroundColor: CommonColors.cream,
         floatingActionButton: _buildFloatingActionButton(),
         body: SafeArea(
-          child: Column(
+          child: Stack(
             children: [
+              if (_viewModel.gatherings.isEmpty)
+                _buildEmptyGathering()
+              else
+                Padding(
+                  padding: const EdgeInsets.only(top: 60),
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 24),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 18),
+                          child: ListView.separated(
+                            itemCount: _viewModel.gatherings.length,
+                            itemBuilder: (context, index) =>
+                                _buildGatheringItem(
+                              _viewModel.gatherings[index],
+                            ),
+                            separatorBuilder: (context, index) =>
+                                const SizedBox(height: 18),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               OdyTopBar(
                 title: "오디",
                 rightIcon: CommonImages.icSetting,
                 onRightIcon: () async =>
                     Navigator.pushNamed(context, Routes.settings),
               ),
-              const SizedBox(height: 24),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 18),
-                  child: ListView.separated(
-                    itemCount: _viewModel.gatherings.length,
-                    itemBuilder: (context, index) =>
-                        _buildGatheringItem(_viewModel.gatherings[index]),
-                    separatorBuilder: (context, index) =>
-                        const SizedBox(height: 18),
-                  ),
-                ),
-              ),
             ],
           ),
+        ),
+      );
+
+  Widget _buildEmptyGathering() => Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset(CommonImages.icSadOdy),
+            const SizedBox(height: 39),
+            Text(
+              "아직 약속이 없어요.\n약속을 만들어 주세요!",
+              style: PretendardFonts.bold24.copyWith(color: CommonColors.black),
+              textAlign: TextAlign.center,
+            ),
+          ],
         ),
       );
 
