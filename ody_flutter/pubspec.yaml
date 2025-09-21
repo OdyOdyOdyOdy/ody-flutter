@@ -30,6 +30,7 @@ dependencies:
   sign_in_with_apple: ^6.1.4
   smooth_page_indicator: ^1.2.1
   sqflite: ^2.4.1
+  synchronized: ^3.1.0+1
   table_calendar: ^3.1.3
   webview_flutter: ^4.10.0
 dev_dependencies:
