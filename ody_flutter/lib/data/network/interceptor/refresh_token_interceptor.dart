@@ -14,7 +14,9 @@ class RefreshTokenInterceptor extends QueuedInterceptorsWrapper {
 
   @override
   Future<void> onError(
-      DioException err, ErrorInterceptorHandler handler) async {
+    DioException err,
+    ErrorInterceptorHandler handler,
+  ) async {
     if (err.response?.statusCode == 401) {
       await _lock.synchronized(() async {
         try {
