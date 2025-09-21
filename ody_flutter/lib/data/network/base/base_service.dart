@@ -1,7 +1,4 @@
-import "dart:convert";
-
 import "package:dio/dio.dart";
-import "package:flutter/foundation.dart";
 import "package:injectable/injectable.dart";
 import "package:ody_flutter/data/db/service/auth_token_service.dart";
 import "package:ody_flutter/data/network/base/base_exception.dart";

@@ -1,4 +1,3 @@
-
 import "package:dio/dio.dart";
 import "package:get_it/get_it.dart";
 import "package:injectable/injectable.dart";
@@ -21,5 +20,6 @@ void configureDependencies() {
 void _setupInterceptors() {
   final dio = getIt<Dio>();
   final authRepository = getIt<AuthRepository>();
-  dio.interceptors.add(RefreshTokenInterceptor(authRepository: authRepository, dio: dio));
+  dio.interceptors
+      .add(RefreshTokenInterceptor(authRepository: authRepository, dio: dio));
 }

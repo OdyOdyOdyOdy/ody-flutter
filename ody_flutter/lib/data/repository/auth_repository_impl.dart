@@ -2,7 +2,7 @@ import "package:dio/dio.dart";
 import "package:flutter_dotenv/flutter_dotenv.dart";
 import "package:injectable/injectable.dart";
 import "package:ody_flutter/data/db/service/auth_token_service.dart";
-import 'package:ody_flutter/data/entity/auth/login_response.dart';
+import "package:ody_flutter/data/entity/auth/login_response.dart";
 import "package:ody_flutter/data/entity/mapper/login_mapper.dart";
 import "package:ody_flutter/data/network/service/auth_service.dart";
 import "package:ody_flutter/domain/model/apple_login.dart";
