@@ -17,9 +17,12 @@ class BaseScreen<T extends BaseViewModel> extends StatelessWidget {
           children: [
             builder(context),
             if (viewModel.isLoading)
-              const Center(
-                child: CircularProgressIndicator(
-                  color: CommonColors.purple_800,
+              ColoredBox(
+                color: Colors.black.withValues(0.5),
+                child: const Center(
+                  child: CircularProgressIndicator(
+                    color: CommonColors.purple_800,
+                  ),
                 ),
               ),
           ],

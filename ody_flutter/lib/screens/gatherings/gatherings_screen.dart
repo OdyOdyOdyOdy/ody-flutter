@@ -1,5 +1,3 @@
-import "dart:async";
-
 import "package:flutter/material.dart";
 import "package:flutter_svg/svg.dart";
 import "package:ody_flutter/assets/colors/colors.dart";
@@ -33,44 +31,47 @@ class _GatheringsScreenState extends State<GatheringsScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        backgroundColor: CommonColors.cream,
-        floatingActionButton: _buildFloatingActionButton(),
-        body: SafeArea(
-          child: Stack(
-            children: [
-              if (_viewModel.gatherings.isEmpty)
-                _buildEmptyGathering()
-              else
-                Padding(
-                  padding: const EdgeInsets.only(top: 60),
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 24),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 18),
-                          child: ListView.separated(
-                            itemCount: _viewModel.gatherings.length,
-                            itemBuilder: (context, index) =>
-                                _buildGatheringItem(
-                              _viewModel.gatherings[index],
+  Widget build(BuildContext context) => BaseScreen(
+        viewModel: _viewModel,
+        builder: (context) => Scaffold(
+          backgroundColor: CommonColors.cream,
+          floatingActionButton: _buildFloatingActionButton(),
+          body: SafeArea(
+            child: Stack(
+              children: [
+                if (!_viewModel.isLoading && _viewModel.gatherings.isEmpty)
+                  _buildEmptyGathering()
+                else if (!_viewModel.isLoading)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 60),
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 24),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 18),
+                            child: ListView.separated(
+                              itemCount: _viewModel.gatherings.length,
+                              itemBuilder: (context, index) =>
+                                  _buildGatheringItem(
+                                _viewModel.gatherings[index],
+                              ),
+                              separatorBuilder: (context, index) =>
+                                  const SizedBox(height: 18),
                             ),
-                            separatorBuilder: (context, index) =>
-                                const SizedBox(height: 18),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
+                OdyTopBar(
+                  title: "오디",
+                  rightIcon: CommonImages.icSetting,
+                  onRightIcon: () async =>
+                      Navigator.pushNamed(context, Routes.settings),
                 ),
-              OdyTopBar(
-                title: "오디",
-                rightIcon: CommonImages.icSetting,
-                onRightIcon: () async =>
-                    Navigator.pushNamed(context, Routes.settings),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       );
