@@ -9,6 +9,7 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
@@ -37,6 +38,7 @@ import '../screens/invitation_code/invitation_code_view_model.dart' as _i1054;
 import '../screens/login/login_view_model.dart' as _i115;
 import '../screens/settings/settings_view_model.dart' as _i1051;
 import '../screens/splash/splash_view_model.dart' as _i737;
+import 'network_module.dart' as _i567;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -49,13 +51,17 @@ extension GetItInjectableX on _i174.GetIt {
       environment,
       environmentFilter,
     );
+    final networkModule = _$NetworkModule();
     gh.factory<_i363.DeviceTokenService>(() => _i363.DeviceTokenService());
     gh.factory<_i967.AuthTokenService>(() => _i967.AuthTokenService());
     gh.singleton<_i756.DatabaseHelper>(() => _i756.DatabaseHelper());
-    gh.factory<_i139.BaseService>(
-        () => _i139.BaseService(gh<_i967.AuthTokenService>()));
+    gh.lazySingleton<_i361.Dio>(() => networkModule.dio());
     gh.factory<_i1010.DeviceTokenRepository>(
         () => _i320.DeviceTokenRepositoryImpl(gh<_i363.DeviceTokenService>()));
+    gh.factory<_i139.BaseService>(() => _i139.BaseService(
+          gh<_i967.AuthTokenService>(),
+          gh<_i361.Dio>(),
+        ));
     gh.factory<_i1027.GatheringService>(() => _i1027.GatheringService(
           gh<_i139.BaseService>(),
           gh<_i967.AuthTokenService>(),
@@ -100,3 +106,5 @@ extension GetItInjectableX on _i174.GetIt {
     return this;
   }
 }
+
+class _$NetworkModule extends _i567.NetworkModule {}
