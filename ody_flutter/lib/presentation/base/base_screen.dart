@@ -18,7 +18,7 @@ class BaseScreen<T extends BaseViewModel> extends StatelessWidget {
             builder(context),
             if (viewModel.isLoading)
               ColoredBox(
-                color: Colors.black.withValues(0.5),
+                color: Colors.black.withValues(alpha: 0.5),
                 child: const Center(
                   child: CircularProgressIndicator(
                     color: CommonColors.purple_800,

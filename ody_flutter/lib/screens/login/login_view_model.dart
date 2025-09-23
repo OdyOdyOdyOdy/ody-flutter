@@ -27,7 +27,7 @@ class LoginViewModel extends BaseViewModel {
     String? nickname,
     String? authorizationCode,
   ) async {
-    load(() async {
+    await load(() async {
       final DeviceToken? deviceToken = await _tokenRepository.getToken();
       final AppleLogin request = AppleLogin(
         deviceToken: deviceToken?.device,

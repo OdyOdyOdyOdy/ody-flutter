@@ -51,7 +51,8 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 _topContent(),
                 Padding(
-                  padding: const EdgeInsets.only(left: 21, bottom: 25, right: 21),
+                  padding:
+                      const EdgeInsets.only(left: 21, bottom: 25, right: 21),
                   child: SignInWithAppleButton(
                     onPressed: _appleLogin,
                     text: "Apple로 로그인",
