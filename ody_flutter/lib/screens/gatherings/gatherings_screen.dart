@@ -9,6 +9,7 @@ import "package:ody_flutter/components/ody_top_bar.dart";
 import "package:ody_flutter/config/routes.dart";
 import "package:ody_flutter/di/di.dart";
 import "package:ody_flutter/domain/model/gathering2.dart";
+import "package:ody_flutter/presentation/base/base_screen.dart";
 import "package:ody_flutter/screens/gatherings/gatherings_view_model.dart";
 
 class GatheringsScreen extends StatefulWidget {
@@ -28,41 +29,39 @@ class _GatheringsScreenState extends State<GatheringsScreen> {
   void initState() {
     super.initState();
     _viewModel = getIt<GatheringsViewModel>();
-    _viewModel.addListener(_onViewModelChanged);
     unawaited(_viewModel.getGatherings());
   }
 
-  void _onViewModelChanged() {
-    setState(() {});
-  }
-
   @override
-  Widget build(BuildContext context) => Scaffold(
-        backgroundColor: CommonColors.cream,
-        floatingActionButton: _buildFloatingActionButton(),
-        body: SafeArea(
-          child: Column(
-            children: [
-              OdyTopBar(
-                title: "오디",
-                rightIcon: CommonImages.icSetting,
-                onRightIcon: () async =>
-                    Navigator.pushNamed(context, Routes.settings),
-              ),
-              const SizedBox(height: 24),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 18),
-                  child: ListView.separated(
-                    itemCount: _viewModel.gatherings.length,
-                    itemBuilder: (context, index) =>
-                        _buildGatheringItem(_viewModel.gatherings[index]),
-                    separatorBuilder: (context, index) =>
-                        const SizedBox(height: 18),
+  Widget build(BuildContext context) => BaseScreen(
+        viewModel: _viewModel,
+        builder: (context) => Scaffold(
+          backgroundColor: CommonColors.cream,
+          floatingActionButton: _buildFloatingActionButton(),
+          body: SafeArea(
+            child: Column(
+              children: [
+                OdyTopBar(
+                  title: "오디",
+                  rightIcon: CommonImages.icSetting,
+                  onRightIcon: () async =>
+                      Navigator.pushNamed(context, Routes.settings),
+                ),
+                const SizedBox(height: 24),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 18),
+                    child: ListView.separated(
+                      itemCount: _viewModel.gatherings.length,
+                      itemBuilder: (context, index) =>
+                          _buildGatheringItem(_viewModel.gatherings[index]),
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(height: 18),
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       );
@@ -287,9 +286,5 @@ class _GatheringsScreenState extends State<GatheringsScreen> {
     await Navigator.pushNamed(context, routeName);
   }
 
-  @override
-  void dispose() {
-    _viewModel.removeListener(_onViewModelChanged);
-    super.dispose();
-  }
+
 }
