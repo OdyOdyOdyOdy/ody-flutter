@@ -7,8 +7,8 @@ import "package:ody_flutter/di/di.dart";
 import "package:ody_flutter/firebase_options.dart";
 
 Future<void> main() async {
-  configureDependencies();
   await dotenv.load();
+  configureDependencies();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
