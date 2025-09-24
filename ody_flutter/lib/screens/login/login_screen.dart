@@ -8,6 +8,7 @@ import "package:ody_flutter/assets/fonts/pretendard_fonts.dart";
 import "package:ody_flutter/assets/images/images.dart";
 import "package:ody_flutter/config/routes.dart";
 import "package:ody_flutter/di/di.dart";
+import "package:ody_flutter/presentation/base/base_screen.dart";
 import "package:ody_flutter/screens/login/login_navigate_action.dart";
 import "package:ody_flutter/screens/login/login_view_model.dart";
 import "package:sign_in_with_apple/sign_in_with_apple.dart";
@@ -40,21 +41,25 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   @override
-  Widget build(final BuildContext context) => Scaffold(
-        backgroundColor: CommonColors.cream,
-        body: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _topContent(),
-              Padding(
-                padding: const EdgeInsets.only(left: 21, bottom: 25, right: 21),
-                child: SignInWithAppleButton(
-                  onPressed: _appleLogin,
-                  text: "Apple로 로그인",
+  Widget build(final BuildContext context) => BaseScreen(
+        viewModel: _viewModel,
+        builder: (context) => Scaffold(
+          backgroundColor: CommonColors.cream,
+          body: SafeArea(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _topContent(),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 21, bottom: 25, right: 21),
+                  child: SignInWithAppleButton(
+                    onPressed: _appleLogin,
+                    text: "Apple로 로그인",
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       );

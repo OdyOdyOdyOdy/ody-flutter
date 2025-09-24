@@ -9,6 +9,7 @@ import "package:ody_flutter/components/ody_top_bar.dart";
 import "package:ody_flutter/config/routes.dart";
 import "package:ody_flutter/di/di.dart";
 import "package:ody_flutter/domain/model/gathering2.dart";
+import "package:ody_flutter/presentation/base/base_screen.dart";
 import "package:ody_flutter/screens/gatherings/gatherings_view_model.dart";
 
 class GatheringsScreen extends StatefulWidget {
@@ -28,53 +29,51 @@ class _GatheringsScreenState extends State<GatheringsScreen> {
   void initState() {
     super.initState();
     _viewModel = getIt<GatheringsViewModel>();
-    _viewModel.addListener(_onViewModelChanged);
     unawaited(_viewModel.getGatherings());
   }
 
-  void _onViewModelChanged() {
-    setState(() {});
-  }
-
   @override
-  Widget build(BuildContext context) => Scaffold(
-        backgroundColor: CommonColors.cream,
-        floatingActionButton: _buildFloatingActionButton(),
-        body: SafeArea(
-          child: Stack(
-            children: [
-              if (_viewModel.gatherings.isEmpty)
-                _buildEmptyGathering()
-              else
-                Padding(
-                  padding: const EdgeInsets.only(top: 60),
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 24),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 18),
-                          child: ListView.separated(
-                            itemCount: _viewModel.gatherings.length,
-                            itemBuilder: (context, index) =>
-                                _buildGatheringItem(
-                              _viewModel.gatherings[index],
+  Widget build(BuildContext context) => BaseScreen(
+        viewModel: _viewModel,
+        builder: (context) => Scaffold(
+          backgroundColor: CommonColors.cream,
+          floatingActionButton: _buildFloatingActionButton(),
+          body: SafeArea(
+            child: Stack(
+              children: [
+                if (!_viewModel.isLoading && _viewModel.gatherings.isEmpty)
+                  _buildEmptyGathering()
+                else if (!_viewModel.isLoading)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 60),
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 24),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 18),
+                            child: ListView.separated(
+                              itemCount: _viewModel.gatherings.length,
+                              itemBuilder: (context, index) =>
+                                  _buildGatheringItem(
+                                _viewModel.gatherings[index],
+                              ),
+                              separatorBuilder: (context, index) =>
+                                  const SizedBox(height: 18),
                             ),
-                            separatorBuilder: (context, index) =>
-                                const SizedBox(height: 18),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
+                OdyTopBar(
+                  title: "오디",
+                  rightIcon: CommonImages.icSetting,
+                  onRightIcon: () async =>
+                      Navigator.pushNamed(context, Routes.settings),
                 ),
-              OdyTopBar(
-                title: "오디",
-                rightIcon: CommonImages.icSetting,
-                onRightIcon: () async =>
-                    Navigator.pushNamed(context, Routes.settings),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       );
@@ -312,11 +311,5 @@ class _GatheringsScreenState extends State<GatheringsScreen> {
   Future<void> _navigateTo(String routeName) async {
     _isFloatingActionButtonPressed.value = false;
     await Navigator.pushNamed(context, routeName);
-  }
-
-  @override
-  void dispose() {
-    _viewModel.removeListener(_onViewModelChanged);
-    super.dispose();
   }
 }

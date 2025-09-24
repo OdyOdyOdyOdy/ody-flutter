@@ -6,10 +6,11 @@ import "package:ody_flutter/domain/model/auth_token.dart";
 import "package:ody_flutter/domain/model/device_token.dart";
 import "package:ody_flutter/domain/repository/auth_repository.dart";
 import "package:ody_flutter/domain/repository/device_token_repository.dart";
+import "package:ody_flutter/presentation/base/base_view_model.dart";
 import "package:ody_flutter/screens/login/login_navigate_action.dart";
 
 @injectable
-class LoginViewModel extends ChangeNotifier {
+class LoginViewModel extends BaseViewModel {
   LoginViewModel(this._authRepository, this._tokenRepository);
 
   final AuthRepository _authRepository;
@@ -26,20 +27,22 @@ class LoginViewModel extends ChangeNotifier {
     String? nickname,
     String? authorizationCode,
   ) async {
-    final DeviceToken? deviceToken = await _tokenRepository.getToken();
-    final AppleLogin request = AppleLogin(
-      deviceToken: deviceToken?.device,
-      providerId: providerId,
-      nickname: nickname,
-      imageUrl: "",
-      authorizationCode: authorizationCode,
-    );
-    final AuthToken authToken = await _authRepository.login(request);
-    await _authRepository.saveToken(
-      authToken.accessToken!,
-      authToken.refreshToken!,
-    );
+    await load(() async {
+      final DeviceToken? deviceToken = await _tokenRepository.getToken();
+      final AppleLogin request = AppleLogin(
+        deviceToken: deviceToken?.device,
+        providerId: providerId,
+        nickname: nickname,
+        imageUrl: "",
+        authorizationCode: authorizationCode,
+      );
+      final AuthToken authToken = await _authRepository.login(request);
+      await _authRepository.saveToken(
+        authToken.accessToken!,
+        authToken.refreshToken!,
+      );
 
-    navigation.value = NavigateToGatherings();
+      navigation.value = NavigateToGatherings();
+    });
   }
 }
