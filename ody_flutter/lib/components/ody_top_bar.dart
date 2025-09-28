@@ -33,10 +33,11 @@ class OdyTopBar extends StatelessWidget {
               Row(
                 children: [
                   const SizedBox(width: 14),
-                  GestureDetector(
-                    onTap: onLeftIcon ?? () => Navigator.of(context).pop(),
-                    child: SvgPicture.asset(leftIcon),
-                  ),
+                  if (leftIcon.isNotEmpty)
+                    GestureDetector(
+                      onTap: onLeftIcon ?? () => Navigator.of(context).pop(),
+                      child: SvgPicture.asset(leftIcon),
+                    ),
                   const SizedBox(width: 12),
                   SizedBox(
                     width: 228,
@@ -60,10 +61,11 @@ class OdyTopBar extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 12),
-                  GestureDetector(
-                    onTap: onRightIcon,
-                    child: SvgPicture.asset(rightIcon),
-                  ),
+                  if (rightIcon.isNotEmpty)
+                    GestureDetector(
+                      onTap: onRightIcon,
+                      child: SvgPicture.asset(rightIcon),
+                    ),
                   const SizedBox(width: 14),
                 ],
               ),

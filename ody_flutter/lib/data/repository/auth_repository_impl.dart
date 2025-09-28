@@ -75,7 +75,11 @@ class AuthRepositoryImpl extends AuthRepository {
 
       final response = await dio.post(
         "/v1/auth/refresh",
-        data: {"refreshToken": token!.refreshToken},
+        options: Options(
+          headers: {
+            "Authorization": "Bearer access-token=${token!.accessToken} refresh-token=${token.refreshToken}",
+          },
+        ),
       );
 
       final newAuthToken = LoginResponse.fromJson(response.data).toModel();
