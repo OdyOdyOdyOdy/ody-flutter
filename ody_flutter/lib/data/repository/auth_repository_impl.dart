@@ -77,7 +77,9 @@ class AuthRepositoryImpl extends AuthRepository {
         "/v1/auth/refresh",
         options: Options(
           headers: {
-            "Authorization": "Bearer access-token=${token!.accessToken} refresh-token=${token.refreshToken}",
+            "Authorization":
+                "Bearer access-token=${token!.accessToken} "
+                    "\nrefresh-token=${token.refreshToken}",
           },
         ),
       );
