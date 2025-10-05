@@ -24,7 +24,8 @@ class InvitationCodeViewModel extends BaseViewModel {
   Future<void> enterInvitationCode() async {
     try {
       final isValid = await load<bool>(
-        () => _gatheringRepository.validateInvitationCode(currentInvitationCode),
+        () =>
+            _gatheringRepository.validateInvitationCode(currentInvitationCode),
       );
       isValidCode.value = isValid;
     } on Exception catch (_) {
