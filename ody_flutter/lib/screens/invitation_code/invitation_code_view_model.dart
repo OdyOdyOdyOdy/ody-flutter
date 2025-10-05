@@ -1,9 +1,10 @@
 import "package:flutter/cupertino.dart";
 import "package:injectable/injectable.dart";
 import "package:ody_flutter/domain/repository/gathering_repository.dart";
+import "package:ody_flutter/screens/base/base_view_model.dart";
 
 @injectable
-class InvitationCodeViewModel extends ChangeNotifier {
+class InvitationCodeViewModel extends BaseViewModel {
   InvitationCodeViewModel(this._gatheringRepository) {
     _init();
   }
@@ -22,11 +23,14 @@ class InvitationCodeViewModel extends ChangeNotifier {
 
   Future<void> enterInvitationCode() async {
     try {
-      final isValid = await _gatheringRepository
-          .validateInvitationCode(currentInvitationCode);
+      final isValid = await load<bool>(
+        () =>
+            _gatheringRepository.validateInvitationCode(currentInvitationCode),
+      );
       isValidCode.value = isValid;
     } on Exception catch (_) {
       isValidCode.value = false;
+      showSnackBar("초대 코드가 뭔가 이상한데요? 🤔");
     }
   }
 }

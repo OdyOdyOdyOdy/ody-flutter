@@ -9,7 +9,7 @@ import "package:ody_flutter/components/ody_top_bar.dart";
 import "package:ody_flutter/config/routes.dart";
 import "package:ody_flutter/di/di.dart";
 import "package:ody_flutter/domain/model/gathering2.dart";
-import "package:ody_flutter/presentation/base/base_screen.dart";
+import "package:ody_flutter/screens/base/base_screen.dart";
 import "package:ody_flutter/screens/gatherings/gatherings_view_model.dart";
 
 class GatheringsScreen extends StatefulWidget {
