@@ -79,7 +79,7 @@ class AuthRepositoryImpl extends AuthRepository {
           headers: {
             "Authorization":
                 "Bearer access-token=${token!.accessToken} "
-                    "\nrefresh-token=${token.refreshToken}",
+                    "refresh-token=${token.refreshToken}",
           },
         ),
       );
