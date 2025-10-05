@@ -1,8 +1,8 @@
 import "package:ody_flutter/data/entity/gathering/gathering_request.dart";
 import "package:ody_flutter/data/entity/gathering/gathering_response.dart";
-import "package:ody_flutter/domain/model/gathering.dart";
+import "package:ody_flutter/domain/model/new_gathering.dart";
 
-extension ToData on Gathering {
+extension ToData on NewGathering {
   GatheringRequest toEntity() => GatheringRequest(
         name: name,
         date: date,
@@ -14,7 +14,7 @@ extension ToData on Gathering {
 }
 
 extension ToDomain on GatheringResponse {
-  Gathering toModel() => Gathering(
+  NewGathering toModel() => NewGathering(
         id: id,
         name: name,
         date: date,

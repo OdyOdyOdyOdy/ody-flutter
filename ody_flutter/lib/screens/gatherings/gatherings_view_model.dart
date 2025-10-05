@@ -1,5 +1,5 @@
 import "package:injectable/injectable.dart";
-import "package:ody_flutter/domain/model/gathering2.dart";
+import "package:ody_flutter/domain/model/gathering.dart";
 import "package:ody_flutter/domain/repository/gathering_repository.dart";
 import "package:ody_flutter/screens/base/base_view_model.dart";
 
@@ -9,9 +9,9 @@ class GatheringsViewModel extends BaseViewModel {
 
   final GatheringRepository _gatheringRepository;
 
-  final List<Gathering2> _gatherings = [];
+  final List<Gathering> _gatherings = [];
 
-  List<Gathering2> get gatherings => _gatherings;
+  List<Gathering> get gatherings => _gatherings;
 
   Future getGatherings() async {
     await load(
