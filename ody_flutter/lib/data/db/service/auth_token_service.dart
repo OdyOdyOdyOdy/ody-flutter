@@ -9,6 +9,7 @@ class AuthTokenService {
 
   Future<int> saveToken(AuthToken authToken) async {
     final Database db = await _databaseHelper.database;
+    await db.delete("auth_token");
     return db.insert("auth_token", authToken.toMap());
   }
 
