@@ -6,7 +6,7 @@ import "package:ody_flutter/domain/model/auth_token.dart";
 import "package:ody_flutter/domain/model/device_token.dart";
 import "package:ody_flutter/domain/repository/auth_repository.dart";
 import "package:ody_flutter/domain/repository/device_token_repository.dart";
-import "package:ody_flutter/presentation/base/base_view_model.dart";
+import "package:ody_flutter/screens/base/base_view_model.dart";
 import "package:ody_flutter/screens/login/login_navigate_action.dart";
 
 @injectable

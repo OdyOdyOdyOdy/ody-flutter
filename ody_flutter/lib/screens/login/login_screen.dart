@@ -8,7 +8,7 @@ import "package:ody_flutter/assets/fonts/pretendard_fonts.dart";
 import "package:ody_flutter/assets/images/images.dart";
 import "package:ody_flutter/config/routes.dart";
 import "package:ody_flutter/di/di.dart";
-import "package:ody_flutter/presentation/base/base_screen.dart";
+import "package:ody_flutter/screens/base/base_screen.dart";
 import "package:ody_flutter/screens/login/login_navigate_action.dart";
 import "package:ody_flutter/screens/login/login_view_model.dart";
 import "package:sign_in_with_apple/sign_in_with_apple.dart";

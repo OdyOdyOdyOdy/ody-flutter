@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
 import "package:ody_flutter/assets/colors/colors.dart";
-import "package:ody_flutter/presentation/base/base_view_model.dart";
+import "package:ody_flutter/screens/base/base_view_model.dart";
 
 class BaseScreen<T extends BaseViewModel> extends StatelessWidget {
 

@@ -1,7 +1,7 @@
 import "package:injectable/injectable.dart";
 import "package:ody_flutter/domain/model/gathering2.dart";
 import "package:ody_flutter/domain/repository/gathering_repository.dart";
-import "package:ody_flutter/presentation/base/base_view_model.dart";
+import "package:ody_flutter/screens/base/base_view_model.dart";
 
 @injectable
 class GatheringsViewModel extends BaseViewModel {
