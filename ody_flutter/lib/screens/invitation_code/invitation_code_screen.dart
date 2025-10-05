@@ -8,6 +8,7 @@ import "package:ody_flutter/components/ody_text_field.dart";
 import "package:ody_flutter/components/ody_top_bar.dart";
 import "package:ody_flutter/config/routes.dart";
 import "package:ody_flutter/di/di.dart";
+import "package:ody_flutter/screens/base/base_screen.dart";
 import "package:ody_flutter/screens/invitation_code/invitation_code_view_model.dart";
 
 class InvitationCodeScreen extends StatelessWidget {
@@ -16,9 +17,9 @@ class InvitationCodeScreen extends StatelessWidget {
   final InvitationCodeViewModel viewModel = getIt<InvitationCodeViewModel>();
 
   @override
-  Widget build(final BuildContext context) => ListenableBuilder(
-        listenable: viewModel,
-        builder: (BuildContext context, Widget? child) => Scaffold(
+  Widget build(final BuildContext context) => BaseScreen(
+        viewModel: viewModel,
+        builder: (BuildContext context) => Scaffold(
           backgroundColor: CommonColors.cream,
           body: SafeArea(
             child: ColoredBox(
@@ -64,8 +65,6 @@ class InvitationCodeScreen extends StatelessWidget {
                           Routes.gatheringEnter,
                           arguments: viewModel.currentInvitationCode,
                         );
-                      } else {
-                        // to do: 초대 코드 유효하지 않을 때 토스트 메시지 띄우기
                       }
                     },
                     isEnabled: viewModel.isConfirmEnabled,

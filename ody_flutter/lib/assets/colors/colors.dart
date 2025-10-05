@@ -19,6 +19,7 @@ class CommonColors {
   static const Color gray_700 = Color(0xFF48484A);
   static const Color gray_800 = Color(0xFF3A3A3C);
   static const Color gray_800_20 = Color(0x332F2F2F);
+  static const Color gray_850 = Color(0xFF322F35);
   static const Color gray_900 = Color(0xFF1C1C1E);
   static const Color gray_900_50 = Color(0x801C1C1E);
 
