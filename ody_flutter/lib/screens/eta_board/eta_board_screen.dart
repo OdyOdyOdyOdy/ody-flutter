@@ -34,7 +34,7 @@ class _EtaBoardScreenState extends State<EtaBoardScreen> {
     debugPrint("EtaBoardScreen initState");
     super.initState();
     _viewModel = getIt<EtaBoardViewModel>();
-    // to-do: 
+    // to-do: 서버에서 알림 받으면 시작하도록 로직 수정 필요
     unawaited(_viewModel.startPolling(widget.gatheringId));
   }
 

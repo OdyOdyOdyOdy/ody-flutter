@@ -1,9 +1,9 @@
 import "package:dio/dio.dart";
 import "package:ody_flutter/data/entity/gathering/enter_gathering_request.dart";
 import "package:ody_flutter/data/entity/gathering/gathering_request.dart";
-import "package:ody_flutter/domain/model/new_gathering.dart";
 import "package:ody_flutter/domain/model/gathering.dart";
 import "package:ody_flutter/domain/model/gathering_detail.dart";
+import "package:ody_flutter/domain/model/new_gathering.dart";
 import "package:ody_flutter/domain/model/nudge.dart";
 
 abstract class GatheringRepository {

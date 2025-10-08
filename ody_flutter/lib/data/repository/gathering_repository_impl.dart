@@ -8,9 +8,9 @@ import "package:ody_flutter/data/entity/mapper/gathering_mapper.dart";
 import "package:ody_flutter/data/entity/mapper/gatherings_mapper.dart";
 import "package:ody_flutter/data/entity/mapper/nudge_mapper.dart";
 import "package:ody_flutter/data/network/service/gathering_service.dart";
-import "package:ody_flutter/domain/model/new_gathering.dart";
 import "package:ody_flutter/domain/model/gathering.dart";
 import "package:ody_flutter/domain/model/gathering_detail.dart";
+import "package:ody_flutter/domain/model/new_gathering.dart";
 import "package:ody_flutter/domain/model/nudge.dart";
 import "package:ody_flutter/domain/repository/gathering_repository.dart";
 
