@@ -12,6 +12,7 @@ import "package:ody_flutter/components/ody_top_bar.dart";
 import "package:ody_flutter/config/routes.dart";
 import "package:ody_flutter/di/di.dart";
 import "package:ody_flutter/domain/model/gathering_detail.dart";
+import "package:ody_flutter/screens/eta_board/model/eta_board_argument.dart";
 import "package:ody_flutter/screens/gathering_detail/gathering_detail_navigate_action.dart";
 import "package:ody_flutter/screens/gathering_detail/gathering_detail_view_model.dart";
 
@@ -199,7 +200,8 @@ class _GatheringDetailScreenState extends State<GatheringDetailScreen> {
               _viewModel.detailGathering?.date != null &&
                       _viewModel.detailGathering?.time != null
                   ? _formatDateTime(
-                      """${_viewModel.detailGathering!.date} ${_viewModel.detailGathering!.time}""",)
+                      """${_viewModel.detailGathering!.date} ${_viewModel.detailGathering!.time}""",
+                    )
                   : "",
             ),
             const SizedBox(height: 28),
@@ -300,7 +302,14 @@ class _GatheringDetailScreenState extends State<GatheringDetailScreen> {
 
   Widget _buildOdyButton() => OutlinedButton(
         onPressed: () async {
-          await Navigator.pushNamed(context, Routes.etaBoard);
+          await Navigator.pushNamed(
+            context,
+            Routes.etaBoard,
+            arguments: EtaBoardArgument(
+              title: _viewModel.detailGathering?.name ?? "",
+              gatheringId: _viewModel.detailGathering?.id ?? 0,
+            ),
+          );
         },
         style: OutlinedButton.styleFrom(
           side: const BorderSide(color: CommonColors.purple_800),

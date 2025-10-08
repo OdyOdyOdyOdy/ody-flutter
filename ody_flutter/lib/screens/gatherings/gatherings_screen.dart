@@ -10,6 +10,7 @@ import "package:ody_flutter/config/routes.dart";
 import "package:ody_flutter/di/di.dart";
 import "package:ody_flutter/domain/model/gathering.dart";
 import "package:ody_flutter/presentation/base/base_screen.dart";
+import "package:ody_flutter/screens/eta_board/model/eta_board_argument.dart";
 import "package:ody_flutter/screens/gatherings/gatherings_view_model.dart";
 
 class GatheringsScreen extends StatefulWidget {
@@ -235,7 +236,17 @@ class _GatheringsScreenState extends State<GatheringsScreen> {
                 right: 22,
                 bottom: 12,
                 child: GestureDetector(
-                  onTap: () async => _navigateTo(Routes.etaBoard),
+                  onTap: () async {
+                    _isFloatingActionButtonPressed.value = false;
+                    await Navigator.pushNamed(
+                      context,
+                      Routes.etaBoard,
+                      arguments: EtaBoardArgument(
+                        title: gathering.name,
+                        gatheringId: gathering.id,
+                      ),
+                    );
+                  },
                   child: Container(
                     width: 86,
                     height: 37,

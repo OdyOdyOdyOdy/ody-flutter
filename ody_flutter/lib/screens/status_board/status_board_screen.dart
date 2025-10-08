@@ -60,6 +60,7 @@ class _StatusBoardScreenState extends State<StatusBoardScreen> {
         height: 37,
         child: FloatingActionButton.extended(
           onPressed: () async {
+            // to-do: API 연결 후 오디 화면으로 이동 구현 필요
             await Navigator.pushNamed(context, Routes.etaBoard);
           },
           backgroundColor: CommonColors.purple_800,
