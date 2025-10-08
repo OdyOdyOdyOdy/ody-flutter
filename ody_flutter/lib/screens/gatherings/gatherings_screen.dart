@@ -8,8 +8,9 @@ import "package:ody_flutter/assets/images/images.dart";
 import "package:ody_flutter/components/ody_top_bar.dart";
 import "package:ody_flutter/config/routes.dart";
 import "package:ody_flutter/di/di.dart";
-import "package:ody_flutter/domain/model/gathering2.dart";
+import "package:ody_flutter/domain/model/gathering.dart";
 import "package:ody_flutter/screens/base/base_screen.dart";
+import "package:ody_flutter/screens/eta_board/model/eta_board_argument.dart";
 import "package:ody_flutter/screens/gatherings/gatherings_view_model.dart";
 
 class GatheringsScreen extends StatefulWidget {
@@ -159,7 +160,7 @@ class _GatheringsScreenState extends State<GatheringsScreen> {
         ),
       );
 
-  Widget _buildGatheringItem(Gathering2 gathering) => GestureDetector(
+  Widget _buildGatheringItem(Gathering gathering) => GestureDetector(
         onTap: () async {
           await Navigator.pushNamed(
             context,
@@ -235,7 +236,17 @@ class _GatheringsScreenState extends State<GatheringsScreen> {
                 right: 22,
                 bottom: 12,
                 child: GestureDetector(
-                  onTap: () async => _navigateTo(Routes.etaBoard),
+                  onTap: () async {
+                    _isFloatingActionButtonPressed.value = false;
+                    await Navigator.pushNamed(
+                      context,
+                      Routes.etaBoard,
+                      arguments: EtaBoardArgument(
+                        title: gathering.name,
+                        gatheringId: gathering.id,
+                      ),
+                    );
+                  },
                   child: Container(
                     width: 86,
                     height: 37,
@@ -263,7 +274,7 @@ class _GatheringsScreenState extends State<GatheringsScreen> {
         ),
       );
 
-  Widget _buildExpandedGatheringDetails(Gathering2 gathering) => Column(
+  Widget _buildExpandedGatheringDetails(Gathering gathering) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(

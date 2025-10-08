@@ -1,8 +1,8 @@
 import "package:flutter/cupertino.dart";
 import "package:injectable/injectable.dart";
 import "package:ody_flutter/data/entity/gathering/gathering_request.dart";
-import "package:ody_flutter/domain/model/gathering.dart";
 import "package:ody_flutter/domain/model/location.dart";
+import "package:ody_flutter/domain/model/new_gathering.dart";
 import "package:ody_flutter/domain/repository/gathering_repository.dart";
 
 enum GatheringCreatorScreenType {
@@ -28,7 +28,7 @@ class GatheringCreatorViewModel extends ChangeNotifier {
   }
 
   final GatheringRepository _gatheringRepository;
-  Gathering? gathering;
+  NewGathering? gathering;
 
   final pageController = PageController();
 

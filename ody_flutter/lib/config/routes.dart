@@ -1,5 +1,6 @@
 import "package:flutter/cupertino.dart";
 import "package:ody_flutter/screens/eta_board/eta_board_screen.dart";
+import "package:ody_flutter/screens/eta_board/model/eta_board_argument.dart";
 import "package:ody_flutter/screens/gathering_creator/gathering_creator_screen.dart";
 import "package:ody_flutter/screens/gathering_creator/screens/gathering_location_search_screen.dart";
 import "package:ody_flutter/screens/gathering_detail/gathering_detail_screen.dart";
@@ -26,7 +27,14 @@ Map<String, WidgetBuilder> namedRoutes = <String, WidgetBuilder>{
   },
   "/settings": (final BuildContext context) => const SettingsScreen(),
   "/invitationCode": (final BuildContext context) => InvitationCodeScreen(),
-  "/etaBoard": (final BuildContext context) => const EtaBoardScreen(),
+  "/etaBoard": (final BuildContext context) {
+    final args =
+        ModalRoute.of(context)!.settings.arguments! as EtaBoardArgument;
+    return EtaBoardScreen(
+      title: args.title,
+      gatheringId: args.gatheringId,
+    );
+  },
   "/statusBoard": (final BuildContext context) => const StatusBoardScreen(),
   "/gatheringLocationSearch": (final BuildContext context) =>
       GatheringLocationSearchScreen(),

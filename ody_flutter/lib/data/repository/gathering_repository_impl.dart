@@ -9,8 +9,8 @@ import "package:ody_flutter/data/entity/mapper/gatherings_mapper.dart";
 import "package:ody_flutter/data/entity/mapper/nudge_mapper.dart";
 import "package:ody_flutter/data/network/service/gathering_service.dart";
 import "package:ody_flutter/domain/model/gathering.dart";
-import "package:ody_flutter/domain/model/gathering2.dart";
 import "package:ody_flutter/domain/model/gathering_detail.dart";
+import "package:ody_flutter/domain/model/new_gathering.dart";
 import "package:ody_flutter/domain/model/nudge.dart";
 import "package:ody_flutter/domain/repository/gathering_repository.dart";
 
@@ -22,7 +22,7 @@ class GatheringRepositoryImpl implements GatheringRepository {
   final AuthTokenService authTokenService;
 
   @override
-  Future<Gathering> createGathering(GatheringRequest request) async {
+  Future<NewGathering> createGathering(GatheringRequest request) async {
     try {
       final response = await gatheringService.createGathering(request);
       return response.toModel();
@@ -42,7 +42,7 @@ class GatheringRepositoryImpl implements GatheringRepository {
   }
 
   @override
-  Future<List<Gathering2>> fetchGatherings() async {
+  Future<List<Gathering>> fetchGatherings() async {
     try {
       final response = await gatheringService.fetchGatherings();
       return response.toModel();
@@ -86,7 +86,7 @@ class GatheringRepositoryImpl implements GatheringRepository {
   Future<Response<void>> postNudge(Nudge nudge) async {
     try {
       return await gatheringService.postNudge(nudge.toEntity());
-    } catch(_) {
+    } catch (_) {
       rethrow;
     }
   }
