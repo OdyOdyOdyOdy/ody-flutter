@@ -9,7 +9,7 @@ import "package:ody_flutter/components/ody_top_bar.dart";
 import "package:ody_flutter/di/di.dart";
 import "package:ody_flutter/domain/model/eta_status.dart";
 import "package:ody_flutter/domain/model/user_eta.dart";
-import "package:ody_flutter/presentation/base/base_screen.dart";
+import "package:ody_flutter/screens/base/base_screen.dart";
 import "package:ody_flutter/screens/eta_board/eta_board_view_model.dart";
 
 class EtaBoardScreen extends StatefulWidget {

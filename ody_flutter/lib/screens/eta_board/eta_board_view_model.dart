@@ -8,7 +8,7 @@ import "package:ody_flutter/domain/model/nudge.dart";
 import "package:ody_flutter/domain/model/user_eta.dart";
 import "package:ody_flutter/domain/repository/eta_repository.dart";
 import "package:ody_flutter/domain/repository/gathering_repository.dart";
-import "package:ody_flutter/presentation/base/base_view_model.dart";
+import "package:ody_flutter/screens/base/base_view_model.dart";
 import "package:ody_flutter/screens/gathering_detail/gathering_detail_navigate_action.dart";
 import "package:ody_flutter/utils/location_util.dart";
 
@@ -110,12 +110,5 @@ class EtaBoardViewModel extends BaseViewModel {
     } on Exception catch (e) {
       await Fluttertoast.showToast(msg: "도착 정보를 업데이트하지 못했습니다 ($e)");
     }
-  }
-
-  @override
-  void dispose() {
-    debugPrint("EtaBoardViewModel dispose called");
-    stopPolling();
-    super.dispose();
   }
 }
