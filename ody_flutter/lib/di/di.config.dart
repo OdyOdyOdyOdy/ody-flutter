@@ -18,16 +18,20 @@ import '../data/db/service/auth_token_service.dart' as _i967;
 import '../data/db/service/device_token_service.dart' as _i363;
 import '../data/network/base/base_service.dart' as _i139;
 import '../data/network/service/auth_service.dart' as _i308;
+import '../data/network/service/eta_service.dart' as _i991;
 import '../data/network/service/gathering_service.dart' as _i1027;
 import '../data/network/service/location_service.dart' as _i881;
 import '../data/repository/auth_repository_impl.dart' as _i461;
 import '../data/repository/device_token_repository_impl.dart' as _i320;
+import '../data/repository/eta_repository_impl.dart' as _i607;
 import '../data/repository/gathering_repository_impl.dart' as _i307;
 import '../data/repository/location_repository_impl.dart' as _i601;
 import '../domain/repository/auth_repository.dart' as _i306;
 import '../domain/repository/device_token_repository.dart' as _i1010;
+import '../domain/repository/eta_repository.dart' as _i30;
 import '../domain/repository/gathering_repository.dart' as _i11;
 import '../domain/repository/location_repository.dart' as _i201;
+import '../screens/eta_board/eta_board_view_model.dart' as _i969;
 import '../screens/gathering_creator/gathering_creator_view_model.dart' as _i74;
 import '../screens/gathering_creator/screens/gathering_location_view_model.dart'
     as _i485;
@@ -62,6 +66,10 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i967.AuthTokenService>(),
           gh<_i361.Dio>(),
         ));
+    gh.singleton<_i991.EtaService>(
+        () => _i991.EtaService(gh<_i139.BaseService>()));
+    gh.lazySingleton<_i30.EtaRepository>(
+        () => _i607.EtaRepositoryImpl(gh<_i991.EtaService>()));
     gh.factory<_i1027.GatheringService>(() => _i1027.GatheringService(
           gh<_i139.BaseService>(),
           gh<_i967.AuthTokenService>(),
@@ -81,6 +89,10 @@ extension GetItInjectableX on _i174.GetIt {
               gh<_i201.LocationRepository>(),
               gh<_i11.GatheringRepository>(),
             ));
+    gh.factory<_i969.EtaBoardViewModel>(() => _i969.EtaBoardViewModel(
+          gh<_i11.GatheringRepository>(),
+          gh<_i30.EtaRepository>(),
+        ));
     gh.factory<_i485.GatheringLocationViewModel>(
         () => _i485.GatheringLocationViewModel(gh<_i201.LocationRepository>()));
     gh.factory<_i306.AuthRepository>(() => _i461.AuthRepositoryImpl(

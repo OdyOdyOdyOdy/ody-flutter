@@ -146,6 +146,28 @@ class BaseService {
     }
   }
 
+  Future<dynamic> patchWithResponse({
+    required String path,
+    required Map<String, dynamic> data,
+    Map<String, dynamic>? headers,
+  }) async {
+    try {
+      final AuthToken? token = await _getStoredToken();
+      _dio.options.headers = headers ??
+          (token != null
+              ? {"Authorization": "Bearer access-token=${token.accessToken}"}
+              : {});
+
+      final response = await _dio.patch(
+        path,
+        data: data,
+      );
+      return response.data;
+    } on DioException catch (e) {
+      throw _handleError(e);
+    }
+  }
+
   Exception _handleError(DioException e) {
     switch (e.response?.statusCode) {
       case 400:
