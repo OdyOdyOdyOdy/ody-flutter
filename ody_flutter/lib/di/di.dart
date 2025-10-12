@@ -7,7 +7,8 @@ import "package:ody_flutter/di/di.config.dart";
 import "package:ody_flutter/domain/repository/auth_repository.dart";
 
 final getIt = GetIt.instance;
-final RouteObserver<ModalRoute<void>> routeObserver = RouteObserver<ModalRoute<void>>();
+final RouteObserver<ModalRoute<void>> routeObserver =
+    RouteObserver<ModalRoute<void>>();
 
 @InjectableInit(
   initializerName: "init",
@@ -15,8 +16,9 @@ final RouteObserver<ModalRoute<void>> routeObserver = RouteObserver<ModalRoute<v
   asExtension: true,
 )
 void configureDependencies() {
-  getIt..init()
-  ..registerSingleton<RouteObserver<ModalRoute<void>>>(routeObserver);
+  getIt
+    ..init()
+    ..registerSingleton<RouteObserver<ModalRoute<void>>>(routeObserver);
   _setupInterceptors();
 }
 
