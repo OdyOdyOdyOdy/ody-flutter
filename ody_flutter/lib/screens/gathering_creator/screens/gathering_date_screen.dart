@@ -21,59 +21,61 @@ class GatheringDateScreen extends StatelessWidget {
           body: SafeArea(
             child: ColoredBox(
               color: CommonColors.cream,
-              child: Column(
-                children: [
-                  OdyHighlightText(
-                    text: "언제 만나시나요?",
-                    highlightText: "언제",
-                    textStyle: PretendardFonts.bold24.copyWith(
-                      color: CommonColors.gray_800,
-                    ),
-                    highlightStyle: PretendardFonts.bold24.copyWith(
-                      color: CommonColors.purple_800,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 14, right: 14),
-                      child: TableCalendar(
-                        locale: "ko_KR",
-                        rowHeight: 50,
-                        focusedDay: viewModel.date.value,
-                        firstDay: DateTime.now(),
-                        lastDay: DateTime.now().add(
-                          const Duration(days: 365),
-                        ),
-                        headerStyle: const HeaderStyle(
-                          titleCentered: true,
-                          formatButtonVisible: false,
-                        ),
-                        calendarStyle: CalendarStyle(
-                          selectedDecoration: const BoxDecoration(
-                            color: CommonColors.purple_800,
-                            shape: BoxShape.circle,
-                          ),
-                          todayDecoration: const BoxDecoration(
-                            color: Colors.transparent,
-                            shape: BoxShape.circle,
-                          ),
-                          todayTextStyle: PretendardFonts.regular14.copyWith(
-                            color: CommonColors.black,
-                          ),
-                        ),
-                        onDaySelected: (_, focusedDay) =>
-                            viewModel.date.value = focusedDay,
-                        selectedDayPredicate: (day) =>
-                            isSameDay(viewModel.date.value, day),
-                        availableGestures: AvailableGestures.none,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    OdyHighlightText(
+                      text: "언제 만나시나요?",
+                      highlightText: "언제",
+                      textStyle: PretendardFonts.bold24.copyWith(
+                        color: CommonColors.gray_800,
+                      ),
+                      highlightStyle: PretendardFonts.bold24.copyWith(
+                        color: CommonColors.purple_800,
                       ),
                     ),
-                  ),
-                ],
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 14, right: 14),
+                        child: TableCalendar(
+                          locale: "ko_KR",
+                          rowHeight: 50,
+                          focusedDay: viewModel.date.value,
+                          firstDay: DateTime.now(),
+                          lastDay: DateTime.now().add(
+                            const Duration(days: 365),
+                          ),
+                          headerStyle: const HeaderStyle(
+                            titleCentered: true,
+                            formatButtonVisible: false,
+                          ),
+                          calendarStyle: CalendarStyle(
+                            selectedDecoration: const BoxDecoration(
+                              color: CommonColors.purple_800,
+                              shape: BoxShape.circle,
+                            ),
+                            todayDecoration: const BoxDecoration(
+                              color: Colors.transparent,
+                              shape: BoxShape.circle,
+                            ),
+                            todayTextStyle: PretendardFonts.regular14.copyWith(
+                              color: CommonColors.black,
+                            ),
+                          ),
+                          onDaySelected: (_, focusedDay) =>
+                              viewModel.date.value = focusedDay,
+                          selectedDayPredicate: (day) =>
+                              isSameDay(viewModel.date.value, day),
+                          availableGestures: AvailableGestures.none,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

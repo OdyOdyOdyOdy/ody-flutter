@@ -50,8 +50,8 @@ class GatheringLocationScreen extends StatelessWidget {
 
                     if (result != null) {
                       viewModel.locationText.value =
-                          (result as LocationModel).address ??
-                              result.name ??
+                          (result as LocationModel).name ??
+                              result.address ??
                               "";
                       viewModel.location = result;
                       viewModel.isConfirmEnabled.value = true;
