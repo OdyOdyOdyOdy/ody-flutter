@@ -158,6 +158,7 @@ class _GatheringDetailScreenState extends State<GatheringDetailScreen> {
           const SizedBox(height: 8),
           OutlinedButton(
             onPressed: () async {
+              await HapticFeedback.lightImpact();
               await Clipboard.setData(
                 ClipboardData(
                   text: _viewModel.detailGathering?.inviteCode ?? "",
@@ -166,8 +167,8 @@ class _GatheringDetailScreenState extends State<GatheringDetailScreen> {
               _viewModel.showSnackBar("초대코드가 복사되었어요.");
             },
             style: OutlinedButton.styleFrom(
-              side: const BorderSide(color: CommonColors.gray_300),
-              backgroundColor: CommonColors.gray_300,
+              side: const BorderSide(color: CommonColors.purple_800),
+              backgroundColor: CommonColors.purple_800,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
               ),
@@ -175,7 +176,7 @@ class _GatheringDetailScreenState extends State<GatheringDetailScreen> {
             child: Text(
               "초대 코드 복사하기",
               style: PretendardFonts.regular14
-                  .copyWith(color: CommonColors.gray_500),
+                  .copyWith(color: CommonColors.cream),
             ),
           ),
         ],
