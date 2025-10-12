@@ -17,7 +17,8 @@ class GatheringsViewModel extends BaseViewModel {
     await load(
       () async {
         final fetchedGatherings = await _gatheringRepository.fetchGatherings();
-        _gatherings.addAll(fetchedGatherings);
+        _gatherings..clear()
+        ..addAll(fetchedGatherings);
       },
     );
   }

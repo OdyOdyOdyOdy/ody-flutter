@@ -21,7 +21,7 @@ class GatheringsScreen extends StatefulWidget {
   State<GatheringsScreen> createState() => _GatheringsScreenState();
 }
 
-class _GatheringsScreenState extends State<GatheringsScreen> {
+class _GatheringsScreenState extends State<GatheringsScreen> with RouteAware {
   late final GatheringsViewModel _viewModel;
 
   final ValueNotifier<bool> _isFloatingActionButtonPressed =
@@ -31,6 +31,24 @@ class _GatheringsScreenState extends State<GatheringsScreen> {
   void initState() {
     super.initState();
     _viewModel = getIt<GatheringsViewModel>();
+    unawaited(_viewModel.getGatherings());
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    routeObserver.subscribe(this, ModalRoute.of(context)!);
+  }
+
+  @override
+  void dispose() {
+    routeObserver.unsubscribe(this);
+    super.dispose();
+  }
+
+  @override
+  void didPopNext() {
+    super.didPopNext();
     unawaited(_viewModel.getGatherings());
   }
 
