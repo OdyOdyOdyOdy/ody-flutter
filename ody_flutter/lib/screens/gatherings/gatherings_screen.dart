@@ -77,6 +77,22 @@ class _GatheringsScreenState extends State<GatheringsScreen> {
                     onRightIcon: () async =>
                         Navigator.pushNamed(context, Routes.settings),
                   ),
+                  ValueListenableBuilder<bool>(
+                    valueListenable: _isFloatingActionButtonPressed,
+                    builder: (context, isPressed, child) {
+                      if (!isPressed) {
+                        return const SizedBox.shrink();
+                      }
+                      return GestureDetector(
+                        onTap: () {
+                          _isFloatingActionButtonPressed.value = false;
+                        },
+                        child: Container(
+                          color: Colors.transparent,
+                        ),
+                      );
+                    },
+                  ),
                 ],
               ),
             ),
