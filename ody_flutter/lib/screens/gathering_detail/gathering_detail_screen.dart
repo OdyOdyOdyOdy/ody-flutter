@@ -13,6 +13,7 @@ import "package:ody_flutter/components/ody_top_bar.dart";
 import "package:ody_flutter/config/routes.dart";
 import "package:ody_flutter/di/di.dart";
 import "package:ody_flutter/domain/model/gathering_detail.dart";
+import "package:ody_flutter/screens/base/base_screen.dart";
 import "package:ody_flutter/screens/eta_board/model/eta_board_argument.dart";
 import "package:ody_flutter/screens/gathering_detail/gathering_detail_navigate_action.dart";
 import "package:ody_flutter/screens/gathering_detail/gathering_detail_view_model.dart";
@@ -68,19 +69,23 @@ class _GatheringDetailScreenState extends State<GatheringDetailScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        floatingActionButton: _buildFloatingActionButton(),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        backgroundColor: CommonColors.cream,
-        body: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildTopBar(context),
-              _buildMatesSection(),
-              const SizedBox(height: 44),
-              _buildDetailSection(),
-            ],
+  Widget build(BuildContext context) => BaseScreen(
+        viewModel: _viewModel,
+        builder: (BuildContext context) => Scaffold(
+          floatingActionButton: _buildFloatingActionButton(),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerFloat,
+          backgroundColor: CommonColors.cream,
+          body: SafeArea(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildTopBar(context),
+                _buildMatesSection(),
+                const SizedBox(height: 44),
+                _buildDetailSection(),
+              ],
+            ),
           ),
         ),
       );
@@ -124,7 +129,7 @@ class _GatheringDetailScreenState extends State<GatheringDetailScreen> {
             padding: const EdgeInsets.only(left: 18, top: 14, right: 36),
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
-              itemCount: _viewModel.detailGathering?.mates?.length ?? 0 + 1,
+              itemCount: (_viewModel.detailGathering?.mates?.length ?? 0) + 1,
               itemBuilder: (context, index) {
                 if (index == _viewModel.detailGathering?.mates?.length) {
                   return _buildInviteFriendSection();
@@ -152,8 +157,13 @@ class _GatheringDetailScreenState extends State<GatheringDetailScreen> {
           ),
           const SizedBox(height: 8),
           OutlinedButton(
-            onPressed: () {
-              // 초대 코드 복사하기
+            onPressed: () async {
+              await Clipboard.setData(
+                ClipboardData(
+                  text: _viewModel.detailGathering?.inviteCode ?? "",
+                ),
+              );
+              _viewModel.showSnackBar("초대코드가 복사되었어요.");
             },
             style: OutlinedButton.styleFrom(
               side: const BorderSide(color: CommonColors.gray_300),
