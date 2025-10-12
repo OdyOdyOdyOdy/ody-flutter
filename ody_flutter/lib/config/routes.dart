@@ -6,6 +6,7 @@ import "package:ody_flutter/screens/gathering_creator/screens/gathering_location
 import "package:ody_flutter/screens/gathering_detail/gathering_detail_screen.dart";
 import "package:ody_flutter/screens/gathering_enter/gathering_enter_complete_screen.dart";
 import "package:ody_flutter/screens/gathering_enter/gathering_enter_location_screen.dart";
+import "package:ody_flutter/screens/gathering_enter/model/gathering_enter_argument.dart";
 import "package:ody_flutter/screens/gatherings/gatherings_screen.dart";
 import "package:ody_flutter/screens/invitation_code/invitation_code_screen.dart";
 import "package:ody_flutter/screens/login/login_screen.dart";
@@ -42,8 +43,14 @@ Map<String, WidgetBuilder> namedRoutes = <String, WidgetBuilder>{
     final BuildContext context,
   ) =>
       const GatheringEnterScreen(),
-  "/gatheringEnterComplete": (final BuildContext context) =>
-      const GatheringEnterCompleteScreen(),
+  "/gatheringEnterComplete": (final BuildContext context) {
+    final args =
+        ModalRoute.of(context)!.settings.arguments! as GatheringEnterArgument;
+    return GatheringEnterCompleteScreen(
+      title: args.title,
+      gatheringId: args.gatheringId,
+    );
+  },
 };
 
 class Routes {

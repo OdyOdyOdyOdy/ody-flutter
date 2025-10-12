@@ -52,7 +52,7 @@ class GatheringRepositoryImpl implements GatheringRepository {
   }
 
   @override
-  Future<bool> enterGathering(EnterGatheringRequest request) {
+  Future<int> enterGathering(EnterGatheringRequest request) {
     try {
       return gatheringService
           .enterGathering(request)

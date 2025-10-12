@@ -13,7 +13,7 @@ abstract class GatheringRepository {
 
   Future<List<Gathering>> fetchGatherings();
 
-  Future<bool> enterGathering(EnterGatheringRequest request);
+  Future<int> enterGathering(EnterGatheringRequest request);
 
   Future<bool> validateInvitationCode(String inviteCode);
 

@@ -5,9 +5,10 @@ import "package:ody_flutter/data/entity/gathering/enter_gathering_request.dart";
 import "package:ody_flutter/domain/model/location.dart";
 import "package:ody_flutter/domain/repository/gathering_repository.dart";
 import "package:ody_flutter/domain/repository/location_repository.dart";
+import "package:ody_flutter/screens/base/base_view_model.dart";
 
 @injectable
-class GatheringEnterViewModel extends ChangeNotifier {
+class GatheringEnterViewModel extends BaseViewModel {
   GatheringEnterViewModel(
     this._locationRepository,
     this._gatheringRepository,
@@ -17,48 +18,62 @@ class GatheringEnterViewModel extends ChangeNotifier {
   final GatheringRepository _gatheringRepository;
   LocationModel _currentLocation = LocationModel.init();
   String _invitationCode = "";
+  final Location location = Location();
+  int gatheringId = 0;
+  String title = "";
 
+  final ValueNotifier<bool> isCompleted = ValueNotifier(false);
   final ValueNotifier<String> locationText = ValueNotifier("");
   final ValueNotifier<bool> isConfirmEnabled = ValueNotifier(false);
-  final ValueNotifier<bool> isCompleted = ValueNotifier(false);
 
   Future<void> setInvitationCode(String code) async => _invitationCode = code;
 
   void setLocation(LocationModel location) {
     _currentLocation = location;
-    locationText.value = location.name ?? location.address ?? "알 수 없는 위치";
+    locationText.value = location.address ?? "알 수 없는 위치";
     isConfirmEnabled.value = true;
     notifyListeners();
   }
 
   Future<void> fetchCurrentLocation() async {
-    final Location location = Location();
-
-    await location.getLocation().then((final LocationData locationData) async {
-      _currentLocation = await _locationRepository.fetchLocationWithCoord(
-        "${locationData.longitude}",
-        "${locationData.latitude}",
-      );
-      locationText.value = "${_currentLocation.name}";
-      isConfirmEnabled.value = true;
-      notifyListeners();
-    });
+    await load(
+      () async {
+        await location.getLocation().then(
+          (final LocationData locationData) async {
+            _currentLocation = await _locationRepository.fetchLocationWithCoord(
+              "${locationData.longitude}",
+              "${locationData.latitude}",
+            );
+            locationText.value = "${_currentLocation.address}";
+            isConfirmEnabled.value = true;
+            notifyListeners();
+          },
+        );
+      },
+    );
   }
 
   Future<void> enterGathering() async {
-    try {
-      final EnterGatheringRequest request = EnterGatheringRequest(
-        inviteCode: _invitationCode,
-        originAddress: locationText.value,
-        originLatitude: "${_currentLocation.latitude}",
-        originLongitude: "${_currentLocation.longitude}",
-      );
+    await load(
+      () async {
+        try {
+          final EnterGatheringRequest request = EnterGatheringRequest(
+            inviteCode: _invitationCode,
+            originAddress: locationText.value,
+            originLatitude: "${_currentLocation.latitude}",
+            originLongitude: "${_currentLocation.longitude}",
+          );
 
-      final success = await _gatheringRepository.enterGathering(request);
-      isCompleted.value = success;
-      notifyListeners();
-    } on Exception catch (_) {
-      isCompleted.value = false;
-    }
+          final meetingId = await _gatheringRepository.enterGathering(request);
+          gatheringId = meetingId;
+          title = await _gatheringRepository.fetchGathering(meetingId).then(
+                (final gathering) => gathering.name ?? "",
+              );
+          isCompleted.value = title.isNotEmpty;
+        } on Exception catch (_) {
+          isCompleted.value = false;
+        }
+      },
+    );
   }
 }
