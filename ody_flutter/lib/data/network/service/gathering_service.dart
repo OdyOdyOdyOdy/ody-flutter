@@ -71,12 +71,13 @@ class GatheringService {
     }
   }
 
-  Future<bool> enterGathering(EnterGatheringRequest request) async {
+  Future<int> enterGathering(EnterGatheringRequest request) async {
     try {
-      return await baseService.postWithoutResponse(
+      final Map<String, dynamic> response = await baseService.postWithResponse(
         path: "/v2/mates",
         data: request.toJson(),
       );
+      return response["meetingId"] as int;
     } catch (_) {
       rethrow;
     }

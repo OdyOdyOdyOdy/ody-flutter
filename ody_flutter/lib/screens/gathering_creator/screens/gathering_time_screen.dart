@@ -31,7 +31,7 @@ class GatheringTimeScreen extends StatelessWidget {
             height: 80,
           ),
           SizedBox(
-            height: 120,
+            height: 200,
             child: OdyTimePicker(
               selectedHour: viewModel.hour,
               selectedMinute: viewModel.minute,

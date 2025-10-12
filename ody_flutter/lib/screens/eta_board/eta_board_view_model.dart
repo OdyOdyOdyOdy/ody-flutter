@@ -14,20 +14,16 @@ import "package:ody_flutter/utils/location_util.dart";
 
 @injectable
 class EtaBoardViewModel extends BaseViewModel {
-  // Constructor
   EtaBoardViewModel(this._gatheringRepository, this._etaRepository);
 
-  // Repositories
   final GatheringRepository _gatheringRepository;
   final EtaRepository _etaRepository;
 
-  /// Properties
   UserEta? userEta;
   ValueNotifier<GatheringDetailNavigateAction?> navigation =
       ValueNotifier(null);
   Timer? _timer;
 
-  /// Methods
   Future<void> startPolling(int gatheringId) async {
     await patchEtaBoard(gatheringId);
     _timer = Timer.periodic(const Duration(seconds: 10), (_) async {
@@ -73,42 +69,46 @@ class EtaBoardViewModel extends BaseViewModel {
   Future<void> patchEtaBoard(
     int gatheringId,
   ) async {
-    EtaRequest request;
-    try {
-      final position = await getCurrentLocation();
-      if (position != null) {
-        request = EtaRequest(
-          isMissing: false,
-          currentLatitude: position.latitude ?? 0.0,
-          currentLongitude: position.longitude ?? 0.0,
-        );
-      } else {
-        // 위치 정보는 가져왔지만 null인 경우
-        request = const EtaRequest(
-          isMissing: true,
-          currentLatitude: 0,
-          currentLongitude: 0,
-        );
-        await Fluttertoast.showToast(msg: "위치 정보를 가져오지 못했습니다");
-      }
-    } on Exception catch (_) {
-      // 위치 정보 조회 중 예외 발생
-      request = const EtaRequest(
-        isMissing: true,
-        currentLatitude: 0,
-        currentLongitude: 0,
-      );
-      await Fluttertoast.showToast(msg: "위치 정보를 가져오는 데 실패했습니다");
-    }
+    await load(
+      () async {
+        EtaRequest request;
+        try {
+          final position = await getCurrentLocation();
+          if (position != null) {
+            request = EtaRequest(
+              isMissing: false,
+              currentLatitude: position.latitude ?? 0.0,
+              currentLongitude: position.longitude ?? 0.0,
+            );
+          } else {
+            // 위치 정보는 가져왔지만 null인 경우
+            request = const EtaRequest(
+              isMissing: true,
+              currentLatitude: 0,
+              currentLongitude: 0,
+            );
+            await Fluttertoast.showToast(msg: "위치 정보를 가져오지 못했습니다");
+          }
+        } on Exception catch (_) {
+          // 위치 정보 조회 중 예외 발생
+          request = const EtaRequest(
+            isMissing: true,
+            currentLatitude: 0,
+            currentLongitude: 0,
+          );
+          await Fluttertoast.showToast(msg: "위치 정보를 가져오는 데 실패했습니다");
+        }
 
-    try {
-      userEta = await _etaRepository.patchEtaBoard(
-        meetingId: gatheringId,
-        request: request,
-      );
-      notifyListeners();
-    } on Exception catch (e) {
-      await Fluttertoast.showToast(msg: "도착 정보를 업데이트하지 못했습니다 ($e)");
-    }
+        try {
+          userEta = await _etaRepository.patchEtaBoard(
+            meetingId: gatheringId,
+            request: request,
+          );
+          notifyListeners();
+        } on Exception catch (e) {
+          await Fluttertoast.showToast(msg: "도착 정보를 업데이트하지 못했습니다 ($e)");
+        }
+      },
+    );
   }
 }

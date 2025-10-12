@@ -68,6 +68,10 @@ class GatheringCreatorViewModel extends ChangeNotifier {
       isConfirmEnabled.value = text.value.isNotEmpty;
       notifyListeners();
     });
+
+    for (final notifier in [hour, minute]) {
+      notifier.addListener(_checkIfConfirmEnabled);
+    }
   }
 
   @override
@@ -128,6 +132,16 @@ class GatheringCreatorViewModel extends ChangeNotifier {
     switch (_currentScreenType) {
       case GatheringCreatorScreenType.title:
         isConfirmEnabled.value = text.value.isNotEmpty;
+      case GatheringCreatorScreenType.time:
+        final now = DateTime.now();
+        final selectedDateTime = DateTime(
+          date.value.year,
+          date.value.month,
+          date.value.day,
+          hour.value,
+          minute.value,
+        );
+        isConfirmEnabled.value = selectedDateTime.isAfter(now);
       case GatheringCreatorScreenType.location:
         isConfirmEnabled.value = locationText.value.isNotEmpty;
       default:

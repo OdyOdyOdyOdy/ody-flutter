@@ -2,6 +2,7 @@ import "dart:async";
 
 import "package:cached_network_image/cached_network_image.dart";
 import "package:flutter/material.dart";
+import "package:flutter/services.dart";
 import "package:flutter_svg/flutter_svg.dart";
 import "package:intl/intl.dart";
 import "package:ody_flutter/assets/colors/colors.dart";
@@ -285,8 +286,10 @@ class _GatheringDetailScreenState extends State<GatheringDetailScreen> {
             FloatingActionButton(
               foregroundColor: CommonColors.white,
               backgroundColor: CommonColors.purple_800,
-              onPressed: () =>
-                  _isFloatingActionButtonPressed.value = !isPressed,
+              onPressed: () async {
+                await HapticFeedback.lightImpact();
+                _isFloatingActionButtonPressed.value = !isPressed;
+              },
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
               ),

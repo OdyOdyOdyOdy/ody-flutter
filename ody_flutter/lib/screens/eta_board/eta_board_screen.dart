@@ -86,7 +86,6 @@ class _EtaBoardScreenState extends State<EtaBoardScreen> {
       );
 
   Widget _buildEtaItem(MateEta? mateEta) => Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Expanded(
             child: Text(
@@ -94,11 +93,14 @@ class _EtaBoardScreenState extends State<EtaBoardScreen> {
               mateEta?.name ?? "",
               style:
                   PretendardFonts.bold20.copyWith(color: CommonColors.gray_800),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
           ),
-          const Spacer(),
-          _buildStatusBadge(mateEta?.etaStatus),
-          const Spacer(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 26),
+            child: _buildStatusBadge(mateEta?.etaStatus),
+          ),
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -107,8 +109,10 @@ class _EtaBoardScreenState extends State<EtaBoardScreen> {
                   child: Text(
                     textAlign: TextAlign.center,
                     mateEta?.etaStatus.statusMessage() ?? "",
-                    style: PretendardFonts.regular16
+                    style: PretendardFonts.medium16
                         .copyWith(color: CommonColors.black),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
                 if (mateEta?.etaStatus is Missing)

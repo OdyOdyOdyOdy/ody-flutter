@@ -1,6 +1,7 @@
 import "package:flutter_dotenv/flutter_dotenv.dart";
 import "package:injectable/injectable.dart";
 import "package:ody_flutter/data/entity/gathering/location_response.dart";
+import "package:ody_flutter/data/entity/gathering/location_response_with_string.dart";
 import "package:ody_flutter/data/network/base/base_service.dart";
 
 @injectable
@@ -9,20 +10,20 @@ class LocationService {
 
   final BaseService baseService;
 
-  Future<LocationResponse> fetchLocation(String keyword) async {
+  Future<LocationResponseWithString> fetchLocation(String keyword) async {
     try {
       final response = await baseService.getWithResponse(
         url:
             "https://dapi.kakao.com/v2/local/search/keyword.json?query=$keyword&page=1&size=15",
         headers: {"Authorization": "KakaoAK ${dotenv.get("KAKAO_API_KEY")}"},
       );
-      return LocationResponse.fromJson(response);
+      return LocationResponseWithString.fromJson(response);
     } catch (_) {
       rethrow;
     }
   }
 
-  Future<LocationResponseData> fetchLocationWithCoord(
+  Future<LocationResponse> fetchLocationWithCoord(
     String x,
     String y,
   ) async {
@@ -32,7 +33,7 @@ class LocationService {
             "https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?x=$x&y=$y",
         headers: {"Authorization": "KakaoAK ${dotenv.get("KAKAO_API_KEY")}"},
       );
-      return LocationResponseData.fromJson(response);
+      return LocationResponse.fromJson(response);
     } catch (_) {
       rethrow;
     }
