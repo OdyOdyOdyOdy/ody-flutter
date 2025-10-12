@@ -1,4 +1,5 @@
 import "package:flutter/cupertino.dart";
+import "package:flutter/services.dart";
 import "package:flutter_svg/flutter_svg.dart";
 import "package:ody_flutter/assets/colors/colors.dart";
 import "package:ody_flutter/assets/fonts/pretendard_fonts.dart";
@@ -34,9 +35,13 @@ class OdyTopBar extends StatelessWidget {
                 children: [
                   const SizedBox(width: 14),
                   if (leftIcon.isNotEmpty)
-                    GestureDetector(
-                      onTap: onLeftIcon ?? () => Navigator.of(context).pop(),
-                      child: SvgPicture.asset(leftIcon),
+                    Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: GestureDetector(
+                        onTap: onLeftIcon ?? () => Navigator.of(context).pop(),
+                        behavior: HitTestBehavior.translucent,
+                        child: SvgPicture.asset(leftIcon),
+                      ),
                     ),
                   const SizedBox(width: 12),
                   SizedBox(
@@ -62,9 +67,16 @@ class OdyTopBar extends StatelessWidget {
                   ),
                   const SizedBox(width: 12),
                   if (rightIcon.isNotEmpty)
-                    GestureDetector(
-                      onTap: onRightIcon,
-                      child: SvgPicture.asset(rightIcon),
+                    Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: GestureDetector(
+                        onTap: () async {
+                          await HapticFeedback.lightImpact();
+                          onRightIcon?.call();
+                        },
+                        behavior: HitTestBehavior.translucent,
+                        child: SvgPicture.asset(rightIcon),
+                      ),
                     ),
                   const SizedBox(width: 14),
                 ],

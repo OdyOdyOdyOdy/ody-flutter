@@ -23,28 +23,19 @@ class _OdyTimePickerState extends State<OdyTimePicker> {
         spacing: 20,
         children: [
           _timerTextWidget(
-            List.generate(
-              24,
-              (index) => index.toString().padLeft(2, "0"),
-            ),
+            List.generate(24, (index) => index.toString().padLeft(2, "0")),
             widget.selectedHour.value,
-            (value) => setState(
-              () => widget.selectedHour.value = int.parse(value),
-            ),
+            (value) => setState(() {
+              widget.selectedHour.value = int.parse(value);
+            }),
           ),
-          const Text(
-            " : ",
-            style: PretendardFonts.bold24,
-          ),
+          const Text(":", style: PretendardFonts.bold24),
           _timerTextWidget(
-            List.generate(
-              60,
-              (index) => index.toString().padLeft(2, "0"),
-            ),
+            List.generate(60, (index) => index.toString().padLeft(2, "0")),
             widget.selectedMinute.value,
-            (value) => setState(
-              () => widget.selectedMinute.value = int.parse(value),
-            ),
+            (value) => setState(() {
+              widget.selectedMinute.value = int.parse(value);
+            }),
           ),
         ],
       );
@@ -55,7 +46,7 @@ class _OdyTimePickerState extends State<OdyTimePicker> {
     ValueChanged<String> onSelected,
   ) =>
       SizedBox(
-        width: 60,
+        width: 100,
         child: CupertinoPicker(
           scrollController:
               FixedExtentScrollController(initialItem: selectedValue),
