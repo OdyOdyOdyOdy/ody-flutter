@@ -7,10 +7,12 @@ import "package:ody_flutter/data/entity/mapper/gathering_detail_mapper.dart";
 import "package:ody_flutter/data/entity/mapper/gathering_mapper.dart";
 import "package:ody_flutter/data/entity/mapper/gatherings_mapper.dart";
 import "package:ody_flutter/data/entity/mapper/nudge_mapper.dart";
+import "package:ody_flutter/data/entity/mapper/status_board_mapper.dart";
 import "package:ody_flutter/data/network/service/gathering_service.dart";
 import "package:ody_flutter/domain/model/gathering.dart";
 import "package:ody_flutter/domain/model/gathering_detail.dart";
 import "package:ody_flutter/domain/model/new_gathering.dart";
+import "package:ody_flutter/domain/model/noti_log.dart";
 import "package:ody_flutter/domain/model/nudge.dart";
 import "package:ody_flutter/domain/repository/gathering_repository.dart";
 
@@ -86,6 +88,16 @@ class GatheringRepositoryImpl implements GatheringRepository {
   Future<Response<void>> postNudge(Nudge nudge) async {
     try {
       return await gatheringService.postNudge(nudge.toEntity());
+    } catch (_) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<NotiLog>> fetchStatusBoard(int meetingId) async {
+    try {
+      final response = await gatheringService.fetchStatusBoard(meetingId);
+      return response.toModel();
     } catch (_) {
       rethrow;
     }

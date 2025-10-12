@@ -340,7 +340,14 @@ class _GatheringDetailScreenState extends State<GatheringDetailScreen> {
 
   Widget _buildLogButton() => OutlinedButton(
         onPressed: () async {
-          await Navigator.pushNamed(context, Routes.statusBoard);
+          await Navigator.pushNamed(
+            context,
+            Routes.statusBoard,
+            arguments: {
+              "meetingId": widget.gatheringId,
+              "title": _viewModel.detailGathering?.name ?? "",
+            },
+          );
         },
         style: OutlinedButton.styleFrom(
           side: const BorderSide(color: CommonColors.purple_800),
