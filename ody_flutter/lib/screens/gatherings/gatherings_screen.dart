@@ -1,6 +1,7 @@
 import "dart:async";
 
 import "package:flutter/material.dart";
+import "package:flutter/services.dart";
 import "package:flutter_svg/svg.dart";
 import "package:ody_flutter/assets/colors/colors.dart";
 import "package:ody_flutter/assets/fonts/pretendard_fonts.dart";
@@ -36,44 +37,48 @@ class _GatheringsScreenState extends State<GatheringsScreen> {
   @override
   Widget build(BuildContext context) => BaseScreen(
         viewModel: _viewModel,
-        builder: (context) => Scaffold(
-          backgroundColor: CommonColors.cream,
-          floatingActionButton: _buildFloatingActionButton(),
-          body: SafeArea(
-            child: Stack(
-              children: [
-                if (!_viewModel.isLoading && _viewModel.gatherings.isEmpty)
-                  _buildEmptyGathering()
-                else if (!_viewModel.isLoading)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 60),
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 24),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 18),
-                            child: ListView.separated(
-                              itemCount: _viewModel.gatherings.length,
-                              itemBuilder: (context, index) =>
-                                  _buildGatheringItem(
-                                _viewModel.gatherings[index],
+        builder: (context) => PopScope(
+          canPop: false,
+          child: Scaffold(
+            backgroundColor: CommonColors.cream,
+            floatingActionButton: _buildFloatingActionButton(),
+            body: SafeArea(
+              child: Stack(
+                children: [
+                  if (!_viewModel.isLoading && _viewModel.gatherings.isEmpty)
+                    _buildEmptyGathering()
+                  else if (!_viewModel.isLoading)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 60),
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 24),
+                          Expanded(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 18),
+                              child: ListView.separated(
+                                itemCount: _viewModel.gatherings.length,
+                                itemBuilder: (context, index) =>
+                                    _buildGatheringItem(
+                                  _viewModel.gatherings[index],
+                                ),
+                                separatorBuilder: (context, index) =>
+                                    const SizedBox(height: 18),
                               ),
-                              separatorBuilder: (context, index) =>
-                                  const SizedBox(height: 18),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
+                  OdyTopBar(
+                    title: "오디",
+                    rightIcon: CommonImages.icSetting,
+                    onRightIcon: () async =>
+                        Navigator.pushNamed(context, Routes.settings),
                   ),
-                OdyTopBar(
-                  title: "오디",
-                  rightIcon: CommonImages.icSetting,
-                  onRightIcon: () async =>
-                      Navigator.pushNamed(context, Routes.settings),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -105,8 +110,10 @@ class _GatheringsScreenState extends State<GatheringsScreen> {
             FloatingActionButton(
               foregroundColor: CommonColors.white,
               backgroundColor: CommonColors.purple_300,
-              onPressed: () =>
-                  _isFloatingActionButtonPressed.value = !isPressed,
+              onPressed: () async {
+                await HapticFeedback.lightImpact();
+                _isFloatingActionButtonPressed.value = !isPressed;
+              },
               shape: const CircleBorder(),
               child: isPressed
                   ? SvgPicture.asset(CommonImages.icCancel)
@@ -220,9 +227,12 @@ class _GatheringsScreenState extends State<GatheringsScreen> {
                 right: 12,
                 top: 4,
                 child: GestureDetector(
-                  onTap: () => setState(
-                    () => gathering.isExpanded = !gathering.isExpanded,
-                  ),
+                  onTap: () async {
+                    await HapticFeedback.lightImpact();
+                    setState(
+                      () => gathering.isExpanded = !gathering.isExpanded,
+                    );
+                  },
                   child: SvgPicture.asset(
                     gathering.isExpanded
                         ? CommonImages.icArrowUp
@@ -230,13 +240,14 @@ class _GatheringsScreenState extends State<GatheringsScreen> {
                   ),
                 ),
               ),
-              // 추후에 약속 시간 30분전 일때만 오디? 버튼 활성화 되게 변경 해야함
+              // to-do: 추후에 약속 시간 30분전 일때만 오디? 버튼 활성화 되게 변경 해야함
 
               Positioned(
                 right: 22,
                 bottom: 12,
                 child: GestureDetector(
                   onTap: () async {
+                    await HapticFeedback.lightImpact();
                     _isFloatingActionButtonPressed.value = false;
                     await Navigator.pushNamed(
                       context,
