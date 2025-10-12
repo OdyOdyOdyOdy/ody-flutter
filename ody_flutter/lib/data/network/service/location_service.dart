@@ -1,4 +1,3 @@
-import "package:flutter/cupertino.dart";
 import "package:flutter_dotenv/flutter_dotenv.dart";
 import "package:injectable/injectable.dart";
 import "package:ody_flutter/data/entity/gathering/location_response.dart";
@@ -34,8 +33,6 @@ class LocationService {
             "https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?x=$x&y=$y",
         headers: {"Authorization": "KakaoAK ${dotenv.get("KAKAO_API_KEY")}"},
       );
-      debugPrint('response: $response');
-      debugPrint('fromjson: ${LocationResponse.fromJson(response)}');
       return LocationResponse.fromJson(response);
     } catch (_) {
       rethrow;

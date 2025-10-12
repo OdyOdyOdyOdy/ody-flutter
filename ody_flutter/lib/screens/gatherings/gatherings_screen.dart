@@ -249,14 +249,16 @@ class _GatheringsScreenState extends State<GatheringsScreen> {
                   onTap: () async {
                     await HapticFeedback.lightImpact();
                     _isFloatingActionButtonPressed.value = false;
-                    await Navigator.pushNamed(
-                      context,
-                      Routes.etaBoard,
-                      arguments: EtaBoardArgument(
-                        title: gathering.name,
-                        gatheringId: gathering.id,
-                      ),
-                    );
+                    if (mounted) {
+                      await Navigator.pushNamed(
+                        context,
+                        Routes.etaBoard,
+                        arguments: EtaBoardArgument(
+                          title: gathering.name,
+                          gatheringId: gathering.id,
+                        ),
+                      );
+                    }
                   },
                   child: Container(
                     width: 86,
