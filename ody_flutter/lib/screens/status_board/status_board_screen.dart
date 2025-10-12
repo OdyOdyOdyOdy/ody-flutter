@@ -1,56 +1,66 @@
+import "dart:async";
+
 import "package:cached_network_image/cached_network_image.dart";
 import "package:flutter/material.dart";
 import "package:flutter_svg/flutter_svg.dart";
+import "package:get_it/get_it.dart";
 import "package:ody_flutter/assets/colors/colors.dart";
 import "package:ody_flutter/assets/fonts/pretendard_fonts.dart";
 import "package:ody_flutter/assets/images/images.dart";
 import "package:ody_flutter/components/ody_alert.dart";
 import "package:ody_flutter/components/ody_top_bar.dart";
 import "package:ody_flutter/config/routes.dart";
+import "package:ody_flutter/domain/model/noti_log.dart";
 import "package:ody_flutter/screens/status_board/model/user_notification_type.dart";
 import "package:ody_flutter/screens/status_board/model/user_status.dart";
+import "package:ody_flutter/screens/status_board/status_board_view_model.dart";
+import "package:provider/provider.dart";
 
 class StatusBoardScreen extends StatefulWidget {
-  const StatusBoardScreen({super.key});
+  const StatusBoardScreen({
+    required this.meetingId,
+    required this.title,
+    super.key,
+  });
+
+  final int meetingId;
+  final String title;
 
   @override
   State<StatusBoardScreen> createState() => _StatusBoardScreenState();
 }
 
 class _StatusBoardScreenState extends State<StatusBoardScreen> {
-  // 추후에 서버 api 연결
-  final List<UserStatus> userStatuses = [
-    UserStatus(
-      nickname: "김영인",
-      created: "2024-07-11 2:30",
-      imageUrl: "https://picsum.photos/250?image=1",
-      userNotificationType: UserNotificationType.entry,
-    ),
-    UserStatus(
-      nickname: "장원영",
-      created: "2024-07-11 2:30",
-      imageUrl: "https://picsum.photos/250?image=2",
-      userNotificationType: UserNotificationType.departure,
-    ),
-    UserStatus(
-      nickname: "카리나",
-      created: "2024-07-11 2:30",
-      imageUrl: "https://picsum.photos/250?image=3",
-      userNotificationType: UserNotificationType.memberDeletion,
-    ),
-  ];
+  late final StatusBoardViewModel viewModel;
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        floatingActionButton: _buildFloatingActionButton(context),
-        backgroundColor: CommonColors.cream,
-        body: SafeArea(
-          child: Column(
-            children: [
-              _buildTopBar(context),
-              const SizedBox(height: 24),
-              _buildStatusList(),
-            ],
+  void initState() {
+    super.initState();
+    viewModel = GetIt.instance<StatusBoardViewModel>();
+    unawaited(viewModel.getStatusBoard(widget.meetingId));
+  }
+
+  @override
+  Widget build(BuildContext context) => ChangeNotifierProvider(
+        create: (_) => viewModel,
+        child: Scaffold(
+          floatingActionButton: _buildFloatingActionButton(context),
+          backgroundColor: CommonColors.cream,
+          body: SafeArea(
+            child: Column(
+              children: [
+                _buildTopBar(context),
+                const SizedBox(height: 24),
+                Consumer<StatusBoardViewModel>(
+                  builder: (context, viewModel, child) {
+                    if (viewModel.isLoading) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    return _buildStatusList(viewModel.notiLogs);
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       );
@@ -60,7 +70,6 @@ class _StatusBoardScreenState extends State<StatusBoardScreen> {
         height: 37,
         child: FloatingActionButton.extended(
           onPressed: () async {
-            // to-do: API 연결 후 오디 화면으로 이동 구현 필요
             await Navigator.pushNamed(context, Routes.etaBoard);
           },
           backgroundColor: CommonColors.purple_800,
@@ -76,7 +85,7 @@ class _StatusBoardScreenState extends State<StatusBoardScreen> {
       );
 
   Widget _buildTopBar(BuildContext context) => OdyTopBar(
-        title: "어쩌구약속이름어쩌구저쩌구나구나구나",
+        title: widget.title,
         leftIcon: CommonImages.icArrowBack,
         rightIcon: CommonImages.icExit,
         onLeftIcon: () => Navigator.pop(context),
@@ -84,7 +93,7 @@ class _StatusBoardScreenState extends State<StatusBoardScreen> {
           context: context,
           builder: (context) => OdyAlert(
             image: CommonImages.icSadOdy,
-            title: "어쩌구약속이름어쩌구저쩌구나구나구나",
+            title: widget.title,
             description: "약속을 정말 나가실 건가요?",
             confirmText: "나가기",
             onConfirm: () => Navigator.pop(context),
@@ -92,18 +101,39 @@ class _StatusBoardScreenState extends State<StatusBoardScreen> {
         ),
       );
 
-  Widget _buildStatusList() => Expanded(
+  Widget _buildStatusList(List<NotiLog> notiLogs) => Expanded(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: ListView.separated(
-            itemCount: userStatuses.length,
-            itemBuilder: (context, index) => UserStatusItem(
-              userStatus: userStatuses[index],
-            ),
+            itemCount: notiLogs.length,
+            itemBuilder: (context, index) {
+              final userStatus = _mapNotiLogToUserStatus(notiLogs[index]);
+              return UserStatusItem(userStatus: userStatus);
+            },
             separatorBuilder: (context, index) => const SizedBox(height: 18),
           ),
         ),
       );
+
+  UserStatus _mapNotiLogToUserStatus(NotiLog notiLog) => UserStatus(
+      nickname: notiLog.nickname,
+      created: notiLog.createdAt,
+      imageUrl: notiLog.imageUrl,
+      userNotificationType: _mapToUserNotificationType(notiLog.type),
+    );
+
+  UserNotificationType _mapToUserNotificationType(String type) {
+    switch (type) {
+      case "ENTER":
+        return UserNotificationType.entry;
+      case "DEPARTURE":
+        return UserNotificationType.departure;
+      case "DELETION":
+        return UserNotificationType.memberDeletion;
+      default:
+        return UserNotificationType.entry;
+    }
+  }
 }
 
 class UserStatusItem extends StatelessWidget {
@@ -127,6 +157,7 @@ class UserStatusItem extends StatelessWidget {
           height: 44,
           imageUrl: userStatus.imageUrl,
           placeholder: (context, url) => const CircularProgressIndicator(),
+          errorWidget: (context, url, error) => const Icon(Icons.error),
         ),
       );
 

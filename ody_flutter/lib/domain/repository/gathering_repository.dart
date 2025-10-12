@@ -4,6 +4,7 @@ import "package:ody_flutter/data/entity/gathering/gathering_request.dart";
 import "package:ody_flutter/domain/model/gathering.dart";
 import "package:ody_flutter/domain/model/gathering_detail.dart";
 import "package:ody_flutter/domain/model/new_gathering.dart";
+import "package:ody_flutter/domain/model/noti_log.dart";
 import "package:ody_flutter/domain/model/nudge.dart";
 
 abstract class GatheringRepository {
@@ -20,4 +21,6 @@ abstract class GatheringRepository {
   Future<void> exitMeeting(int meetingId);
 
   Future<Response<void>> postNudge(Nudge nudge);
+
+  Future<List<NotiLog>> fetchStatusBoard(int meetingId);
 }

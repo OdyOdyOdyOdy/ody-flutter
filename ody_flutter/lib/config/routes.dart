@@ -36,7 +36,14 @@ Map<String, WidgetBuilder> namedRoutes = <String, WidgetBuilder>{
       gatheringId: args.gatheringId,
     );
   },
-  "/statusBoard": (final BuildContext context) => const StatusBoardScreen(),
+  "/statusBoard": (final BuildContext context) {
+    final args =
+        ModalRoute.of(context)!.settings.arguments! as Map<String, dynamic>;
+    return StatusBoardScreen(
+      meetingId: args["meetingId"],
+      title: args["title"],
+    );
+  },
   "/gatheringLocationSearch": (final BuildContext context) =>
       GatheringLocationSearchScreen(),
   "/gatheringEnter": (

@@ -42,6 +42,7 @@ import '../screens/invitation_code/invitation_code_view_model.dart' as _i1054;
 import '../screens/login/login_view_model.dart' as _i115;
 import '../screens/settings/settings_view_model.dart' as _i1051;
 import '../screens/splash/splash_view_model.dart' as _i737;
+import '../screens/status_board/status_board_view_model.dart' as _i705;
 import 'network_module.dart' as _i567;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -107,6 +108,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i1000.GatheringDetailViewModel(gh<_i11.GatheringRepository>()));
     gh.factory<_i384.GatheringsViewModel>(
         () => _i384.GatheringsViewModel(gh<_i11.GatheringRepository>()));
+    gh.factory<_i705.StatusBoardViewModel>(
+        () => _i705.StatusBoardViewModel(gh<_i11.GatheringRepository>()));
     gh.factory<_i115.LoginViewModel>(() => _i115.LoginViewModel(
           gh<_i306.AuthRepository>(),
           gh<_i1010.DeviceTokenRepository>(),

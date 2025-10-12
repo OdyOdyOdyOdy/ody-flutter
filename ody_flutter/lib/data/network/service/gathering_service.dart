@@ -7,6 +7,7 @@ import "package:ody_flutter/data/entity/gathering/gathering_request.dart";
 import "package:ody_flutter/data/entity/gathering/gathering_response.dart";
 import "package:ody_flutter/data/entity/gathering/gatherings_response.dart";
 import "package:ody_flutter/data/entity/gathering/nudge_request.dart";
+import "package:ody_flutter/data/entity/gathering/status_board_response.dart";
 import "package:ody_flutter/data/network/base/base_service.dart";
 
 @injectable
@@ -88,6 +89,17 @@ class GatheringService {
       return await baseService.getWithoutResponse(
         path: "/invite-codes/$inviteCode/validate",
       );
+    } catch (_) {
+      rethrow;
+    }
+  }
+
+  Future<StatusBoardResponse> fetchStatusBoard(int meetingId) async {
+    try {
+      final response = await baseService.getWithResponse(
+        path: "/meetings/$meetingId/noti-log",
+      );
+      return StatusBoardResponse.fromJson(response);
     } catch (_) {
       rethrow;
     }
