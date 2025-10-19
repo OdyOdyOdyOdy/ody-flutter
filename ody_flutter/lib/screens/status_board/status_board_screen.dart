@@ -66,21 +66,56 @@ class _StatusBoardScreenState extends State<StatusBoardScreen> {
         ),
       );
 
-  Widget _buildFloatingActionButton(BuildContext context) => SizedBox(
-        width: 86,
-        height: 37,
-        child: FloatingActionButton.extended(
-          onPressed: () async {
-            await Navigator.pushNamed(context, Routes.etaBoard);
-          },
-          backgroundColor: CommonColors.purple_800,
-          label: Text(
-            "오디?",
-            style: PretendardFonts.bold16.copyWith(color: CommonColors.white),
+  Widget _buildFloatingActionButton(BuildContext context) =>
+      Consumer<StatusBoardViewModel>(
+        builder: (context, viewModel, child) {
+          final isAccessible = viewModel.detailGathering?.isAccessible ?? false;
+          return odyButton(
+            isAccessible: isAccessible,
+            onTap: () async {
+              await Navigator.pushNamed(context, Routes.etaBoard);
+            },
+          );
+        },
+      );
+
+  Widget odyButton({
+    required bool isAccessible,
+    required VoidCallback onTap,
+  }) =>
+      GestureDetector(
+        onTap: isAccessible ? onTap : null,
+        child: Container(
+          width: 86,
+          height: 37,
+          decoration: BoxDecoration(
+            color: isAccessible ? CommonColors.purple_800 : CommonColors.cream,
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            border: Border.all(
+              color: isAccessible
+                  ? CommonColors.purple_800
+                  : CommonColors.gray_350,
+            ),
           ),
-          icon: SvgPicture.asset(CommonImages.icOdy),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                CommonImages.icOdy,
+                colorFilter: ColorFilter.mode(
+                  isAccessible ? CommonColors.white : CommonColors.gray_350,
+                  BlendMode.srcIn,
+                ),
+              ),
+              const SizedBox(width: 4),
+              Text(
+                "오디?",
+                style: PretendardFonts.bold16.copyWith(
+                  color:
+                      isAccessible ? CommonColors.white : CommonColors.gray_350,
+                ),
+              ),
+            ],
           ),
         ),
       );
