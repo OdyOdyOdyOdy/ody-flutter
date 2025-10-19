@@ -274,42 +274,60 @@ class _GatheringsScreenState extends State<GatheringsScreen> with RouteAware {
                   ),
                 ),
               ),
-              // to-do: 추후에 약속 시간 30분전 일때만 오디? 버튼 활성화 되게 변경 해야함
-
               Positioned(
                 right: 22,
                 bottom: 12,
                 child: GestureDetector(
-                  onTap: () async {
-                    await HapticFeedback.lightImpact();
-                    _isFloatingActionButtonPressed.value = false;
-                    if (mounted) {
-                      await Navigator.pushNamed(
-                        context,
-                        Routes.etaBoard,
-                        arguments: EtaBoardArgument(
-                          title: gathering.name,
-                          gatheringId: gathering.id,
-                        ),
-                      );
-                    }
-                  },
+                  onTap: gathering.isAccessible
+                      ? () async {
+                          await HapticFeedback.lightImpact();
+                          _isFloatingActionButtonPressed.value = false;
+                          if (mounted) {
+                            await Navigator.pushNamed(
+                              context,
+                              Routes.etaBoard,
+                              arguments: EtaBoardArgument(
+                                title: gathering.name,
+                                gatheringId: gathering.id,
+                              ),
+                            );
+                          }
+                        }
+                      : () {},
                   child: Container(
                     width: 86,
                     height: 37,
-                    decoration: const BoxDecoration(
-                      color: CommonColors.purple_800,
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    decoration: BoxDecoration(
+                      color: gathering.isAccessible
+                          ? CommonColors.purple_800
+                          : CommonColors.cream,
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                      border: Border.all(
+                        color: gathering.isAccessible
+                            ? CommonColors.purple_800
+                            : CommonColors.gray_350,
+                      ),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SvgPicture.asset(CommonImages.icOdy),
+                        SvgPicture.asset(
+                          CommonImages.icOdy,
+                          colorFilter: ColorFilter.mode(
+                            gathering.isAccessible
+                                ? CommonColors.white
+                                : CommonColors.gray_350,
+                            BlendMode.srcIn,
+                          ),
+                        ),
                         const SizedBox(width: 4),
                         Text(
                           "오디?",
-                          style: PretendardFonts.bold16
-                              .copyWith(color: CommonColors.white),
+                          style: PretendardFonts.bold16.copyWith(
+                            color: gathering.isAccessible
+                                ? CommonColors.white
+                                : CommonColors.gray_350,
+                          ),
                         ),
                       ],
                     ),
