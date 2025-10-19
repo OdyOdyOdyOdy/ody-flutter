@@ -26,7 +26,6 @@ class Gathering {
   DateTime get datetime => DateFormat("yyyy-MM-dd HH:mm").parse("$date $time");
 
   bool get isAccessible {
-    return true;
     final now = DateTime.now();
     return datetime.isBefore(now.add(const Duration(minutes: 30)));
   }

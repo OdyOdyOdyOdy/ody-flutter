@@ -12,8 +12,8 @@ class GatheringDetailViewModel extends BaseViewModel {
   final GatheringRepository _gatheringRepository;
 
   GatheringDetail? _detailGathering;
-
   GatheringDetail? get detailGathering => _detailGathering;
+
   ValueNotifier<GatheringDetailNavigateAction?> navigation =
       ValueNotifier(null);
 

@@ -38,6 +38,7 @@ class _StatusBoardScreenState extends State<StatusBoardScreen> {
     super.initState();
     viewModel = GetIt.instance<StatusBoardViewModel>();
     unawaited(viewModel.getStatusBoard(widget.meetingId));
+    unawaited(viewModel.getDetailGathering(widget.meetingId));
   }
 
   @override
