@@ -1,3 +1,5 @@
+import "dart:async";
+
 import "package:flutter/material.dart";
 import "package:flutter_svg/svg.dart";
 import "package:ody_flutter/assets/colors/colors.dart";
