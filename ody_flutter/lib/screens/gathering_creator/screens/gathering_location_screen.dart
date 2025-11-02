@@ -71,7 +71,10 @@ class GatheringLocationScreen extends StatelessWidget {
                             duration: const Duration(seconds: 2),
                             behavior: SnackBarBehavior.floating,
                             margin: const EdgeInsets.only(
-                                bottom: 12, left: 8, right: 8),
+                              bottom: 12,
+                              left: 8,
+                              right: 8,
+                            ),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),

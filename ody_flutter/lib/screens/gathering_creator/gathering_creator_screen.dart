@@ -5,12 +5,12 @@ import "package:ody_flutter/components/ody_button.dart";
 import "package:ody_flutter/components/ody_top_bar.dart";
 import "package:ody_flutter/config/routes.dart";
 import "package:ody_flutter/di/di.dart";
+import "package:ody_flutter/screens/base/base_screen.dart";
 import "package:ody_flutter/screens/gathering_creator/gathering_creator_view_model.dart";
 import "package:ody_flutter/screens/gathering_creator/screens/gathering_date_screen.dart";
 import "package:ody_flutter/screens/gathering_creator/screens/gathering_location_screen.dart";
 import "package:ody_flutter/screens/gathering_creator/screens/gathering_time_screen.dart";
 import "package:ody_flutter/screens/gathering_creator/screens/gathering_title_screen.dart";
-import "package:ody_flutter/screens/base/base_screen.dart";
 import "package:smooth_page_indicator/smooth_page_indicator.dart";
 
 class GatheringCreatorScreen extends StatelessWidget {
