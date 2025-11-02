@@ -1,18 +1,21 @@
 import "package:flutter/cupertino.dart";
 import "package:injectable/injectable.dart";
 import "package:ody_flutter/domain/repository/auth_repository.dart";
+import "package:ody_flutter/screens/base/base_view_model.dart";
 import "package:ody_flutter/screens/settings/settings_navigate_action.dart";
 
 @injectable
-class SettingViewModel extends ChangeNotifier {
+class SettingViewModel extends BaseViewModel {
   SettingViewModel(this._authRepository);
 
   final AuthRepository _authRepository;
   ValueNotifier<SettingsNavigateAction?> navigation = ValueNotifier(null);
 
   Future appleWithdrawal() async {
-    await _authRepository.withdrawal();
-    navigation.value = NavigateToLogin();
+    await load(() async {
+      await _authRepository.withdrawal();
+      navigation.value = NavigateToLogin();
+    });
   }
 
   Future appleLogout() async {
