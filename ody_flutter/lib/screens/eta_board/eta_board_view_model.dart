@@ -50,16 +50,23 @@ class EtaBoardViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future performNudge(
-    int userId,
-    int mateId,
-  ) async {
-    const String targetMate = "hello";
+  Future<void> performNudge({
+    required int nudgedMateId,
+    required String nudgedMateName,
+  }) async {
+    if (userEta == null) {
+      return;
+    }
+    final requesterId = userEta!.requesterMateId;
+
+    if (requesterId == nudgedMateId) {
+      return;
+    }
 
     final response = await _gatheringRepository.postNudge(
       Nudge(
-        requestMateId: userId,
-        nudgedMateId: mateId,
+        requestMateId: requesterId,
+        nudgedMateId: nudgedMateId,
       ),
     );
 
@@ -67,7 +74,7 @@ class EtaBoardViewModel extends BaseViewModel {
       case 200:
       case 201:
       case 204:
-        await Fluttertoast.showToast(msg: "$targetMate에게 빨리 오라고 재촉했어요!");
+        await Fluttertoast.showToast(msg: "$nudgedMateName에게 빨리 오라고 재촉했어요!");
       case 400:
         await Fluttertoast.showToast(msg: "약속 시간 30분 이후에는 재촉할 수 없어요");
       default:

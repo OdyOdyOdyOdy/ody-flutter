@@ -134,8 +134,17 @@ class _GatheringEnterScreenState extends State<GatheringEnterScreen> {
                             arguments: LocationModel,
                           );
 
-                          if (result != null) {
-                            _viewModel.setLocation(result as LocationModel);
+                          if (result != null && result is LocationModel) {
+                            final address = result.address;
+                            if (address != null &&
+                                (address.contains("서울") ||
+                                    address.contains("인천") ||
+                                    address.contains("경기"))) {
+                              _viewModel.setLocation(result);
+                            } else {
+                              _viewModel
+                                  .showSnackBar("지원하지 않는 지역이에요. 다시 선택해 주세요.");
+                            }
                           }
                         },
                       ),

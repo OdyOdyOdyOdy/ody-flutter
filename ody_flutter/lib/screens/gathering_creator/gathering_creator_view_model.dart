@@ -4,6 +4,7 @@ import "package:ody_flutter/data/entity/gathering/gathering_request.dart";
 import "package:ody_flutter/domain/model/location.dart";
 import "package:ody_flutter/domain/model/new_gathering.dart";
 import "package:ody_flutter/domain/repository/gathering_repository.dart";
+import "package:ody_flutter/screens/base/base_view_model.dart";
 
 enum GatheringCreatorScreenType {
   title(0),
@@ -22,7 +23,7 @@ enum GatheringCreatorScreenType {
 }
 
 @injectable
-class GatheringCreatorViewModel extends ChangeNotifier {
+class GatheringCreatorViewModel extends BaseViewModel {
   GatheringCreatorViewModel(this._gatheringRepository) {
     _init();
   }
@@ -44,6 +45,7 @@ class GatheringCreatorViewModel extends ChangeNotifier {
 
   GatheringCreatorScreenType _currentScreenType =
       GatheringCreatorScreenType.title;
+
   GatheringCreatorScreenType get currentScreenType => _currentScreenType;
 
   void _init() {
@@ -75,7 +77,7 @@ class GatheringCreatorViewModel extends ChangeNotifier {
   }
 
   @override
-  void dispose() {
+  Future<void> dispose() async {
     pageController.dispose();
     text.dispose();
     date.dispose();
@@ -83,7 +85,7 @@ class GatheringCreatorViewModel extends ChangeNotifier {
     minute.dispose();
     locationText.dispose();
     isConfirmEnabled.dispose();
-    super.dispose();
+    await super.dispose();
   }
 
   void setCurrentScreenType(int? index) {
@@ -98,6 +100,29 @@ class GatheringCreatorViewModel extends ChangeNotifier {
   }
 
   Future<void> goToNextPage() async {
+    if (_currentScreenType == GatheringCreatorScreenType.time) {
+      final now = DateTime.now();
+      final selectedDateTime = DateTime(
+        date.value.year,
+        date.value.month,
+        date.value.day,
+        hour.value,
+        minute.value,
+      );
+
+      if (!selectedDateTime.isAfter(now)) {
+        final selectedDateOnly =
+            DateTime(date.value.year, date.value.month, date.value.day);
+        final todayDateOnly = DateTime(now.year, now.month, now.day);
+        if (selectedDateOnly.isBefore(todayDateOnly)) {
+          showSnackBar("오늘 이후의 날짜를 선택해 주세요!");
+        } else {
+          showSnackBar("현재 이후의 시간을 선택해 주세요!");
+        }
+        return;
+      }
+    }
+
     await pageController.nextPage(
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
