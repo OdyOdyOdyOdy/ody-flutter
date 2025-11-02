@@ -29,7 +29,7 @@ class DeviceTokenRepositoryImpl implements DeviceTokenRepository {
     try {
       final deviceToken = await FirebaseMessaging.instance.getToken();
       return deviceTokenService.saveToken(DeviceToken(device: deviceToken));
-    } catch (e) {
+    } on Exception catch (e) {
       debugPrint("Error fetching FCM token: $e");
       return 0; // or handle the error as needed
     }
