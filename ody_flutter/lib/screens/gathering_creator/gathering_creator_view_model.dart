@@ -111,7 +111,8 @@ class GatheringCreatorViewModel extends BaseViewModel {
       );
 
       if (!selectedDateTime.isAfter(now)) {
-        final selectedDateOnly = DateTime(date.value.year, date.value.month, date.value.day);
+        final selectedDateOnly =
+            DateTime(date.value.year, date.value.month, date.value.day);
         final todayDateOnly = DateTime(now.year, now.month, now.day);
         if (selectedDateOnly.isBefore(todayDateOnly)) {
           showSnackBar("오늘 이후의 날짜를 선택해 주세요!");
