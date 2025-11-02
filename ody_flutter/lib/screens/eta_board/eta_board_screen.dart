@@ -99,7 +99,7 @@ class _EtaBoardScreenState extends State<EtaBoardScreen> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 26),
-            child: _buildStatusBadge(mateEta?.etaStatus),
+            child: _buildStatusBadge(mateEta),
           ),
           Expanded(
             child: Row(
@@ -126,17 +126,32 @@ class _EtaBoardScreenState extends State<EtaBoardScreen> {
         ],
       );
 
-  Widget _buildStatusBadge(EtaStatus? etaStatus) => Container(
-        width: 80,
-        height: 34,
-        decoration: BoxDecoration(
-          color: etaStatus?.color,
-          borderRadius: BorderRadius.circular(17),
-        ),
-        child: Center(
-          child: Text(
-            etaStatus?.badgeMessage ?? "",
-            style: PretendardFonts.medium16.copyWith(color: CommonColors.white),
+  Widget _buildStatusBadge(MateEta? mateEta) => GestureDetector(
+        onTap: () {
+          if (mateEta == null) {
+            return;
+          }
+          unawaited(
+            _viewModel.performNudge(
+              nudgedMateId: mateEta.mateId,
+              nudgedMateName: mateEta.name,
+            ),
+          );
+        },
+        child: Container(
+          width: 80,
+          height: 34,
+          decoration: BoxDecoration(
+            color: mateEta?.etaStatus.color,
+            borderRadius: BorderRadius.circular(17),
+          ),
+          child: Center(
+            child: Text(
+              mateEta?.etaStatus.badgeMessage ?? "",
+              style: PretendardFonts.medium16.copyWith(
+                color: CommonColors.white,
+              ),
+            ),
           ),
         ),
       );
