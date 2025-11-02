@@ -158,6 +158,7 @@ class _GatheringDetailScreenState extends State<GatheringDetailScreen> {
           const SizedBox(height: 8),
           OutlinedButton(
             onPressed: () async {
+              await HapticFeedback.lightImpact();
               await Clipboard.setData(
                 ClipboardData(
                   text: _viewModel.detailGathering?.inviteCode ?? "",
@@ -166,8 +167,8 @@ class _GatheringDetailScreenState extends State<GatheringDetailScreen> {
               _viewModel.showSnackBar("초대코드가 복사되었어요.");
             },
             style: OutlinedButton.styleFrom(
-              side: const BorderSide(color: CommonColors.gray_300),
-              backgroundColor: CommonColors.gray_300,
+              side: const BorderSide(color: CommonColors.purple_800),
+              backgroundColor: CommonColors.purple_800,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
               ),
@@ -175,7 +176,7 @@ class _GatheringDetailScreenState extends State<GatheringDetailScreen> {
             child: Text(
               "초대 코드 복사하기",
               style: PretendardFonts.regular14
-                  .copyWith(color: CommonColors.gray_500),
+                  .copyWith(color: CommonColors.cream),
             ),
           ),
         ],
@@ -288,64 +289,82 @@ class _GatheringDetailScreenState extends State<GatheringDetailScreen> {
 
   Widget _buildFloatingActionButton() => ValueListenableBuilder<bool>(
         valueListenable: _isFloatingActionButtonPressed,
-        builder: (context, isPressed, child) => Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (isPressed) _buildOdyButton(),
-            const SizedBox(width: 18),
-            FloatingActionButton(
-              foregroundColor: CommonColors.white,
-              backgroundColor: CommonColors.purple_800,
-              onPressed: () async {
-                await HapticFeedback.lightImpact();
-                _isFloatingActionButtonPressed.value = !isPressed;
-              },
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
+        builder: (context, isPressed, child) {
+          final isAccessible =
+              _viewModel.detailGathering?.isAccessible ?? false;
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (isPressed) _buildOdyButton(isAccessible: isAccessible),
+              const SizedBox(width: 18),
+              FloatingActionButton(
+                foregroundColor: CommonColors.white,
+                backgroundColor: CommonColors.purple_800,
+                onPressed: () async {
+                  await HapticFeedback.lightImpact();
+                  _isFloatingActionButtonPressed.value = !isPressed;
+                },
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: isPressed
+                    ? SvgPicture.asset(CommonImages.icBigCancel)
+                    : SvgPicture.asset(CommonImages.icOdy),
               ),
-              child: isPressed
-                  ? SvgPicture.asset(CommonImages.icBigCancel)
-                  : SvgPicture.asset(CommonImages.icOdy),
-            ),
-            const SizedBox(width: 18),
-            if (isPressed) _buildLogButton(),
-          ],
-        ),
-      );
-
-  Widget _buildOdyButton() => OutlinedButton(
-        onPressed: () async {
-          await Navigator.pushNamed(
-            context,
-            Routes.etaBoard,
-            arguments: EtaBoardArgument(
-              title: _viewModel.detailGathering?.name ?? "",
-              gatheringId: _viewModel.detailGathering?.id ?? 0,
-              time: _viewModel.detailGathering?.time ?? "",
-            ),
+              const SizedBox(width: 18),
+              if (isPressed) _buildLogButton(),
+            ],
           );
         },
-        style: OutlinedButton.styleFrom(
-          side: const BorderSide(color: CommonColors.purple_800),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-        ),
-        child: Row(
-          children: [
-            SvgPicture.asset(
-              CommonImages.icOdy,
-              colorFilter: const ColorFilter.mode(
-                CommonColors.purple_800,
-                BlendMode.srcIn,
+      );
+
+  Widget _buildOdyButton({required bool isAccessible}) => GestureDetector(
+        onTap: isAccessible
+            ? () async {
+                await Navigator.pushNamed(
+                  context,
+                  Routes.etaBoard,
+                  arguments: EtaBoardArgument(
+                    title: _viewModel.detailGathering?.name ?? "",
+                    gatheringId: _viewModel.detailGathering?.id ?? 0,
+              time: _viewModel.detailGathering?.time ?? "",
+                  ),
+                );
+              }
+            : null,
+        child: Container(
+          width: 86,
+          height: 37,
+          decoration: BoxDecoration(
+            color: isAccessible ? CommonColors.purple_800 : CommonColors.cream,
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            border: Border.all(
+              color: isAccessible
+                  ? CommonColors.purple_800
+                  : CommonColors.gray_350,
+            ),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                CommonImages.icOdy,
+                colorFilter: ColorFilter.mode(
+                  isAccessible ? CommonColors.white : CommonColors.gray_350,
+                  BlendMode.srcIn,
+                ),
               ),
-            ),
-            const SizedBox(width: 4),
-            Text(
-              "오디?",
-              style: PretendardFonts.bold16
-                  .copyWith(color: CommonColors.purple_800),
-            ),
-          ],
+              const SizedBox(width: 4),
+              Text(
+                "오디?",
+                style: PretendardFonts.bold16.copyWith(
+                  color: isAccessible
+                      ? CommonColors.white
+                      : CommonColors.gray_350,
+                ),
+              ),
+            ],
+          ),
         ),
       );
 

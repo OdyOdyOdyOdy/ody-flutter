@@ -27,7 +27,7 @@ class Gathering {
 
   bool get isAccessible {
     final now = DateTime.now();
-    return datetime.isAfter(now.add(const Duration(minutes: 30)));
+    return datetime.isBefore(now.add(const Duration(minutes: 30)));
   }
 
   String dateTimeMessage() {

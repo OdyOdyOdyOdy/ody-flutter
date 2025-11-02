@@ -7,6 +7,7 @@ import "package:ody_flutter/components/ody_alert.dart";
 import "package:ody_flutter/components/ody_top_bar.dart";
 import "package:ody_flutter/config/routes.dart";
 import "package:ody_flutter/di/di.dart";
+import "package:ody_flutter/screens/base/base_screen.dart";
 import "package:ody_flutter/screens/settings/model/notification_setting.dart";
 import "package:ody_flutter/screens/settings/model/use_of_service_setting.dart";
 import "package:ody_flutter/screens/settings/settings_navigate_action.dart";
@@ -52,39 +53,42 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   @override
-  Widget build(final BuildContext context) => Scaffold(
-        backgroundColor: CommonColors.cream,
-        body: SafeArea(
-          child: _showWebView
-              ? Scaffold(
-                  appBar: AppBar(
-                    leading: IconButton(
-                      icon: const Icon(Icons.arrow_back),
-                      onPressed: _handleWebViewBack,
+  Widget build(final BuildContext context) => BaseScreen(
+        viewModel: _viewModel,
+        builder: (context) => Scaffold(
+          backgroundColor: CommonColors.cream,
+          body: SafeArea(
+            child: _showWebView
+                ? Scaffold(
+                    appBar: AppBar(
+                      leading: IconButton(
+                        icon: const Icon(Icons.arrow_back),
+                        onPressed: _handleWebViewBack,
+                      ),
+                      backgroundColor: CommonColors.white,
                     ),
-                    backgroundColor: CommonColors.white,
+                    body: WebViewWidget(controller: _webViewController),
+                  )
+                : Column(
+                    children: [
+                      OdyTopBar(
+                        title: "설정",
+                        leftIcon: CommonImages.icArrowBack,
+                        onLeftIcon: () => Navigator.pop(context),
+                      ),
+                      const SizedBox(height: 26),
+                      _buildNotificationSettings(),
+                      const SizedBox(height: 14),
+                      const Divider(
+                        color: CommonColors.gray_350,
+                        thickness: 1,
+                        height: 1,
+                      ),
+                      const SizedBox(height: 36),
+                      _buildServiceSettings(),
+                    ],
                   ),
-                  body: WebViewWidget(controller: _webViewController),
-                )
-              : Column(
-                  children: [
-                    OdyTopBar(
-                      title: "설정",
-                      leftIcon: CommonImages.icArrowBack,
-                      onLeftIcon: () => Navigator.pop(context),
-                    ),
-                    const SizedBox(height: 26),
-                    _buildNotificationSettings(),
-                    const SizedBox(height: 14),
-                    const Divider(
-                      color: CommonColors.gray_350,
-                      thickness: 1,
-                      height: 1,
-                    ),
-                    const SizedBox(height: 36),
-                    _buildServiceSettings(),
-                  ],
-                ),
+          ),
         ),
       );
 
@@ -203,7 +207,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
             title: "정말 오디를 떠나시겠어요?",
             description: "참여한 약속들이 모두 사라져요.",
             confirmText: "탈퇴",
-            onConfirm: () => _viewModel.appleWithdrawal(),
+            onConfirm: () => {
+              Navigator.pop(context),
+              _viewModel.appleWithdrawal(),
+            },
           ),
         );
     }
