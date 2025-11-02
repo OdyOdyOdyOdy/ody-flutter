@@ -290,6 +290,7 @@ class _GatheringsScreenState extends State<GatheringsScreen> with RouteAware {
                         arguments: EtaBoardArgument(
                           title: gathering.name,
                           gatheringId: gathering.id,
+                          time: gathering.time,
                         ),
                       );
                     }
