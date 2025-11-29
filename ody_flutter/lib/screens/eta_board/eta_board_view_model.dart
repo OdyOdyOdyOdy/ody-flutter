@@ -23,6 +23,7 @@ class EtaBoardViewModel extends BaseViewModel {
   ValueNotifier<GatheringDetailNavigateAction?> navigation =
       ValueNotifier(null);
   Timer? _timer;
+  int? currentGatheringId;
 
   Future<void> startPolling(int gatheringId, String time) async {
     final now = DateTime.now();
@@ -82,9 +83,7 @@ class EtaBoardViewModel extends BaseViewModel {
     }
   }
 
-  Future<void> patchEtaBoard(
-    int gatheringId,
-  ) async {
+  Future<void> patchEtaBoard(int gatheringId) async {
     await load(
       () async {
         EtaRequest request;
@@ -116,11 +115,14 @@ class EtaBoardViewModel extends BaseViewModel {
         }
 
         try {
-          userEta = await _etaRepository.patchEtaBoard(
-            meetingId: gatheringId,
-            request: request,
-          );
-          notifyListeners();
+          // gatheringId가 현재 화면의 gatheringId와 일치할 때만 갱신
+          if (gatheringId == currentGatheringId) {
+            userEta = await _etaRepository.patchEtaBoard(
+              meetingId: gatheringId,
+              request: request,
+            );
+            notifyListeners();
+          }
         } on Exception catch (e) {
           await Fluttertoast.showToast(msg: "도착 정보를 업데이트하지 못했습니다 ($e)");
         }

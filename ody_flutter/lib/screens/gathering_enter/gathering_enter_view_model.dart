@@ -2,10 +2,13 @@ import "package:flutter/cupertino.dart";
 import "package:injectable/injectable.dart";
 import "package:location/location.dart";
 import "package:ody_flutter/data/entity/gathering/enter_gathering_request.dart";
+import "package:ody_flutter/di/di.dart";
 import "package:ody_flutter/domain/model/location.dart";
 import "package:ody_flutter/domain/repository/gathering_repository.dart";
 import "package:ody_flutter/domain/repository/location_repository.dart";
 import "package:ody_flutter/screens/base/base_view_model.dart";
+import "package:ody_flutter/screens/eta_board/eta_board_view_model.dart";
+import "package:ody_flutter/utils/gathering_time_util.dart";
 
 @injectable
 class GatheringEnterViewModel extends BaseViewModel {
@@ -64,12 +67,18 @@ class GatheringEnterViewModel extends BaseViewModel {
             originLongitude: "${_currentLocation.longitude}",
           );
 
-          final meetingId = await _gatheringRepository.enterGathering(request);
-          gatheringId = meetingId;
-          title = await _gatheringRepository.fetchGathering(meetingId).then(
+          final response = await _gatheringRepository.enterGathering(request);
+          gatheringId = response.gatheringId;
+          title = await _gatheringRepository
+              .fetchGathering(response.gatheringId)
+              .then(
                 (final gathering) => gathering.name ?? "",
               );
           isCompleted.value = title.isNotEmpty;
+          if (isWithin30Minutes(response.dateTime)) {
+            await getIt<EtaBoardViewModel>()
+                .startPolling(response.gatheringId, response.dateTime);
+          }
         } on Exception catch (_) {
           isCompleted.value = false;
         }
