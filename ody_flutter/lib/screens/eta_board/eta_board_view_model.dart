@@ -82,9 +82,7 @@ class EtaBoardViewModel extends BaseViewModel {
     }
   }
 
-  Future<void> patchEtaBoard(
-    int gatheringId,
-  ) async {
+  Future<void> patchEtaBoard(int gatheringId) async {
     await load(
       () async {
         EtaRequest request;

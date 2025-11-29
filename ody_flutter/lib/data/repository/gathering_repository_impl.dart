@@ -3,12 +3,14 @@ import "package:injectable/injectable.dart";
 import "package:ody_flutter/data/db/service/auth_token_service.dart";
 import "package:ody_flutter/data/entity/gathering/enter_gathering_request.dart";
 import "package:ody_flutter/data/entity/gathering/gathering_request.dart";
+import "package:ody_flutter/data/entity/mapper/enter_gathering_mapper.dart";
 import "package:ody_flutter/data/entity/mapper/gathering_detail_mapper.dart";
 import "package:ody_flutter/data/entity/mapper/gathering_mapper.dart";
 import "package:ody_flutter/data/entity/mapper/gatherings_mapper.dart";
 import "package:ody_flutter/data/entity/mapper/nudge_mapper.dart";
 import "package:ody_flutter/data/entity/mapper/status_board_mapper.dart";
 import "package:ody_flutter/data/network/service/gathering_service.dart";
+import "package:ody_flutter/domain/model/enter_gathering.dart";
 import "package:ody_flutter/domain/model/gathering.dart";
 import "package:ody_flutter/domain/model/gathering_detail.dart";
 import "package:ody_flutter/domain/model/new_gathering.dart";
@@ -54,11 +56,12 @@ class GatheringRepositoryImpl implements GatheringRepository {
   }
 
   @override
-  Future<int> enterGathering(EnterGatheringRequest request) {
+  Future<EnterGathering> enterGathering(
+    EnterGatheringRequest request,
+  ) async {
     try {
-      return gatheringService
-          .enterGathering(request)
-          .then((response) => response);
+      final response = await gatheringService.enterGathering(request);
+      return response.toModel();
     } catch (_) {
       rethrow;
     }

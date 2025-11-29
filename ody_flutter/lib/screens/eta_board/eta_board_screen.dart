@@ -33,9 +33,9 @@ class _EtaBoardScreenState extends State<EtaBoardScreen> {
 
   @override
   void initState() {
-    debugPrint("EtaBoardScreen initState");
     super.initState();
     _viewModel = getIt<EtaBoardViewModel>();
+    unawaited(_viewModel.patchEtaBoard(widget.gatheringId));
   }
 
   @override
