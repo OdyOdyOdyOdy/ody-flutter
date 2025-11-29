@@ -16,11 +16,13 @@ class EtaBoardScreen extends StatefulWidget {
   const EtaBoardScreen({
     required this.title,
     required this.gatheringId,
+    required this.time,
     super.key,
   });
 
   final String title;
   final int gatheringId;
+  final String time;
 
   @override
   State<EtaBoardScreen> createState() => _EtaBoardScreenState();
@@ -34,8 +36,6 @@ class _EtaBoardScreenState extends State<EtaBoardScreen> {
     debugPrint("EtaBoardScreen initState");
     super.initState();
     _viewModel = getIt<EtaBoardViewModel>();
-    // to-do: 서버에서 알림 받으면 시작하도록 로직 수정 필요
-    unawaited(_viewModel.startPolling(widget.gatheringId));
   }
 
   @override
@@ -68,7 +68,7 @@ class _EtaBoardScreenState extends State<EtaBoardScreen> {
         onLeftIcon: () => Navigator.pop(context),
         rightIcon: CommonImages.icShare,
         onRightIcon: () {
-          // 유저 현황표 화면 스크린샷 공유 작업
+          // to-do: 유저 현황표 화면 스크린샷 공유 작업
         },
       );
 

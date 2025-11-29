@@ -34,6 +34,7 @@ Map<String, WidgetBuilder> namedRoutes = <String, WidgetBuilder>{
     return EtaBoardScreen(
       title: args.title,
       gatheringId: args.gatheringId,
+      time: args.time,
     );
   },
   "/statusBoard": (final BuildContext context) {

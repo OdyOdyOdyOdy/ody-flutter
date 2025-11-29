@@ -327,6 +327,7 @@ class _GatheringDetailScreenState extends State<GatheringDetailScreen> {
                   arguments: EtaBoardArgument(
                     title: _viewModel.detailGathering?.name ?? "",
                     gatheringId: _viewModel.detailGathering?.id ?? 0,
+              time: _viewModel.detailGathering?.time ?? "",
                   ),
                 );
               }

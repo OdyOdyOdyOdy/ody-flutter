@@ -53,9 +53,9 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBl0lwAnp8so4VvJACNRuPaC5E0DzDLKF4',
-    appId: '1:538901827908:ios:c4ff79f7acb421a37e4711',
-    messagingSenderId: '538901827908',
+    apiKey: 'AIzaSyCgy5pO1RpUTuYRuzPn7Dmi7I6i_64mT54',
+    appId: '1:1051687401115:ios:2040d412978b4ef938383e',
+    messagingSenderId: '1051687401115',
     projectId: 'ody-flutter',
     storageBucket: 'ody-flutter.firebasestorage.app',
     iosBundleId: 'org.mulberry.ody.odyFlutter',

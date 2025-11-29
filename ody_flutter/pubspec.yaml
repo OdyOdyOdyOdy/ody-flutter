@@ -12,7 +12,7 @@ dependencies:
   cached_network_image: ^3.4.1
   cupertino_icons: ^1.0.8
   dio: ^5.8.0+1
-  firebase_core: ^2.27.0
+  firebase_core: ^2.32.0
   firebase_messaging: ^14.7.10
   flutter:
     sdk: flutter

@@ -24,10 +24,19 @@ class EtaBoardViewModel extends BaseViewModel {
       ValueNotifier(null);
   Timer? _timer;
 
-  Future<void> startPolling(int gatheringId) async {
+  Future<void> startPolling(int gatheringId, String time) async {
+    final now = DateTime.now();
+    final meetingTime = DateTime.parse(time);
+
+    if (now.isAfter(meetingTime)) {
+      return;
+    }
     await patchEtaBoard(gatheringId);
+
     _timer = Timer.periodic(const Duration(seconds: 10), (_) async {
-      await patchEtaBoard(gatheringId);
+      DateTime.now().isAfter(meetingTime)
+          ? stopPolling()
+          : await patchEtaBoard(gatheringId);
     });
   }
 
