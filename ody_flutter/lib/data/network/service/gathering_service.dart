@@ -2,6 +2,7 @@ import "package:dio/dio.dart";
 import "package:injectable/injectable.dart";
 import "package:ody_flutter/data/db/service/auth_token_service.dart";
 import "package:ody_flutter/data/entity/gathering/enter_gathering_request.dart";
+import "package:ody_flutter/data/entity/gathering/enter_gathering_response.dart";
 import "package:ody_flutter/data/entity/gathering/gathering_detail_response.dart";
 import "package:ody_flutter/data/entity/gathering/gathering_request.dart";
 import "package:ody_flutter/data/entity/gathering/gathering_response.dart";
@@ -72,13 +73,15 @@ class GatheringService {
     }
   }
 
-  Future<int> enterGathering(EnterGatheringRequest request) async {
+  Future<EnterGatheringResponse> enterGathering(
+    EnterGatheringRequest request,
+  ) async {
     try {
-      final Map<String, dynamic> response = await baseService.postWithResponse(
+      final response = await baseService.postWithResponse(
         path: "/v2/mates",
         data: request.toJson(),
       );
-      return response["meetingId"] as int;
+      return EnterGatheringResponse.fromJson(response);
     } catch (_) {
       rethrow;
     }
