@@ -18,6 +18,15 @@ class OdyTimePicker extends StatefulWidget {
 
 class _OdyTimePickerState extends State<OdyTimePicker> {
   @override
+  void initState() {
+    super.initState();
+
+    // 초기값 현재 시간으로 설정
+    widget.selectedHour.value = DateTime.now().hour;
+    widget.selectedMinute.value = DateTime.now().minute;
+  }
+
+  @override
   Widget build(BuildContext context) => Row(
         mainAxisAlignment: MainAxisAlignment.center,
         spacing: 20,
