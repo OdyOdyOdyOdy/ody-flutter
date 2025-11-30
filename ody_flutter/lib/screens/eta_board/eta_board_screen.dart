@@ -87,7 +87,9 @@ class _EtaBoardScreenState extends State<EtaBoardScreen> {
         leftIcon: CommonImages.icArrowBack,
         onLeftIcon: () => Navigator.pop(context),
         rightIcon: CommonImages.icShare,
-        onRightIcon: () => _viewModel.shareScreenshot(_screenshotController),
+        onRightIcon: () => unawaited(
+          _viewModel.shareScreenshot(_screenshotController),
+        ),
       );
 
   Widget _buildEtaItem(MateEta? mateEta) => Padding(
