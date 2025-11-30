@@ -13,6 +13,7 @@ import "package:ody_flutter/config/routes.dart";
 import "package:ody_flutter/domain/model/noti_log.dart";
 import "package:ody_flutter/screens/status_board/model/user_notification_type.dart";
 import "package:ody_flutter/screens/status_board/model/user_status.dart";
+import "package:ody_flutter/screens/status_board/status_board_navigate_action.dart";
 import "package:ody_flutter/screens/status_board/status_board_view_model.dart";
 import "package:provider/provider.dart";
 
@@ -31,19 +32,29 @@ class StatusBoardScreen extends StatefulWidget {
 }
 
 class _StatusBoardScreenState extends State<StatusBoardScreen> {
-  late final StatusBoardViewModel viewModel;
+  late final StatusBoardViewModel _viewModel;
 
   @override
   void initState() {
     super.initState();
-    viewModel = GetIt.instance<StatusBoardViewModel>();
-    unawaited(viewModel.getStatusBoard(widget.meetingId));
-    unawaited(viewModel.getDetailGathering(widget.meetingId));
+    _viewModel = GetIt.instance<StatusBoardViewModel>();
+    _viewModel.addListener(_onNavigationChanged);
+    unawaited(_viewModel.getStatusBoard(widget.meetingId));
+    unawaited(_viewModel.getDetailGathering(widget.meetingId));
+  }
+
+  Future<void> _onNavigationChanged() async {
+    final action = _viewModel.navigation.value;
+    if (action != null) {
+      if (action is NavigateToGatherings) {
+        await Navigator.pushReplacementNamed(context, Routes.gatherings);
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) => ChangeNotifierProvider(
-        create: (_) => viewModel,
+        create: (_) => _viewModel,
         child: Scaffold(
           floatingActionButton: _buildFloatingActionButton(context),
           backgroundColor: CommonColors.cream,
@@ -132,7 +143,8 @@ class _StatusBoardScreenState extends State<StatusBoardScreen> {
             title: widget.title,
             description: "약속을 정말 나가실 건가요?",
             confirmText: "나가기",
-            onConfirm: () => Navigator.pop(context),
+            onConfirm: () =>
+                _viewModel.exitMeeting(_viewModel.detailGathering?.id ?? 0),
           ),
         ),
       );
@@ -152,11 +164,11 @@ class _StatusBoardScreenState extends State<StatusBoardScreen> {
       );
 
   UserStatus _mapNotiLogToUserStatus(NotiLog notiLog) => UserStatus(
-      nickname: notiLog.nickname,
-      created: notiLog.createdAt,
-      imageUrl: notiLog.imageUrl,
-      userNotificationType: _mapToUserNotificationType(notiLog.type),
-    );
+        nickname: notiLog.nickname,
+        created: notiLog.createdAt,
+        imageUrl: notiLog.imageUrl,
+        userNotificationType: _mapToUserNotificationType(notiLog.type),
+      );
 
   UserNotificationType _mapToUserNotificationType(String type) {
     switch (type) {

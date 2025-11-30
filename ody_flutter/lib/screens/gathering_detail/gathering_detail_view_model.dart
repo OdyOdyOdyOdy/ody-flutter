@@ -12,6 +12,7 @@ class GatheringDetailViewModel extends BaseViewModel {
   final GatheringRepository _gatheringRepository;
 
   GatheringDetail? _detailGathering;
+
   GatheringDetail? get detailGathering => _detailGathering;
 
   ValueNotifier<GatheringDetailNavigateAction?> navigation =
@@ -23,8 +24,10 @@ class GatheringDetailViewModel extends BaseViewModel {
   }
 
   Future exitMeeting(int meetingId) async {
-    await _gatheringRepository.exitMeeting(meetingId);
-    navigation.value = NavigateToGatherings();
-    notifyListeners();
+    await load(() async {
+      await _gatheringRepository.exitMeeting(meetingId);
+      navigation.value = NavigateToGatherings();
+      notifyListeners();
+    });
   }
 }
