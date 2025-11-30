@@ -380,6 +380,8 @@ class _GatheringDetailScreenState extends State<GatheringDetailScreen> {
           );
         },
         style: OutlinedButton.styleFrom(
+          fixedSize: const Size(86, 37),
+          padding: EdgeInsets.zero,
           side: const BorderSide(color: CommonColors.purple_800),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
