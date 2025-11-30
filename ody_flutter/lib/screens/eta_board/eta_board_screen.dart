@@ -11,6 +11,7 @@ import "package:ody_flutter/domain/model/eta_status.dart";
 import "package:ody_flutter/domain/model/user_eta.dart";
 import "package:ody_flutter/screens/base/base_screen.dart";
 import "package:ody_flutter/screens/eta_board/eta_board_view_model.dart";
+import "package:screenshot/screenshot.dart";
 
 class EtaBoardScreen extends StatefulWidget {
   const EtaBoardScreen({
@@ -30,11 +31,13 @@ class EtaBoardScreen extends StatefulWidget {
 
 class _EtaBoardScreenState extends State<EtaBoardScreen> {
   late final EtaBoardViewModel _viewModel;
+  late final ScreenshotController _screenshotController;
 
   @override
   void initState() {
     super.initState();
     _viewModel = getIt<EtaBoardViewModel>();
+    _screenshotController = ScreenshotController();
     unawaited(_viewModel.patchEtaBoard(widget.gatheringId));
   }
 
@@ -54,8 +57,25 @@ class _EtaBoardScreenState extends State<EtaBoardScreen> {
             child: Column(
               children: [
                 _buildTopBar(),
-                const SizedBox(height: 32),
-                _buildEtaList(),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Screenshot(
+                      controller: _screenshotController,
+                      child: ColoredBox(
+                        color: CommonColors.cream,
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) => _buildEtaItem(
+                            _viewModel.userEta?.mateEtas[index],
+                          ),
+                          itemCount: _viewModel.userEta?.mateEtas.length ?? 0,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
@@ -67,63 +87,53 @@ class _EtaBoardScreenState extends State<EtaBoardScreen> {
         leftIcon: CommonImages.icArrowBack,
         onLeftIcon: () => Navigator.pop(context),
         rightIcon: CommonImages.icShare,
-        onRightIcon: () {
-          // to-do: 유저 현황표 화면 스크린샷 공유 작업
-        },
-      );
-
-  Widget _buildEtaList() => Expanded(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 36),
-          child: ListView.separated(
-            itemBuilder: (context, index) => _buildEtaItem(
-              _viewModel.userEta?.mateEtas[index],
-            ),
-            separatorBuilder: (context, index) => const SizedBox(height: 42),
-            itemCount: _viewModel.userEta?.mateEtas.length ?? 0,
-          ),
+        onRightIcon: () => unawaited(
+          _viewModel.shareScreenshot(_screenshotController),
         ),
       );
 
-  Widget _buildEtaItem(MateEta? mateEta) => Row(
-        children: [
-          Expanded(
-            child: Text(
-              textAlign: TextAlign.center,
-              mateEta?.name ?? "",
-              style:
-                  PretendardFonts.bold20.copyWith(color: CommonColors.gray_800),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+  Widget _buildEtaItem(MateEta? mateEta) => Padding(
+        padding: const EdgeInsets.fromLTRB(36, 21, 36, 21),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                textAlign: TextAlign.center,
+                mateEta?.name ?? "",
+                style: PretendardFonts.bold20
+                    .copyWith(color: CommonColors.gray_800),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 26),
-            child: _buildStatusBadge(mateEta),
-          ),
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Flexible(
-                  child: Text(
-                    textAlign: TextAlign.center,
-                    mateEta?.etaStatus.statusMessage() ?? "",
-                    style: PretendardFonts.medium16
-                        .copyWith(color: CommonColors.black),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-                if (mateEta?.etaStatus is Missing)
-                  Padding(
-                    padding: const EdgeInsets.only(left: 3),
-                    child: _buildTooltip(mateEta?.mateId),
-                  ),
-              ],
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 26),
+              child: _buildStatusBadge(mateEta),
             ),
-          ),
-        ],
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Flexible(
+                    child: Text(
+                      textAlign: TextAlign.center,
+                      mateEta?.etaStatus.statusMessage() ?? "",
+                      style: PretendardFonts.medium16
+                          .copyWith(color: CommonColors.black),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  if (mateEta?.etaStatus is Missing)
+                    Padding(
+                      padding: const EdgeInsets.only(left: 3),
+                      child: _buildTooltip(mateEta?.mateId),
+                    ),
+                ],
+              ),
+            ),
+          ],
+        ),
       );
 
   Widget _buildStatusBadge(MateEta? mateEta) => GestureDetector(
