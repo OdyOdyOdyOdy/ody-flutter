@@ -1,4 +1,5 @@
 import "dart:async";
+import "dart:typed_data";
 
 import "package:flutter/cupertino.dart";
 import "package:fluttertoast/fluttertoast.dart";
@@ -11,6 +12,8 @@ import "package:ody_flutter/domain/repository/gathering_repository.dart";
 import "package:ody_flutter/screens/base/base_view_model.dart";
 import "package:ody_flutter/screens/gathering_detail/gathering_detail_navigate_action.dart";
 import "package:ody_flutter/utils/location_util.dart";
+import "package:screenshot/screenshot.dart";
+import "package:share_plus/share_plus.dart";
 
 @injectable
 class EtaBoardViewModel extends BaseViewModel {
@@ -83,46 +86,74 @@ class EtaBoardViewModel extends BaseViewModel {
   }
 
   Future<void> patchEtaBoard(int gatheringId) async {
-    await load(
-      () async {
-        EtaRequest request;
-        try {
-          final position = await getCurrentLocation();
-          if (position != null) {
-            request = EtaRequest(
-              isMissing: false,
-              currentLatitude: position.latitude ?? 0.0,
-              currentLongitude: position.longitude ?? 0.0,
-            );
-          } else {
-            // 위치 정보는 가져왔지만 null인 경우
-            request = const EtaRequest(
-              isMissing: true,
-              currentLatitude: 0,
-              currentLongitude: 0,
-            );
-            await Fluttertoast.showToast(msg: "위치 정보를 가져오지 못했습니다");
-          }
-        } on Exception catch (_) {
-          // 위치 정보 조회 중 예외 발생
-          request = const EtaRequest(
-            isMissing: true,
-            currentLatitude: 0,
-            currentLongitude: 0,
-          );
-          await Fluttertoast.showToast(msg: "위치 정보를 가져오는 데 실패했습니다");
-        }
+    EtaRequest request;
+    try {
+      final position = await getCurrentLocation();
+      if (position != null) {
+        request = EtaRequest(
+          isMissing: false,
+          currentLatitude: position.latitude ?? 0.0,
+          currentLongitude: position.longitude ?? 0.0,
+        );
+      } else {
+        // 위치 정보는 가져왔지만 null인 경우
+        request = const EtaRequest(
+          isMissing: true,
+          currentLatitude: 0,
+          currentLongitude: 0,
+        );
+        await Fluttertoast.showToast(msg: "위치 정보를 가져오지 못했습니다");
+      }
+    } on Exception catch (_) {
+      // 위치 정보 조회 중 예외 발생
+      request = const EtaRequest(
+        isMissing: true,
+        currentLatitude: 0,
+        currentLongitude: 0,
+      );
+      await Fluttertoast.showToast(msg: "위치 정보를 가져오는 데 실패했습니다");
+    }
 
-        try {
-          userEta = await _etaRepository.patchEtaBoard(
-            meetingId: gatheringId,
-            request: request,
-          );
-          notifyListeners();
-        } on Exception catch (e) {
-          await Fluttertoast.showToast(msg: "도착 정보를 업데이트하지 못했습니다 ($e)");
+    try {
+      userEta = await _etaRepository.patchEtaBoard(
+        meetingId: gatheringId,
+        request: request,
+      );
+      notifyListeners();
+    } on Exception catch (e) {
+      await Fluttertoast.showToast(msg: "도착 정보를 업데이트하지 못했습니다 ($e)");
+    }
+  }
+
+  Future<void> shareScreenshot(
+    ScreenshotController screenshotController,
+  ) async {
+    try {
+      Uint8List? image;
+      await load(
+        () async {
+          image = await screenshotController.capture();
+        },
+      );
+      if (image != null) {
+        final params = ShareParams(
+          files: [
+            XFile.fromData(
+              image!,
+              name: "ody_eta_board.png",
+              mimeType: "image/png",
+            ),
+          ],
+        );
+        final result = await SharePlus.instance.share(params);
+        if (result.status == ShareResultStatus.success) {
+          debugPrint("스크린샷 공유 성공");
+        } else {
+          debugPrint("스크린샷 공유 실패");
         }
-      },
-    );
+      }
+    } on Exception catch (e) {
+      debugPrint("스크린샷 공유 중 예외 발생: $e");
+    }
   }
 }
