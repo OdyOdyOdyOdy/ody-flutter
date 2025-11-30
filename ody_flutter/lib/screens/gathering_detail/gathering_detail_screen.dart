@@ -1,6 +1,7 @@
 import "dart:async";
 
 import "package:cached_network_image/cached_network_image.dart";
+import "package:el_tooltip/el_tooltip.dart";
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:flutter_svg/flutter_svg.dart";
@@ -262,24 +263,24 @@ class _GatheringDetailScreenState extends State<GatheringDetailScreen> {
                 style: PretendardFonts.bold18
                     .copyWith(color: CommonColors.purple_800),
               ),
-              const SizedBox(width: 10),
-              Tooltip(
-                preferBelow: false,
-                verticalOffset: 5,
-                margin: const EdgeInsets.only(left: 140),
-                triggerMode: TooltipTriggerMode.tap,
-                decoration: const BoxDecoration(
-                  color: CommonColors.gray_400_70,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                    bottomRight: Radius.circular(20),
-                  ),
+              const SizedBox(width: 14),
+              ElTooltip(
+                content: Text(
+                  "출발 시간은 대중교통 지연 등을 고려해\n여유 있게 알려드리고 있어요.",
+                  style: PretendardFonts.regular12
+                      .copyWith(color: CommonColors.white),
                 ),
-                message: "뭐라뭐라뭐라뭐라뭐라\n뭐라뭐라뭐라뭐라뭐라",
-                textStyle: PretendardFonts.regular12
-                    .copyWith(color: CommonColors.white),
-                child: SvgPicture.asset(CommonImages.icInformation),
+                position: ElTooltipPosition.topStart,
+                color: CommonColors.gray_400_70,
+                padding: const EdgeInsets.all(12),
+                showArrow: false,
+                distance: -8,
+                showModal: false,
+                radius: const Radius.circular(25),
+                child: Transform.translate(
+                  offset: const Offset(-4, 0),
+                  child: SvgPicture.asset(CommonImages.icInformation),
+                ),
               ),
             ],
           ),
