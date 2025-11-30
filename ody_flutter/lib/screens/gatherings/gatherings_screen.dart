@@ -10,7 +10,6 @@ import "package:ody_flutter/components/ody_top_bar.dart";
 import "package:ody_flutter/config/routes.dart";
 import "package:ody_flutter/di/di.dart";
 import "package:ody_flutter/domain/model/gathering.dart";
-import "package:ody_flutter/screens/base/base_screen.dart";
 import "package:ody_flutter/screens/eta_board/model/eta_board_argument.dart";
 import "package:ody_flutter/screens/gatherings/gatherings_view_model.dart";
 
@@ -53,9 +52,9 @@ class _GatheringsScreenState extends State<GatheringsScreen> with RouteAware {
   }
 
   @override
-  Widget build(BuildContext context) => BaseScreen(
-        viewModel: _viewModel,
-        builder: (context) => PopScope(
+  Widget build(BuildContext context) => ListenableBuilder(
+        listenable: _viewModel,
+        builder: (context, _) => PopScope(
           canPop: false,
           child: Scaffold(
             backgroundColor: CommonColors.cream,
@@ -63,31 +62,17 @@ class _GatheringsScreenState extends State<GatheringsScreen> with RouteAware {
             body: SafeArea(
               child: Stack(
                 children: [
-                  if (!_viewModel.isLoading && _viewModel.gatherings.isEmpty)
+                  if (_viewModel.gatherings.isEmpty)
                     _buildEmptyGathering()
-                  else if (!_viewModel.isLoading)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 60),
-                      child: Column(
-                        children: [
-                          const SizedBox(height: 24),
-                          Expanded(
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 18),
-                              child: ListView.separated(
-                                itemCount: _viewModel.gatherings.length,
-                                itemBuilder: (context, index) =>
-                                    _buildGatheringItem(
-                                  _viewModel.gatherings[index],
-                                ),
-                                separatorBuilder: (context, index) =>
-                                    const SizedBox(height: 18),
-                              ),
-                            ),
-                          ),
-                        ],
+                  else
+                    ListView.separated(
+                      padding: const EdgeInsets.fromLTRB(18, 84, 18, 24),
+                      itemCount: _viewModel.gatherings.length,
+                      itemBuilder: (context, index) => _buildGatheringItem(
+                        _viewModel.gatherings[index],
                       ),
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(height: 18),
                     ),
                   OdyTopBar(
                     title: "오디",
@@ -215,9 +200,9 @@ class _GatheringsScreenState extends State<GatheringsScreen> with RouteAware {
             borderRadius: BorderRadius.all(Radius.circular(15)),
             boxShadow: [
               BoxShadow(
-                color: CommonColors.gray_200,
-                blurRadius: 10,
-                spreadRadius: 5,
+                color: CommonColors.gray_300,
+                offset: Offset(0, 4),
+                blurRadius: 6,
               ),
             ],
           ),
@@ -289,7 +274,7 @@ class _GatheringsScreenState extends State<GatheringsScreen> with RouteAware {
                               arguments: EtaBoardArgument(
                                 title: gathering.name,
                                 gatheringId: gathering.id,
-                          time: gathering.time,
+                                time: gathering.time,
                               ),
                             );
                           }
@@ -301,7 +286,7 @@ class _GatheringsScreenState extends State<GatheringsScreen> with RouteAware {
                     decoration: BoxDecoration(
                       color: gathering.isAccessible
                           ? CommonColors.purple_800
-                          : CommonColors.cream,
+                          : CommonColors.white,
                       borderRadius: const BorderRadius.all(Radius.circular(10)),
                       border: Border.all(
                         color: gathering.isAccessible

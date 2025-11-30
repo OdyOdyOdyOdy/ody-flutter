@@ -1,10 +1,10 @@
+import "package:flutter/material.dart";
 import "package:injectable/injectable.dart";
 import "package:ody_flutter/domain/model/gathering.dart";
 import "package:ody_flutter/domain/repository/gathering_repository.dart";
-import "package:ody_flutter/screens/base/base_view_model.dart";
 
 @injectable
-class GatheringsViewModel extends BaseViewModel {
+class GatheringsViewModel extends ChangeNotifier {
   GatheringsViewModel(this._gatheringRepository);
 
   final GatheringRepository _gatheringRepository;
@@ -14,12 +14,10 @@ class GatheringsViewModel extends BaseViewModel {
   List<Gathering> get gatherings => _gatherings;
 
   Future getGatherings() async {
-    await load(
-      () async {
-        final fetchedGatherings = await _gatheringRepository.fetchGatherings();
-        _gatherings..clear()
-        ..addAll(fetchedGatherings);
-      },
-    );
+    final fetchedGatherings = await _gatheringRepository.fetchGatherings();
+    _gatherings
+      ..clear()
+      ..addAll(fetchedGatherings);
+    notifyListeners();
   }
 }

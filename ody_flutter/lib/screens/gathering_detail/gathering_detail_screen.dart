@@ -40,14 +40,8 @@ class _GatheringDetailScreenState extends State<GatheringDetailScreen> {
   void initState() {
     super.initState();
     _viewModel = getIt<GatheringDetailViewModel>();
-    _viewModel
-      ..addListener(_onViewModelChanged)
-      ..addListener(_onNavigationChanged);
+    _viewModel.addListener(_onNavigationChanged);
     unawaited(_viewModel.getDetailGathering(widget.gatheringId));
-  }
-
-  void _onViewModelChanged() {
-    setState(() {});
   }
 
   Future<void> _onNavigationChanged() async {
@@ -131,7 +125,9 @@ class _GatheringDetailScreenState extends State<GatheringDetailScreen> {
               scrollDirection: Axis.horizontal,
               itemCount: (_viewModel.detailGathering?.mates?.length ?? 0) + 1,
               itemBuilder: (context, index) {
-                if (index == _viewModel.detailGathering?.mates?.length) {
+                final matesLength =
+                    _viewModel.detailGathering?.mates?.length ?? 0;
+                if (index == matesLength) {
                   return _buildInviteFriendSection();
                 } else {
                   return _buildMateSection(
@@ -139,10 +135,13 @@ class _GatheringDetailScreenState extends State<GatheringDetailScreen> {
                   );
                 }
               },
-              separatorBuilder: (context, index) =>
-                  index == _viewModel.detailGathering!.mates!.length - 1
-                      ? const SizedBox(width: 36)
-                      : const SizedBox(width: 8),
+              separatorBuilder: (context, index) {
+                final matesLength =
+                    _viewModel.detailGathering?.mates?.length ?? 0;
+                return index == matesLength - 1
+                    ? const SizedBox(width: 36)
+                    : const SizedBox(width: 8);
+              },
             ),
           ),
         ),
@@ -175,8 +174,8 @@ class _GatheringDetailScreenState extends State<GatheringDetailScreen> {
             ),
             child: Text(
               "초대 코드 복사하기",
-              style: PretendardFonts.regular14
-                  .copyWith(color: CommonColors.cream),
+              style:
+                  PretendardFonts.regular14.copyWith(color: CommonColors.cream),
             ),
           ),
         ],
@@ -191,6 +190,11 @@ class _GatheringDetailScreenState extends State<GatheringDetailScreen> {
               height: 58,
               imageUrl: mate.imageUrl ?? "",
               placeholder: (context, url) => const CircularProgressIndicator(),
+              errorWidget: (context, url, error) => Container(
+                width: 58,
+                height: 58,
+                color: CommonColors.gray_400,
+              ),
             ),
           ),
           const SizedBox(height: 6),
@@ -327,7 +331,7 @@ class _GatheringDetailScreenState extends State<GatheringDetailScreen> {
                   arguments: EtaBoardArgument(
                     title: _viewModel.detailGathering?.name ?? "",
                     gatheringId: _viewModel.detailGathering?.id ?? 0,
-              time: _viewModel.detailGathering?.time ?? "",
+                    time: _viewModel.detailGathering?.time ?? "",
                   ),
                 );
               }
@@ -358,9 +362,8 @@ class _GatheringDetailScreenState extends State<GatheringDetailScreen> {
               Text(
                 "오디?",
                 style: PretendardFonts.bold16.copyWith(
-                  color: isAccessible
-                      ? CommonColors.white
-                      : CommonColors.gray_350,
+                  color:
+                      isAccessible ? CommonColors.white : CommonColors.gray_350,
                 ),
               ),
             ],
